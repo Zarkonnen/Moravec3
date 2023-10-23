@@ -1,0 +1,36 @@
+[gd_scene load_steps=7 format=3 uid="uid://cb3icp3ox1m3k"]
+
+[ext_resource type="TileSet" uid="uid://cat3g8vk3uxca" path="res://ground_tile_set.tres" id="1_xbrc4"]
+[ext_resource type="Script" path="res://Player.gd" id="2_jq1fc"]
+[ext_resource type="Texture2D" uid="uid://cg232q4ygjq8b" path="res://tiles.png" id="2_sqygo"]
+[ext_resource type="Script" path="res://MapDisplay.gd" id="4_u3xq3"]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_s0aak"]
+radius = 16.0
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_c5jko"]
+atlas = ExtResource("2_sqygo")
+region = Rect2(50.4266, 201.428, 25.0864, 86.9136)
+
+[node name="Node2D" type="Node2D"]
+
+[node name="Player" type="RigidBody2D" parent="."]
+unique_name_in_owner = true
+position = Vector2(157, 157)
+gravity_scale = 0.0
+lock_rotation = true
+script = ExtResource("2_jq1fc")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Player"]
+shape = SubResource("CircleShape2D_s0aak")
+
+[node name="Sprite2D" type="Sprite2D" parent="Player"]
+z_index = 1
+texture = SubResource("AtlasTexture_c5jko")
+offset = Vector2(0, -43)
+
+[node name="TileMap" type="TileMap" parent="."]
+tile_set = ExtResource("1_xbrc4")
+format = 2
+layer_0/tile_data = PackedInt32Array(327689, 196608, 4, 262153, 196608, 1, 196617, 393216, 8, 131081, 327680, 6, 65545, 262144, 6, 9, 393216, 6, 327688, 393216, 5, 262152, 131072, 1, 196616, 262144, 8, 131080, 393216, 6, 65544, 327680, 8, 8, 262144, 7, 327687, 196608, 5, 262151, 196608, 9, 196615, 196608, 1, 131079, 393216, 8, 65543, 262144, 6, 7, 393216, 6, 327686, 131072, 2, 262150, 131072, 2, 196614, 196608, 9, 131078, 196608, 3, 65542, 196608, 1, 6, 262144, 8, 327685, 131072, 2, 262149, 131072, 2, 196613, 131072, 3, 131077, 131072, 2, 65541, 131072, 1, 5, 262144, 6, 327684, 131072, 2, 262148, 131072, 3, 196612, 131072, 2, 131076, 131072, 3, 65540, 393216, 9, 4, 393216, 7, 327683, 131072, 2, 262147, 131072, 2, 196611, 131072, 2, 131075, 458752, 9, 65539, 65536, 1, 3, 262144, 6, 327682, 65536, 2, 262146, 458752, 6, 196610, 65536, 3, 131074, 65536, 1, 65538, 262144, 7, 2, 393216, 6, 327681, 393216, 8, 262145, 327680, 8, 196609, 327680, 8, 131073, 393216, 6, 65537, 262144, 7, 1, 262144, 8, 327680, 393216, 7, 262144, 327680, 8, 196608, 327680, 8, 131072, 393216, 8, 65536, 327680, 6, 0, 393216, 6, 524297, 327680, 7, 458761, 327680, 6, 393225, 393216, 8, 524296, 393216, 6, 458760, 393216, 6, 393224, 327680, 6, 524295, 196608, 4, 458759, 196608, 2, 393223, 196608, 3, 524294, 327680, 5, 458758, 131072, 3, 393222, 131072, 2, 524293, 327680, 5, 458757, 131072, 3, 393221, 131072, 2, 524292, 65536, 4, 458756, 458752, 5, 393220, 131072, 2, 524291, 327680, 7, 458755, 327680, 5, 393219, 131072, 2, 524290, 262144, 6, 458754, 65536, 4, 393218, 65536, 2, 524289, 393216, 7, 458753, 393216, 6, 393217, 262144, 8, 524288, 393216, 6, 458752, 327680, 8, 393216, 393216, 7)
+script = ExtResource("4_u3xq3")
