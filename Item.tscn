@@ -6,7 +6,7 @@
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_hvsvt"]
 
-[sub_resource type="ShaderMaterial" id="ShaderMaterial_y41li"]
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_dgjuv"]
 shader = ExtResource("1_ifmo8")
 shader_parameter/color = Color(0.815686, 0.819608, 0.796078, 1)
 shader_parameter/width = 0.0
@@ -16,7 +16,7 @@ shader_parameter/add_margins = true
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_ccgmh"]
 atlas = ExtResource("1_qxv04")
-region = Rect2(403.347, 28.7713, 66.1157, 66.6667)
+region = Rect2(406, 29, 63, 66)
 
 [node name="Item" type="Area2D" groups=["Items"]]
 script = ExtResource("1_3t73v")
@@ -25,6 +25,6 @@ script = ExtResource("1_3t73v")
 shape = SubResource("CircleShape2D_hvsvt")
 
 [node name="Sprite2D" type="Sprite2D" parent="."]
-material = SubResource("ShaderMaterial_y41li")
+material = SubResource("ShaderMaterial_dgjuv")
 texture = SubResource("AtlasTexture_ccgmh")
-offset = Vector2(-8, -33)
+offset = Vector2(0, -33)

@@ -1,4 +1,20 @@
+@tool
 extends Area2D
+
+var type:ItemType = ItemType.ofName("bush")
+var texCopied = false
+
+@export var typeName:String = "bush":
+	set(value):
+		var t = ItemType.ofName(value)
+		if t:
+			type = t
+			if not texCopied:
+				$Sprite2D.texture = $Sprite2D.texture.duplicate()
+				texCopied = true
+			$Sprite2D.texture.region = t.texRect
+			$Sprite2D.offset.y = -t.texRect.size.y / 2
+		typeName = value
 
 @export var highlight = false:
 	set(value):

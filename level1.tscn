@@ -36,6 +36,7 @@ unique_name_in_owner = true
 
 [node name="Item" parent="." instance=ExtResource("5_ie426")]
 position = Vector2(102, 262)
+typeName = "chalk"
 
 [node name="Item2" parent="." instance=ExtResource("5_ie426")]
 position = Vector2(322, 122)

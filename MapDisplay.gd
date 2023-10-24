@@ -37,5 +37,5 @@ func _process(delta):
 			var gridPos = Vector2i(floor(mp.x / tile_set.tile_size.x), floor(mp.y / tile_set.tile_size.y))
 			var td:TileData = get_cell_tile_data(0, gridPos)
 			if td:# and td.terrain == 0:
-				%Player.setMoveTo(mp)
+				%Player.setNavTarget(mp)
 	
