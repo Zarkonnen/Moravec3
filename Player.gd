@@ -7,22 +7,22 @@ var navigate = false
 var prevTile = Vector2i.ZERO
 var canSetNavTarget = true
 var nextNavTarget = Vector2.ZERO
+var interactWith:Item = null
+var dropAt = Vector2.ZERO
 
 func _ready():
-	# These values need to be adjusted for the actor's speed
-	# and the navigation layout.
-	navigation_agent.path_desired_distance = 10.0
-	navigation_agent.target_desired_distance = 10.0
-
-	# Make sure to not await during _ready.
 	call_deferred("actor_setup")
 
 func actor_setup():
-	# Wait for the first physics frame so the NavigationServer can sync.
 	await get_tree().physics_frame
 
-func setNavTarget(to:Vector2):
+func setNavTarget(to:Vector2, interact):
 	nextNavTarget = to
+	interactWith = interact
+
+func interact(it:Item):
+	if it.type.canTake and %Inventory.add(it.type):
+		it.queue_free()
 
 func _physics_process(delta):
 	var mv = Vector2(0, 0)
@@ -35,6 +35,13 @@ func _physics_process(delta):
 	if navigation_agent.is_navigation_finished():
 		navigate = false
 		canSetNavTarget = true
+		if nextNavTarget == Vector2.ZERO:
+			if interactWith:
+				interact(interactWith)
+				interactWith = null
+			elif dropAt != Vector2.ZERO and %DropItem.toDrop:
+				%DropItem.doDrop(dropAt)
+				dropAt = Vector2.ZERO
 	else:
 		moveTo = navigation_agent.get_next_path_position()
 		var gridPos = Vector2i(floor(position.x / 128), floor(position.y / 96))
@@ -43,18 +50,13 @@ func _physics_process(delta):
 			prevTile = gridPos
 	if Input.is_action_pressed("north"):
 		mv.y = -1
-		navigate = false
-		nextNavTarget = Vector2.ZERO
 	if Input.is_action_pressed("south"):
 		mv.y = 1
-		navigate = false
-		nextNavTarget = Vector2.ZERO
 	if Input.is_action_pressed("east"):
 		mv.x = 1
-		navigate = false
-		nextNavTarget = Vector2.ZERO
 	if Input.is_action_pressed("west"):
 		mv.x = -1
+	if mv != Vector2.ZERO:
 		navigate = false
 		nextNavTarget = Vector2.ZERO
 	if not navigate:

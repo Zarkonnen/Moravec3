@@ -1,0 +1,56 @@
+[gd_scene load_steps=4 format=3 uid="uid://cq7lggbfun7va"]
+
+[ext_resource type="Script" path="res://InventorySlot.gd" id="1_bwliq"]
+[ext_resource type="Texture2D" uid="uid://cg232q4ygjq8b" path="res://tiles.png" id="1_y10wu"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_28fyw"]
+atlas = ExtResource("1_y10wu")
+region = Rect2(14.4754, 120.109, 28.0035, 42.3468)
+
+[node name="InventorySlot" type="Control" groups=["InventorySlots", "MoveOpaque"]]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_top = -6.0
+offset_right = -1220.0
+offset_bottom = -594.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_bwliq")
+
+[node name="ColorRect" type="ColorRect" parent="."]
+layout_mode = 0
+offset_right = 60.0
+offset_bottom = 60.0
+mouse_filter = 1
+color = Color(0.815686, 0.819608, 0.796078, 1)
+
+[node name="ColorRect2" type="ColorRect" parent="."]
+layout_mode = 0
+offset_left = 5.0
+offset_top = 5.0
+offset_right = 55.0
+offset_bottom = 55.0
+mouse_filter = 1
+color = Color(0.494118, 0.490196, 0.470588, 1)
+
+[node name="Quantity" type="Label" parent="."]
+layout_mode = 0
+offset_left = 8.0
+offset_top = 33.0
+offset_right = 48.0
+offset_bottom = 59.0
+mouse_filter = 1
+
+[node name="Texture" type="TextureRect" parent="."]
+visible = false
+layout_mode = 0
+offset_left = 10.0
+offset_top = 10.0
+offset_right = 50.0
+offset_bottom = 52.0
+texture = SubResource("AtlasTexture_28fyw")
+stretch_mode = 3
+
+[connection signal="gui_input" from="." to="." method="_on_gui_input"]
