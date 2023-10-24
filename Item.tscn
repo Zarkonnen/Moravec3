@@ -1,0 +1,30 @@
+[gd_scene load_steps=7 format=3 uid="uid://pb415w1j1u0k"]
+
+[ext_resource type="Script" path="res://Item.gd" id="1_3t73v"]
+[ext_resource type="Shader" path="res://Outline.gdshader" id="1_ifmo8"]
+[ext_resource type="Texture2D" uid="uid://cg232q4ygjq8b" path="res://tiles.png" id="1_qxv04"]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_hvsvt"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_y41li"]
+shader = ExtResource("1_ifmo8")
+shader_parameter/color = Color(0.815686, 0.819608, 0.796078, 1)
+shader_parameter/width = 0.0
+shader_parameter/pattern = 2
+shader_parameter/inside = true
+shader_parameter/add_margins = true
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_ccgmh"]
+atlas = ExtResource("1_qxv04")
+region = Rect2(403.347, 28.7713, 66.1157, 66.6667)
+
+[node name="Item" type="Area2D" groups=["Items"]]
+script = ExtResource("1_3t73v")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape = SubResource("CircleShape2D_hvsvt")
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+material = SubResource("ShaderMaterial_y41li")
+texture = SubResource("AtlasTexture_ccgmh")
+offset = Vector2(-8, -33)
