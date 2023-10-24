@@ -6,7 +6,7 @@
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_hvsvt"]
 
-[sub_resource type="ShaderMaterial" id="ShaderMaterial_dgjuv"]
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_t5jos"]
 shader = ExtResource("1_ifmo8")
 shader_parameter/color = Color(0.815686, 0.819608, 0.796078, 1)
 shader_parameter/width = 0.0
@@ -25,6 +25,6 @@ script = ExtResource("1_3t73v")
 shape = SubResource("CircleShape2D_hvsvt")
 
 [node name="Sprite2D" type="Sprite2D" parent="."]
-material = SubResource("ShaderMaterial_dgjuv")
+material = SubResource("ShaderMaterial_t5jos")
 texture = SubResource("AtlasTexture_ccgmh")
 offset = Vector2(0, -33)

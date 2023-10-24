@@ -9,7 +9,7 @@ func _process(delta):
 	var mp = get_viewport().get_mouse_position()
 	if get_tree().get_nodes_in_group("MoveOpaque").any(func(n): return n.get_rect().has_point(mp)):
 		return
-	mp = mp - Vector2(get_viewport().size) / 2 + %Player.position
+	mp = mp - Vector2(get_viewport().size) / 2 + %Player.position + %Camera.offset
 	var closest = null
 	var bestDist = 0
 	for it in get_tree().get_nodes_in_group("Items"):

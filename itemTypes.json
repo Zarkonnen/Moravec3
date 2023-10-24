@@ -1,11 +1,27 @@
 [
 	{
 		"name": "bush",
-		"x": 406, "y": 29, "w": 63, "h": 66
+		"x": 406, "y": 29, "w": 63, "h": 66,
+		"use": {
+			"any": {
+				"time": 3,
+				"turnInto": "emptyBush",
+				"spawn": [["berries", 1]]
+			}
+		}
+	},
+	{
+		"name": "emptyBush",
+		"x": 319, "y": 3, "w": 63, "h": 66,
 	},
 	{
 		"name": "chalk",
 		"x": 306, "y": 75, "w": 25, "h": 20,
+		"canTake": true, "stacking": 10
+	},
+	{
+		"name": "berries",
+		"x": 780, "y": 29, "w": 31, "h": 28,
 		"canTake": true, "stacking": 10
 	}
 ]

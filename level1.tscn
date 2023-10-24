@@ -38,6 +38,7 @@ offset = Vector2(0, -43)
 
 [node name="Camera" type="Camera2D" parent="Player"]
 unique_name_in_owner = true
+offset = Vector2(0, -20)
 
 [node name="Navigation" type="NavigationAgent2D" parent="Player"]
 
@@ -111,6 +112,38 @@ offset_bottom = -10.0
 grow_horizontal = 1
 grow_vertical = 0
 index = 3
+
+[node name="UseProgress" type="ColorRect" parent="GUI"]
+unique_name_in_owner = true
+visible = false
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -50.0
+offset_top = -94.0
+offset_right = 50.0
+offset_bottom = -82.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0.494118, 0.490196, 0.470588, 1)
+
+[node name="UseProgressBar" type="ColorRect" parent="GUI/UseProgress"]
+unique_name_in_owner = true
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -48.0
+offset_top = -4.0
+offset_right = 48.0
+offset_bottom = 4.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0.815686, 0.819608, 0.796078, 1)
 
 [node name="DropItem" type="Sprite2D" parent="."]
 unique_name_in_owner = true

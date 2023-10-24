@@ -19,14 +19,14 @@ grow_horizontal = 2
 grow_vertical = 2
 script = ExtResource("1_bwliq")
 
-[node name="ColorRect" type="ColorRect" parent="."]
+[node name="Border" type="ColorRect" parent="."]
 layout_mode = 0
 offset_right = 60.0
 offset_bottom = 60.0
 mouse_filter = 1
 color = Color(0.815686, 0.819608, 0.796078, 1)
 
-[node name="ColorRect2" type="ColorRect" parent="."]
+[node name="Inner" type="ColorRect" parent="."]
 layout_mode = 0
 offset_left = 5.0
 offset_top = 5.0

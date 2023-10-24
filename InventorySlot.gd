@@ -4,4 +4,7 @@ extends Control
 
 func _on_gui_input(event):
 	if event is InputEventMouseButton and event.pressed:
-		%Inventory.dropSlot(self)
+		if event.button_index == 1:
+			%Inventory.selectSlot(index)
+		if event.button_index == 2:
+			%Inventory.dropSlot(index)
