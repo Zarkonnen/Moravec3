@@ -13,6 +13,8 @@
 	{
 		"name": "emptyBush",
 		"x": 228, "y": 4, "w": 63, "h": 66,
+		"rotInterval": 1000,
+		"rotInto": "bush"
 	},
 	{
 		"name": "chalk",
@@ -23,6 +25,8 @@
 		"name": "berries",
 		"x": 780, "y": 29, "w": 31, "h": 28,
 		"canTake": true, "stacking": 10,
+		"durability": 100,
+		"rotInterval": 1,
 		"use": {
 			"consume": {
 				"time": 1,
@@ -39,6 +43,37 @@
 	{
 		"name": "antler knife",
 		"x": 55, "y": 438, "w": 30, "h": 28,
-		"canTake": true
+		"canTake": true,
+		"durability": 100
+	},
+	{
+		"name": "finger tree",
+		"x": 406, "y": 29, "w": 63, "h": 66,
+		"use": {
+			"antler knife": {
+				"time": 3,
+				"toolDurability": -5,
+				"destroy": true,
+				"spawn": [["tree fibres", 3], ["tree mulch", 1]]
+			}
+		}
+	},
+	{
+		"name": "tree fibres",
+		"x": 13, "y": 300, "w": 35, "h": 45,
+		"canTake": true, "stacking": 20,
+	},
+	{
+		"name": "tree mulch",
+		"x": 68, "y": 299, "w": 49, "h": 31,
+		"canTake": true,
+		"durability": 100,
+		"rotInterval": 1,
+		"rotInto": "dried tree mulch"
+	},
+	{
+		"name": "dried tree mulch",
+		"x": 58, "y": 338, "w": 50, "h": 35,
+		"canTake": true, "stacking": 10
 	},
 ]

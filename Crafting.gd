@@ -54,8 +54,8 @@ func craft(r:Recipe):
 func finishCrafting(r:Recipe):
 	for i in r.inputs:
 		%Inventory.remove(i[0], i[1])
-	if not r.output.canTake or not %Inventory.add(r.output):
-		%DropItem.createItem(r.output, %Player.position)
+	if not r.output.canTake or not %Inventory.add(r.output, r.output.durability):
+		%DropItem.createItem(r.output, %Player.position, r.output.durability)
 
 func _on_inventory_changed():
 	if show:

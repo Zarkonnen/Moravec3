@@ -12,6 +12,9 @@ var type:ItemType = ItemType.ofName("bush"):
 		$Sprite2D.texture.region = t.texRect
 		$Sprite2D.offset.y = -t.texRect.size.y / 2
 
+var durability = 0
+var rotTimeout = 0
+
 @export var typeName:String = "bush":
 	set(value):
 		var t = ItemType.ofName(value)
@@ -36,3 +39,17 @@ func get_rect():
 # Called when the node enters the scene tree for the first time.
 func _ready():
 	$Sprite2D.material = $Sprite2D.material.duplicate()
+	
+func _process(delta):
+	if type.rotInterval:
+		rotTimeout -= delta
+		if rotTimeout <= 0:
+			durability -= 1
+			rotTimeout = type.rotInterval
+			if durability <= 0:
+				var rotInto = ItemType.ofName(type.rotInto)
+				if rotInto:
+					type = rotInto
+					durability = rotInto.durability
+				else:
+					queue_free()

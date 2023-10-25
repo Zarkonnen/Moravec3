@@ -28,7 +28,7 @@ func setNavTarget(to:Vector2, interact):
 	using = null
 
 func interact(it:Item):
-	if it.type.canTake and %Inventory.add(it.type):
+	if it.type.canTake and %Inventory.add(it.type, it.durability):
 		it.queue_free()
 		return
 	if %Inventory.selectedItem() and it.type.use.has(%Inventory.selectedItem().name):
@@ -68,19 +68,20 @@ func _process(delta):
 			if crafting:
 				%Crafts.finishCrafting(crafting)
 			else:
+				%Inventory.useTool(ItemType.ofName(useType.tool), useType.toolDurability)
 				for entry in useType.spawn:
 					var t:ItemType = ItemType.ofName(entry[0])
 					for i in range(entry[1]):
-						if not %Inventory.add(t):
-							%DropItem.createItem(t, using.position if using else position)
+						if not %Inventory.add(t, t.durability):
+							%DropItem.createItem(t, using.position if using else position, t.durability)
 				var turnInto:ItemType = ItemType.ofName(useType.turnInto) if useType.turnInto else null
 				if turnInto:
 					if using:
 						using.type = turnInto
 					else:
 						%Inventory.remove(usingInInventory)
-						if not %Inventory.add(turnInto):
-							%DropItem.createItem(turnInto, position)
+						if not %Inventory.add(turnInto, turnInto.durability):
+							%DropItem.createItem(turnInto, position, turnInto.durability)
 				elif useType.destroy:
 					if using:
 						using.queue_free()

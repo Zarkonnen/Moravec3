@@ -5,6 +5,9 @@ var texRect:Rect2
 var canTake:bool = false
 var stacking:int = 1
 var use:Dictionary = {}
+var durability:int = 1
+var rotInterval:int = 0
+var rotInto:String
 
 func _init(name, texRect):
 	self.name = name
@@ -29,6 +32,9 @@ static func loadTypes():
 		var it = ItemType.new(i["name"], Rect2(i["x"], i["y"], i["w"], i["h"]))
 		it.canTake = i.get("canTake", false)
 		it.stacking = i.get("stacking", 1)
+		it.durability = i.get("durability", 1)
+		it.rotInterval = i.get("rotInterval", 0)
+		it.rotInto = i.get("rotInto", "")
 		if i.has("use"):
 			var uses:Dictionary = i.get("use")
 			for useK in uses.keys():
@@ -40,6 +46,7 @@ static func loadTypes():
 				u.destroy = useV.get("destroy", false)
 				u.spawn = useV.get("spawn", [])
 				u.stats = useV.get("stats", {})
+				u.toolDurability = useV.get("toolDurability", 0)
 				it.use[useK] = u
 		ts.append(it)
 	types = ts
@@ -51,3 +58,4 @@ class Use:
 	var destroy:bool = false
 	var spawn:Array = []
 	var stats:Dictionary = {}
+	var toolDurability = 0

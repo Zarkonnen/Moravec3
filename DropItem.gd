@@ -19,18 +19,22 @@ func _process(delta):
 	if visible:
 		position = get_viewport().get_mouse_position() - Vector2(get_viewport().size) / 2 + %Player.position + %Camera.offset
 
-func createItem(type, at):
+func createItem(type, at, durability):
 	if %World.tileAtIsFloor(at):
 		var item:Item = itemScene.instantiate()
 		item.position = at
 		item.type = type
+		item.durability = durability
 		$/root/Node2D.add_child(item)
 
 func doDrop(dropAt):
 	if not toDrop:
 		return
-	if %World.tileAtIsFloor(dropAt) and %Inventory.remove(toDrop):
-		createItem(toDrop, dropAt)
+	if %World.tileAtIsFloor(dropAt):
+		visible = true
+	var removed = %Inventory.remove(toDrop)
+	if removed:
+		createItem(toDrop, dropAt, removed[1])
 		toDrop = null
 	else:
 		visible = true

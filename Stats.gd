@@ -54,7 +54,6 @@ func update(stat):
 	b.size.x = 96 * stat.value / 100
 	var ch = sb.get_node("Change")
 	if stat.recentValue != stat.value:
-		print("Change")
 		ch.position.x = b.position.x + b.size.x
 		ch.size.x = abs(stat.recentValue - stat.value)
 		if stat.recentValue < stat.value:
