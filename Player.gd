@@ -10,7 +10,9 @@ var nextNavTarget = Vector2.ZERO
 var interactWith:Item = null
 var dropAt = Vector2.ZERO
 
+var crafting:Recipe = null
 var using:Item = null
+var usingInInventory:ItemType = null
 var useType:ItemType.Use = null
 var useTime = 0
 
@@ -37,32 +39,64 @@ func interact(it:Item):
 		return
 
 func use(it:Item, useType:ItemType.Use):
+	usingInInventory = null
 	using = it
+	crafting = null
 	self.useType = useType
 	useTime = 0
 
+func consume(it:ItemType):
+	usingInInventory = it
+	using = null
+	crafting = null
+	self.useType = it.use["consume"]
+	useTime = 0
+
+func craft(r:Recipe):
+	crafting = r
+	using = null
+	usingInInventory = null
+	useTime = 0
+
 func _process(delta):
-	if using:
+	if using or usingInInventory or crafting:
 		useTime += delta
 		%UseProgress.visible = true
-		%UseProgressBar.size.x = clamp(96 * useTime / useType.time, 0, 96)
-		if useTime >= useType.time:
-			for entry in useType.spawn:
-				var t:ItemType = ItemType.ofName(entry[0])
-				for i in range(entry[1]):
-					if not %Inventory.add(t):
-						%DropItem.createItem(t, using.position)
-			if ItemType.ofName(useType.turnInto):
-				using.type = ItemType.ofName(useType.turnInto)
-			elif useType.destroy:
-				using.queue_free()
+		var time = crafting.time if crafting else useType.time
+		%UseProgressBar.size.x = clamp(96 * useTime / time, 0, 96)
+		if useTime >= time:
+			if crafting:
+				%Crafts.finishCrafting(crafting)
+			else:
+				for entry in useType.spawn:
+					var t:ItemType = ItemType.ofName(entry[0])
+					for i in range(entry[1]):
+						if not %Inventory.add(t):
+							%DropItem.createItem(t, using.position if using else position)
+				var turnInto:ItemType = ItemType.ofName(useType.turnInto) if useType.turnInto else null
+				if turnInto:
+					if using:
+						using.type = turnInto
+					else:
+						%Inventory.remove(usingInInventory)
+						if not %Inventory.add(turnInto):
+							%DropItem.createItem(turnInto, position)
+				elif useType.destroy:
+					if using:
+						using.queue_free()
+					else:
+						%Inventory.remove(usingInInventory)
 			using = null
+			usingInInventory = null
+			crafting = null
 	else:
 		%UseProgress.visible = false
 
 func _physics_process(delta):
 	var mv = Vector2(0, 0)
 	var moveTo = Vector2(0, 0)
+	if not is_instance_valid(interactWith):
+		interactWith = null
 	if canSetNavTarget and nextNavTarget != Vector2.ZERO:
 		navigation_agent.target_position = nextNavTarget
 		navigate = true
@@ -95,6 +129,7 @@ func _physics_process(delta):
 	if mv != Vector2.ZERO:
 		using = null
 		navigate = false
+		crafting = null
 		nextNavTarget = Vector2.ZERO
 	if not navigate:
 		mv = mv.normalized() * speed * Util.RATIO * delta

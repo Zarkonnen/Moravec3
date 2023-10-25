@@ -12,7 +12,7 @@ func _init(name, texRect):
 
 static var types = null:
 	get:
-		if not types:
+		if not types or Engine.is_editor_hint():
 			loadTypes()
 		return types
 

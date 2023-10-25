@@ -6,7 +6,7 @@
 			"any": {
 				"time": 3,
 				"turnInto": "emptyBush",
-				"spawn": [["berries", 1]]
+				"spawn": [["berries", 3]]
 			}
 		}
 	},
@@ -22,6 +22,22 @@
 	{
 		"name": "berries",
 		"x": 780, "y": 29, "w": 31, "h": 28,
-		"canTake": true, "stacking": 10
-	}
+		"canTake": true, "stacking": 10,
+		"use": {
+			"consume": {
+				"time": 1,
+				"destroy": true
+			}
+		}
+	},
+	{
+		"name": "antler",
+		"x": 11, "y": 392, "w": 55, "h": 43,
+		"canTake": true
+	},
+	{
+		"name": "antler knife",
+		"x": 55, "y": 438, "w": 30, "h": 28,
+		"canTake": true
+	},
 ]

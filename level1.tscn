@@ -1,4 +1,4 @@
-[gd_scene load_steps=12 format=3 uid="uid://cb3icp3ox1m3k"]
+[gd_scene load_steps=14 format=3 uid="uid://cb3icp3ox1m3k"]
 
 [ext_resource type="TileSet" uid="uid://cat3g8vk3uxca" path="res://ground_tile_set.tres" id="1_xbrc4"]
 [ext_resource type="Script" path="res://Player.gd" id="2_jq1fc"]
@@ -8,6 +8,8 @@
 [ext_resource type="Script" path="res://Inventory.gd" id="6_265lw"]
 [ext_resource type="PackedScene" uid="uid://cq7lggbfun7va" path="res://InventorySlot.tscn" id="6_tj3ja"]
 [ext_resource type="Script" path="res://DropItem.gd" id="8_7mnix"]
+[ext_resource type="Texture2D" uid="uid://dpw40sh7lxy63" path="res://crafting.png" id="8_fuffq"]
+[ext_resource type="Script" path="res://Crafting.gd" id="9_x6lxk"]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_s0aak"]
 
@@ -28,6 +30,7 @@ position = Vector2(157, 157)
 gravity_scale = 0.0
 lock_rotation = true
 script = ExtResource("2_jq1fc")
+speed = 400.0
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Player"]
 shape = SubResource("CircleShape2D_s0aak")
@@ -50,7 +53,11 @@ typeName = "chalk"
 position = Vector2(322, 122)
 
 [node name="Item3" parent="." instance=ExtResource("5_ie426")]
-position = Vector2(296, 142)
+position = Vector2(260, 162)
+
+[node name="Item4" parent="." instance=ExtResource("5_ie426")]
+position = Vector2(704, 351)
+typeName = "antler"
 
 [node name="World" type="TileMap" parent="."]
 unique_name_in_owner = true
@@ -145,9 +152,22 @@ grow_horizontal = 2
 grow_vertical = 2
 color = Color(0.815686, 0.819608, 0.796078, 1)
 
+[node name="Crafts" type="TextureRect" parent="GUI" groups=["MoveOpaque"]]
+unique_name_in_owner = true
+offset_left = 40.0
+offset_top = 40.0
+offset_right = 40.0
+offset_bottom = 40.0
+scale = Vector2(0.11, 0.11)
+texture = ExtResource("8_fuffq")
+script = ExtResource("9_x6lxk")
+
 [node name="DropItem" type="Sprite2D" parent="."]
 unique_name_in_owner = true
 visible = false
 z_index = 10
 texture = SubResource("AtlasTexture_regq1")
 script = ExtResource("8_7mnix")
+
+[connection signal="changed" from="GUI/Inventory" to="GUI/Crafts" method="_on_inventory_changed"]
+[connection signal="gui_input" from="GUI/Crafts" to="GUI/Crafts" method="_on_gui_input"]
