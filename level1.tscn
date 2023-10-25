@@ -1,4 +1,4 @@
-[gd_scene load_steps=14 format=3 uid="uid://cb3icp3ox1m3k"]
+[gd_scene load_steps=16 format=3 uid="uid://cb3icp3ox1m3k"]
 
 [ext_resource type="TileSet" uid="uid://cat3g8vk3uxca" path="res://ground_tile_set.tres" id="1_xbrc4"]
 [ext_resource type="Script" path="res://Player.gd" id="2_jq1fc"]
@@ -10,6 +10,8 @@
 [ext_resource type="Script" path="res://DropItem.gd" id="8_7mnix"]
 [ext_resource type="Texture2D" uid="uid://dpw40sh7lxy63" path="res://crafting.png" id="8_fuffq"]
 [ext_resource type="Script" path="res://Crafting.gd" id="9_x6lxk"]
+[ext_resource type="Script" path="res://Stats.gd" id="10_dt6v4"]
+[ext_resource type="PackedScene" uid="uid://dqux4yrt2qht5" path="res://StatBar.tscn" id="12_xieyx"]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_s0aak"]
 
@@ -154,13 +156,23 @@ color = Color(0.815686, 0.819608, 0.796078, 1)
 
 [node name="Crafts" type="TextureRect" parent="GUI" groups=["MoveOpaque"]]
 unique_name_in_owner = true
-offset_left = 40.0
-offset_top = 40.0
-offset_right = 40.0
-offset_bottom = 40.0
+offset_left = 10.0
+offset_top = 10.0
+offset_right = 522.0
+offset_bottom = 522.0
 scale = Vector2(0.11, 0.11)
 texture = ExtResource("8_fuffq")
 script = ExtResource("9_x6lxk")
+
+[node name="Stats" type="Node" parent="GUI"]
+unique_name_in_owner = true
+script = ExtResource("10_dt6v4")
+
+[node name="HP" parent="GUI/Stats" instance=ExtResource("12_xieyx")]
+
+[node name="Food" parent="GUI/Stats" instance=ExtResource("12_xieyx")]
+offset_top = 40.0
+offset_bottom = 40.0
 
 [node name="DropItem" type="Sprite2D" parent="."]
 unique_name_in_owner = true

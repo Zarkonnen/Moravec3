@@ -1,0 +1,66 @@
+[gd_scene format=3 uid="uid://dqux4yrt2qht5"]
+
+[node name="StatBar" type="Control"]
+layout_mode = 3
+anchors_preset = 1
+anchor_left = 1.0
+anchor_right = 1.0
+offset_left = -110.0
+offset_top = 10.0
+offset_right = -110.0
+offset_bottom = 10.0
+grow_horizontal = 0
+
+[node name="Border" type="ColorRect" parent="."]
+layout_mode = 1
+anchors_preset = 1
+anchor_left = 1.0
+anchor_right = 1.0
+offset_right = 100.0
+offset_bottom = 20.0
+grow_horizontal = 0
+color = Color(0.494118, 0.490196, 0.470588, 1)
+
+[node name="Empty" type="ColorRect" parent="."]
+layout_mode = 1
+anchors_preset = 1
+anchor_left = 1.0
+anchor_right = 1.0
+offset_left = 2.0
+offset_top = 2.0
+offset_right = 98.0
+offset_bottom = 18.0
+grow_horizontal = 0
+color = Color(0.184314, 0.156863, 0.117647, 1)
+
+[node name="Bar" type="ColorRect" parent="."]
+layout_mode = 1
+anchors_preset = 1
+anchor_left = 1.0
+anchor_right = 1.0
+offset_left = 2.0
+offset_top = 2.0
+offset_right = 57.0
+offset_bottom = 18.0
+grow_horizontal = 0
+color = Color(0.835294, 0.219608, 0.27451, 1)
+
+[node name="Change" type="ColorRect" parent="."]
+layout_mode = 1
+anchors_preset = 1
+anchor_left = 1.0
+anchor_right = 1.0
+offset_left = 54.0
+offset_top = 2.0
+offset_right = 57.0
+offset_bottom = 18.0
+grow_horizontal = 0
+color = Color(0.815686, 0.819608, 0.796078, 1)
+
+[node name="Label" type="Label" parent="."]
+layout_mode = 0
+offset_left = 3.0
+offset_top = -2.0
+offset_right = 43.0
+offset_bottom = 24.0
+text = "Food"

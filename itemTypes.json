@@ -12,7 +12,7 @@
 	},
 	{
 		"name": "emptyBush",
-		"x": 319, "y": 3, "w": 63, "h": 66,
+		"x": 228, "y": 4, "w": 63, "h": 66,
 	},
 	{
 		"name": "chalk",
@@ -26,7 +26,8 @@
 		"use": {
 			"consume": {
 				"time": 1,
-				"destroy": true
+				"destroy": true,
+				"stats": {"Food": 10}
 			}
 		}
 	},

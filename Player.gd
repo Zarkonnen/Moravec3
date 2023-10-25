@@ -86,6 +86,8 @@ func _process(delta):
 						using.queue_free()
 					else:
 						%Inventory.remove(usingInInventory)
+				for statName in useType.stats.keys():
+					%Stats.change(statName, useType.stats[statName])
 			using = null
 			usingInInventory = null
 			crafting = null

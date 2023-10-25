@@ -39,6 +39,7 @@ static func loadTypes():
 				u.turnInto = useV.get("turnInto", "")
 				u.destroy = useV.get("destroy", false)
 				u.spawn = useV.get("spawn", [])
+				u.stats = useV.get("stats", {})
 				it.use[useK] = u
 		ts.append(it)
 	types = ts
@@ -49,3 +50,4 @@ class Use:
 	var turnInto:String = ""
 	var destroy:bool = false
 	var spawn:Array = []
+	var stats:Dictionary = {}
