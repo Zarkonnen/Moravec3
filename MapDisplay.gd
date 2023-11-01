@@ -22,6 +22,8 @@ func _process(delta):
 	var mp = get_viewport().get_mouse_position()
 	if get_tree().get_nodes_in_group("MoveOpaque").any(func(n): return n.get_rect().has_point(mp)):
 		return
+	if Input.is_mouse_button_pressed(2):
+		%DropItem.toDrop = null
 	mp = mp - Vector2(get_viewport().size) / 2 + %Player.position + %Camera.offset
 	var closest = null
 	var bestDist = 0
@@ -38,7 +40,7 @@ func _process(delta):
 		closest.highlight = %Player.interactionName(closest)
 		highlit = closest
 	if mouseClicked or mouseDown:
-		var doMove = not closest
+		var doMove = not closest and not %DropItem.toDrop
 		if mouseClicked:
 			if %DropItem.toDrop:
 				var irange = INTERACTION_RANGE_WALL if %DropItem.toDrop.wall else INTERACTION_RANGE
@@ -47,9 +49,11 @@ func _process(delta):
 					%Player.dropAt = mp
 					%DropItem.visible = false
 					mp -= distance.normalized() * (irange - 20)
+					print("move and drop")
 					doMove = true
 				else:
 					%DropItem.doDrop(mp)
+					print("drop")
 					doMove = false
 			elif closest:
 				var distance = closest.position - %Player.position
@@ -60,7 +64,6 @@ func _process(delta):
 				else:
 					%Player.interact(closest)
 					doMove = false
-			
 		if doMove and tileAt(mp):
 			%Player.setNavTarget(mp, closest)
 		if doMove:
