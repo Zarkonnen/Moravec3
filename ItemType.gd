@@ -11,6 +11,8 @@ var rotInto:String
 var snapToGrid:bool = false
 var wall:bool = false
 var ceiling:bool = false
+var wallSupportRange = 2
+var spawnOnCollapse:Array = []
 
 func _init(name, texRect):
 	self.name = name
@@ -41,6 +43,8 @@ static func loadTypes():
 		it.snapToGrid = i.get("snapToGrid", false)
 		it.wall = i.get("wall", false)
 		it.ceiling = i.get("ceiling", false)
+		it.wallSupportRange = i.get("wallSupportRange", 2)
+		it.spawnOnCollapse = i.get("spawnOnCollapse", [])
 		if i.has("use"):
 			var uses:Dictionary = i.get("use")
 			for useK in uses.keys():

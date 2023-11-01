@@ -1,19 +1,15 @@
 [gd_scene load_steps=7 format=3 uid="uid://pb415w1j1u0k"]
 
 [ext_resource type="Script" path="res://Item.gd" id="1_3t73v"]
-[ext_resource type="Shader" path="res://Outline.gdshader" id="1_ifmo8"]
 [ext_resource type="Texture2D" uid="uid://cg232q4ygjq8b" path="res://tiles.png" id="1_qxv04"]
+[ext_resource type="Shader" path="res://Item.gdshader" id="2_o8jvu"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_x2o0v"]
 size = Vector2(128, 96)
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_7t1br"]
-shader = ExtResource("1_ifmo8")
-shader_parameter/color = Color(0.815686, 0.819608, 0.796078, 1)
-shader_parameter/width = 0.0
-shader_parameter/pattern = 2
-shader_parameter/inside = true
-shader_parameter/add_margins = true
+shader = ExtResource("2_o8jvu")
+shader_parameter/strength = 0.0
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_ccgmh"]
 atlas = ExtResource("1_qxv04")

@@ -29,19 +29,26 @@ func _canPlace(position):
 	var gridX = int(floor(position.x / 128))
 	var gridY = int(floor(position.y / 96))
 	if %World.tileAtIsFloor(position) and not %Walls.g(gridX, gridY):
+		if toDrop.ceiling:
+			if %Ceilings.g(gridX, gridY) or %Walls.wallSupportStrength(gridX, gridY, %Ceilings) < 1:
+				return false
+		elif toDrop.snapToGrid:
+			for it in get_tree().get_nodes_in_group("Items"):
+				if it.position.x >= gridX * 128 and it.position.x <= gridX * 128 + 128 and it.position.y >= gridY * 128 and it.position.y <= gridY * 96 + 96:
+					return false
 		return true
 	else:
 		return false
 
 func createItem(type:ItemType, at, durability):
-	if _canPlace(at):
-		var item:Item = itemScene.instantiate()
-		item.position = at
-		item.type = type
-		item.durability = durability
-		$/root/Node2D.add_child(item)
-		if type.snapToGrid:
-			item.snapToGridAndRegister()
+	#if _canPlace(at):
+	var item:Item = itemScene.instantiate()
+	item.position = at
+	item.type = type
+	item.durability = durability
+	$/root/Node2D.add_child(item)
+	if type.snapToGrid:
+		item.snapToGridAndRegister()
 
 func doDrop(dropAt):
 	if not toDrop:

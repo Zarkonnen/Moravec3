@@ -192,5 +192,10 @@ script = ExtResource("13_2234k")
 unique_name_in_owner = true
 script = ExtResource("13_2234k")
 
+[node name="Item5" parent="." instance=ExtResource("5_ie426")]
+position = Vector2(-64, 192)
+collision_layer = 1
+typeName = "wall"
+
 [connection signal="changed" from="GUI/Inventory" to="GUI/Crafts" method="_on_inventory_changed"]
 [connection signal="gui_input" from="GUI/Crafts" to="GUI/Crafts" method="_on_gui_input"]

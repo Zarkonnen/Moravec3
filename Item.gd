@@ -28,7 +28,7 @@ var rotTimeout = 0
 
 @export var highlight = false:
 	set(value):
-		$Sprite2D.material.set_shader_parameter("width", 1.0 if value else 0.0)
+		$Sprite2D.material.set_shader_parameter("strength", 0.2 if value else 0.0)
 		highlight = value
 
 func get_rect():

@@ -85,9 +85,10 @@
 	},
 	{
 		"name": "ceiling",
-		"x": 512, "y": 144, "w": 128, "h": 96,
+		"x": 640, "y": 144, "w": 128, "h": 144,
 		"canTake": true,
 		"ceiling": true,
-		"snapToGrid": true
+		"snapToGrid": true,
+		"spawnOnCollapse": [["chalk", 1]]
 	},
 ]

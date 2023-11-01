@@ -30,6 +30,8 @@ func setNavTarget(to:Vector2, interact):
 func interact(it:Item):
 	if it.type.canTake and %Inventory.add(it.type, it.durability):
 		it.unregister()
+		if it.type.wall or it.type.ceiling:
+			%Walls.collapseCeilings(it.gridX(), it.gridY(), %Ceilings)
 		it.queue_free()
 		return
 	if %Inventory.selectedItem() and it.type.use.has(%Inventory.selectedItem().name):
