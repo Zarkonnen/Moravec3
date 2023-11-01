@@ -1,11 +1,15 @@
 @tool
-extends Area2D
+extends StaticBody2D
 class_name Item
 
 var texCopied = false
 var type:ItemType = ItemType.ofName("bush"):
 	set(t):
 		type = t
+		set_collision_layer_value(1, t.wall)
+		$Sprite2D.z_index = 3 if t.ceiling else 0
+		if t.snapToGrid:
+			snapToGridAndRegister()
 		if not texCopied:
 			$Sprite2D.texture = $Sprite2D.texture.duplicate()
 			texCopied = true
@@ -36,9 +40,22 @@ func get_rect():
 		sr.size.y
 	)
 
+func snapToGridAndRegister():
+	var gridX = int(floor(position.x))
+	var gridY = int(floor(position.y))
+	position.x = gridX * 128
+	position.y = gridY * 96
+	if not Engine.is_editor_hint():
+		if type.wall:
+			%Walls.p(gridX, gridY, self)
+		if type.ceiling:
+			%Ceilings.p(gridX, gridY, self)
+
 # Called when the node enters the scene tree for the first time.
 func _ready():
 	$Sprite2D.material = $Sprite2D.material.duplicate()
+	if type.snapToGrid:
+		snapToGridAndRegister()
 	
 func _process(delta):
 	if type.rotInterval:

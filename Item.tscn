@@ -4,9 +4,10 @@
 [ext_resource type="Shader" path="res://Outline.gdshader" id="1_ifmo8"]
 [ext_resource type="Texture2D" uid="uid://cg232q4ygjq8b" path="res://tiles.png" id="1_qxv04"]
 
-[sub_resource type="CircleShape2D" id="CircleShape2D_hvsvt"]
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_x2o0v"]
+size = Vector2(128, 96)
 
-[sub_resource type="ShaderMaterial" id="ShaderMaterial_bidxg"]
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_30lji"]
 shader = ExtResource("1_ifmo8")
 shader_parameter/color = Color(0.815686, 0.819608, 0.796078, 1)
 shader_parameter/width = 0.0
@@ -18,13 +19,15 @@ shader_parameter/add_margins = true
 atlas = ExtResource("1_qxv04")
 region = Rect2(406, 29, 63, 66)
 
-[node name="Item" type="Area2D" groups=["Items"]]
+[node name="Item" type="StaticBody2D" groups=["Items"]]
+collision_layer = 0
 script = ExtResource("1_3t73v")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
-shape = SubResource("CircleShape2D_hvsvt")
+position = Vector2(0, -48)
+shape = SubResource("RectangleShape2D_x2o0v")
 
 [node name="Sprite2D" type="Sprite2D" parent="."]
-material = SubResource("ShaderMaterial_bidxg")
+material = SubResource("ShaderMaterial_30lji")
 texture = SubResource("AtlasTexture_ccgmh")
 offset = Vector2(0, -33)

@@ -1,4 +1,4 @@
-[gd_scene load_steps=16 format=3 uid="uid://cb3icp3ox1m3k"]
+[gd_scene load_steps=17 format=3 uid="uid://cb3icp3ox1m3k"]
 
 [ext_resource type="TileSet" uid="uid://cat3g8vk3uxca" path="res://ground_tile_set.tres" id="1_xbrc4"]
 [ext_resource type="Script" path="res://Player.gd" id="2_jq1fc"]
@@ -12,6 +12,7 @@
 [ext_resource type="Script" path="res://Crafting.gd" id="9_x6lxk"]
 [ext_resource type="Script" path="res://Stats.gd" id="10_dt6v4"]
 [ext_resource type="PackedScene" uid="uid://dqux4yrt2qht5" path="res://StatBar.tscn" id="12_xieyx"]
+[ext_resource type="Script" path="res://GridManager.gd" id="13_2234k"]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_s0aak"]
 
@@ -180,6 +181,14 @@ visible = false
 z_index = 10
 texture = SubResource("AtlasTexture_regq1")
 script = ExtResource("8_7mnix")
+
+[node name="Walls" type="Node" parent="."]
+unique_name_in_owner = true
+script = ExtResource("13_2234k")
+
+[node name="Ceilings" type="Node" parent="."]
+unique_name_in_owner = true
+script = ExtResource("13_2234k")
 
 [connection signal="changed" from="GUI/Inventory" to="GUI/Crafts" method="_on_inventory_changed"]
 [connection signal="gui_input" from="GUI/Crafts" to="GUI/Crafts" method="_on_gui_input"]

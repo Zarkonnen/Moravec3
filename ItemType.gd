@@ -8,6 +8,9 @@ var use:Dictionary = {}
 var durability:int = 1
 var rotInterval:int = 0
 var rotInto:String
+var snapToGrid:bool = false
+var wall:bool = false
+var ceiling:bool = false
 
 func _init(name, texRect):
 	self.name = name
@@ -35,6 +38,9 @@ static func loadTypes():
 		it.durability = i.get("durability", 1)
 		it.rotInterval = i.get("rotInterval", 0)
 		it.rotInto = i.get("rotInto", "")
+		it.snapToGrid = i.get("snapToGrid", false)
+		it.wall = i.get("wall", false)
+		it.ceiling = i.get("ceiling", false)
 		if i.has("use"):
 			var uses:Dictionary = i.get("use")
 			for useK in uses.keys():
