@@ -29,6 +29,7 @@ func setNavTarget(to:Vector2, interact):
 
 func interact(it:Item):
 	if it.type.canTake and %Inventory.add(it.type, it.durability):
+		it.unregister()
 		it.queue_free()
 		return
 	if %Inventory.selectedItem() and it.type.use.has(%Inventory.selectedItem().name):
@@ -84,6 +85,7 @@ func _process(delta):
 							%DropItem.createItem(turnInto, position, turnInto.durability)
 				elif useType.destroy:
 					if using:
+						using.unregister()
 						using.queue_free()
 					else:
 						%Inventory.remove(usingInInventory)

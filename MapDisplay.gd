@@ -1,13 +1,24 @@
 extends TileMap
 
 var highlit = null
-var ignoreUntilReleased = false
-var ignoreTimer = 0
+var ignoreNextClick = false
 
-const INTERACTION_RANGE = 40
+var mouseDown = false
+
+const INTERACTION_RANGE = 60
+const INTERACTION_RANGE_WALL = 140
 const INTERACTION_SEARCH_RANGE = 300
 
 func _process(delta):
+	var mouseClicked = false
+	if Input.is_mouse_button_pressed(1):
+		mouseDown = not ignoreNextClick
+	else:
+		if mouseDown:
+			if not ignoreNextClick:
+				mouseClicked = true
+		ignoreNextClick = false
+		mouseDown = false
 	var mp = get_viewport().get_mouse_position()
 	if get_tree().get_nodes_in_group("MoveOpaque").any(func(n): return n.get_rect().has_point(mp)):
 		return
@@ -26,31 +37,34 @@ func _process(delta):
 	if closest:
 		closest.highlight = true
 		highlit = closest
-	ignoreTimer -= delta
-	if Input.is_mouse_button_pressed(1) and ignoreTimer <= 0:
-		var doMove = true
-		if closest:
-			var distance = closest.position - %Player.position
-			if distance.length() > INTERACTION_RANGE:
-				mp -= distance.normalized() * INTERACTION_RANGE / 2
-			else:
-				%Player.interact(closest)
-				doMove = false
-				ignoreUntilReleased = true
-		elif %DropItem.toDrop:
-			var distance = mp - %Player.position
-			if distance.length() > INTERACTION_RANGE:
-				%Player.dropAt = mp
-				%DropItem.visible = false
-				mp -= distance.normalized() * INTERACTION_RANGE / 2
-			else:
-				%DropItem.doDrop()
-				doMove = false
-				ignoreUntilReleased = true
-		if doMove and tileAt(mp) and not ignoreUntilReleased:
+	if mouseClicked or mouseDown:
+		var doMove = not closest
+		if mouseClicked:
+			if closest:
+				var distance = closest.position - %Player.position
+				var irange = INTERACTION_RANGE_WALL if closest.type.wall else INTERACTION_RANGE
+				if distance.length() > irange:
+					mp -= distance.normalized() * (irange - 20)
+					doMove = true
+				else:
+					%Player.interact(closest)
+					doMove = false
+			elif %DropItem.toDrop:
+				var irange = INTERACTION_RANGE_WALL if %DropItem.toDrop.wall else INTERACTION_RANGE
+				var distance = mp - %Player.position
+				if distance.length() > irange:
+					%Player.dropAt = mp
+					%DropItem.visible = false
+					mp -= distance.normalized() * (irange - 20)
+					doMove = true
+				else:
+					%DropItem.doDrop(mp)
+					doMove = false
+		if doMove and tileAt(mp):
 			%Player.setNavTarget(mp, closest)
-	else:
-		ignoreUntilReleased = false
+		if doMove:
+			%Player.using = null
+			%Player.crafting = null
 	if Input.is_action_pressed("use"):
 		# Find something to interact with.
 		var target = Util.most(get_tree().get_nodes_in_group("Items").filter(inSearchRange).filter(canInteract), playerCloseness)

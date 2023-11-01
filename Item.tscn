@@ -7,7 +7,7 @@
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_x2o0v"]
 size = Vector2(128, 96)
 
-[sub_resource type="ShaderMaterial" id="ShaderMaterial_30lji"]
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_7t1br"]
 shader = ExtResource("1_ifmo8")
 shader_parameter/color = Color(0.815686, 0.819608, 0.796078, 1)
 shader_parameter/width = 0.0
@@ -28,6 +28,6 @@ position = Vector2(0, -48)
 shape = SubResource("RectangleShape2D_x2o0v")
 
 [node name="Sprite2D" type="Sprite2D" parent="."]
-material = SubResource("ShaderMaterial_30lji")
+material = SubResource("ShaderMaterial_7t1br")
 texture = SubResource("AtlasTexture_ccgmh")
 offset = Vector2(0, -33)

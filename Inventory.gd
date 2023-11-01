@@ -95,7 +95,7 @@ func updateSlot(i):
 	var islot = get_tree().get_nodes_in_group("InventorySlots")[i]
 	var c = contents[i]
 	if c[0]:
-		islot.get_node("Texture").texture.region = c[0].texRect
+		islot.get_node("Texture").setImage(c[0].texRect)
 		islot.get_node("Texture").visible = true
 		islot.tooltip_text = c[0].name
 		if c[2] < c[0].durability:

@@ -49,14 +49,15 @@ offset = Vector2(0, -20)
 [node name="Navigation" type="NavigationAgent2D" parent="Player"]
 
 [node name="Item" parent="." instance=ExtResource("5_ie426")]
-position = Vector2(102, 262)
+position = Vector2(192, 300)
 typeName = "chalk"
 
 [node name="Item2" parent="." instance=ExtResource("5_ie426")]
 position = Vector2(322, 122)
 
 [node name="Item3" parent="." instance=ExtResource("5_ie426")]
-position = Vector2(260, 162)
+position = Vector2(64, 384)
+typeName = "ceiling"
 
 [node name="Item4" parent="." instance=ExtResource("5_ie426")]
 position = Vector2(704, 351)
@@ -162,6 +163,7 @@ offset_top = 10.0
 offset_right = 522.0
 offset_bottom = 522.0
 scale = Vector2(0.11, 0.11)
+tooltip_text = "Crafting..."
 texture = ExtResource("8_fuffq")
 script = ExtResource("9_x6lxk")
 

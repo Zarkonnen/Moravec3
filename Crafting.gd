@@ -21,7 +21,8 @@ func showCrafting():
 		outSlot.position.x = x
 		outSlot.position.y = y
 		outSlot.get_node("Texture").texture = outSlot.get_node("Texture").texture.duplicate()
-		outSlot.get_node("Texture").texture.region = r.output.texRect
+		outSlot.get_node("Texture").setImage(r.output.texRect)
+		outSlot.tooltip_text = "Craft " + r.output.name
 		$/root/Node2D/GUI.add_child(outSlot)
 		var x2 = x + 70
 		for i in r.inputs:
@@ -31,8 +32,9 @@ func showCrafting():
 			x2 += 70
 			inSlot.get_node("Border").color = Color("d0d1cb") if %Inventory.has(i[0], i[1]) else Color("d53846")
 			inSlot.get_node("Texture").texture = inSlot.get_node("Texture").texture.duplicate()
-			inSlot.get_node("Texture").texture.region = i[0].texRect
+			inSlot.get_node("Texture").setImage(i[0].texRect)
 			inSlot.get_node("Quantity").text = "" if i[1] < 2 else str(i[1])
+			inSlot.tooltip_text = str(i[1]) + " " + i[0].name
 			$/root/Node2D/GUI.add_child(inSlot)
 		y += 70
 	show = true

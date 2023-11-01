@@ -8,7 +8,7 @@ var type:ItemType = ItemType.ofName("bush"):
 		type = t
 		set_collision_layer_value(1, t.wall)
 		$Sprite2D.z_index = 3 if t.ceiling else 0
-		if t.snapToGrid:
+		if t.snapToGrid and Engine.is_editor_hint():
 			snapToGridAndRegister()
 		if not texCopied:
 			$Sprite2D.texture = $Sprite2D.texture.duplicate()
@@ -40,16 +40,29 @@ func get_rect():
 		sr.size.y
 	)
 
+func gridX():
+	return int(floor(position.x / 128))
+
+func gridY():
+	return int(floor(position.y / 96)) - 1
+
+func unregister():
+	if type.snapToGrid:
+		if type.wall and $/root/Node2D/Walls.g(gridX(), gridY()) == self:
+			$/root/Node2D/Walls.p(gridX(), gridY(), null)
+		if type.ceiling and $/root/Node2D/Ceilings.g(gridX(), gridY()) == self:
+			$/root/Node2D/Ceilings.p(gridX(), gridY(), null)
+
 func snapToGridAndRegister():
-	var gridX = int(floor(position.x))
-	var gridY = int(floor(position.y))
-	position.x = gridX * 128
-	position.y = gridY * 96
+	var gridX = gridX()
+	var gridY = gridY()
+	position.x = gridX * 128 + 64
+	position.y = gridY * 96 + 96
 	if not Engine.is_editor_hint():
 		if type.wall:
-			%Walls.p(gridX, gridY, self)
+			$/root/Node2D/Walls.p(gridX, gridY, self)
 		if type.ceiling:
-			%Ceilings.p(gridX, gridY, self)
+			$/root/Node2D/Ceilings.p(gridX, gridY, self)
 
 # Called when the node enters the scene tree for the first time.
 func _ready():

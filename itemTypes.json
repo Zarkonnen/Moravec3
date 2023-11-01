@@ -76,4 +76,18 @@
 		"x": 58, "y": 338, "w": 50, "h": 35,
 		"canTake": true, "stacking": 10
 	},
+	{
+		"name": "wall",
+		"x": 512, "y": 144, "w": 128, "h": 144,
+		"canTake": true,
+		"wall": true,
+		"snapToGrid": true
+	},
+	{
+		"name": "ceiling",
+		"x": 512, "y": 144, "w": 128, "h": 96,
+		"canTake": true,
+		"ceiling": true,
+		"snapToGrid": true
+	},
 ]

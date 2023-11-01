@@ -1,7 +1,8 @@
-[gd_scene load_steps=4 format=3 uid="uid://cq7lggbfun7va"]
+[gd_scene load_steps=5 format=3 uid="uid://cq7lggbfun7va"]
 
 [ext_resource type="Script" path="res://InventorySlot.gd" id="1_bwliq"]
 [ext_resource type="Texture2D" uid="uid://cg232q4ygjq8b" path="res://tiles.png" id="1_y10wu"]
+[ext_resource type="Script" path="res://ScalingImage.gd" id="3_rm1ge"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_28fyw"]
 atlas = ExtResource("1_y10wu")
@@ -43,7 +44,8 @@ offset_top = 10.0
 offset_right = 50.0
 offset_bottom = 52.0
 texture = SubResource("AtlasTexture_28fyw")
-stretch_mode = 3
+expand_mode = 2
+script = ExtResource("3_rm1ge")
 
 [node name="Durability" type="ColorRect" parent="."]
 visible = false
