@@ -10,6 +10,7 @@ var rotInterval:int = 0
 var rotInto:String
 var snapToGrid:bool = false
 var wall:bool = false
+var door:bool = false
 var ceiling:bool = false
 var wallSupportRange = 2
 var spawnOnCollapse:Array = []
@@ -42,6 +43,7 @@ static func loadTypes():
 		it.rotInto = i.get("rotInto", "")
 		it.snapToGrid = i.get("snapToGrid", false)
 		it.wall = i.get("wall", false)
+		it.door = i.get("door", false)
 		it.ceiling = i.get("ceiling", false)
 		it.wallSupportRange = i.get("wallSupportRange", 2)
 		it.spawnOnCollapse = i.get("spawnOnCollapse", [])
@@ -51,6 +53,7 @@ static func loadTypes():
 				var useV = uses[useK]
 				var u = Use.new()
 				u.tool = useK
+				u.name = useV["name"]
 				u.time = useV.get("time", 1)
 				u.turnInto = useV.get("turnInto", "")
 				u.destroy = useV.get("destroy", false)
@@ -62,6 +65,7 @@ static func loadTypes():
 	types = ts
 
 class Use:
+	var name:String = ""
 	var tool:String = "any"
 	var time = 1
 	var turnInto:String = ""

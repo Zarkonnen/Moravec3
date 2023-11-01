@@ -7,9 +7,10 @@
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_x2o0v"]
 size = Vector2(128, 96)
 
-[sub_resource type="ShaderMaterial" id="ShaderMaterial_7t1br"]
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_8dq7b"]
 shader = ExtResource("2_o8jvu")
 shader_parameter/strength = 0.0
+shader_parameter/a = 1.0
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_ccgmh"]
 atlas = ExtResource("1_qxv04")
@@ -24,6 +25,13 @@ position = Vector2(0, -48)
 shape = SubResource("RectangleShape2D_x2o0v")
 
 [node name="Sprite2D" type="Sprite2D" parent="."]
-material = SubResource("ShaderMaterial_7t1br")
+material = SubResource("ShaderMaterial_8dq7b")
 texture = SubResource("AtlasTexture_ccgmh")
 offset = Vector2(0, -33)
+
+[node name="Label" type="Label" parent="."]
+offset_left = -64.0
+offset_top = -96.0
+offset_right = 64.0
+offset_bottom = -70.0
+horizontal_alignment = 1

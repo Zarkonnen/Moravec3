@@ -32,24 +32,15 @@ func _process(delta):
 				closest = it
 				bestDist = dist
 	if highlit and is_instance_valid(highlit):
-		highlit.highlight = false
+		highlit.highlight = ""
 		highlit = null
-	if closest:
-		closest.highlight = true
+	if closest and %Player.interactionName(closest):
+		closest.highlight = %Player.interactionName(closest)
 		highlit = closest
 	if mouseClicked or mouseDown:
 		var doMove = not closest
 		if mouseClicked:
-			if closest:
-				var distance = closest.position - %Player.position
-				var irange = INTERACTION_RANGE_WALL if closest.type.wall else INTERACTION_RANGE
-				if distance.length() > irange:
-					mp -= distance.normalized() * (irange - 20)
-					doMove = true
-				else:
-					%Player.interact(closest)
-					doMove = false
-			elif %DropItem.toDrop:
+			if %DropItem.toDrop:
 				var irange = INTERACTION_RANGE_WALL if %DropItem.toDrop.wall else INTERACTION_RANGE
 				var distance = mp - %Player.position
 				if distance.length() > irange:
@@ -60,6 +51,16 @@ func _process(delta):
 				else:
 					%DropItem.doDrop(mp)
 					doMove = false
+			elif closest:
+				var distance = closest.position - %Player.position
+				var irange = INTERACTION_RANGE_WALL if closest.type.wall else INTERACTION_RANGE
+				if distance.length() > irange:
+					mp -= distance.normalized() * (irange - 20)
+					doMove = true
+				else:
+					%Player.interact(closest)
+					doMove = false
+			
 		if doMove and tileAt(mp):
 			%Player.setNavTarget(mp, closest)
 		if doMove:

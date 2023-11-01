@@ -63,5 +63,6 @@ func doDrop(dropAt):
 	if removed:
 		createItem(toDrop, dropAt, removed[1])
 		toDrop = null
+		%World.ignoreNextClick = true
 	else:
 		visible = true

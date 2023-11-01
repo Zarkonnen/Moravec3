@@ -4,6 +4,7 @@
 		"x": 406, "y": 29, "w": 63, "h": 66,
 		"use": {
 			"any": {
+				"name": "Pick berries",
 				"time": 3,
 				"turnInto": "emptyBush",
 				"spawn": [["berries", 3]]
@@ -29,6 +30,7 @@
 		"rotInterval": 1,
 		"use": {
 			"consume": {
+				"name": "Eat berries",
 				"time": 1,
 				"destroy": true,
 				"stats": {"Food": 10}
@@ -51,6 +53,7 @@
 		"x": 406, "y": 29, "w": 63, "h": 66,
 		"use": {
 			"antler knife": {
+				"name": "Harvest tree",
 				"time": 3,
 				"toolDurability": -5,
 				"destroy": true,
@@ -81,12 +84,13 @@
 		"x": 512, "y": 144, "w": 128, "h": 144,
 		"canTake": true,
 		"wall": true,
-		"snapToGrid": true
+		"snapToGrid": true,
+		"door": true
 	},
 	{
 		"name": "ceiling",
 		"x": 640, "y": 144, "w": 128, "h": 144,
-		"canTake": true,
+		"canTake": false,
 		"ceiling": true,
 		"snapToGrid": true,
 		"spawnOnCollapse": [["chalk", 1]]

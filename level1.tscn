@@ -1,4 +1,4 @@
-[gd_scene load_steps=17 format=3 uid="uid://cb3icp3ox1m3k"]
+[gd_scene load_steps=18 format=3 uid="uid://cb3icp3ox1m3k"]
 
 [ext_resource type="TileSet" uid="uid://cat3g8vk3uxca" path="res://ground_tile_set.tres" id="1_xbrc4"]
 [ext_resource type="Script" path="res://Player.gd" id="2_jq1fc"]
@@ -13,6 +13,7 @@
 [ext_resource type="Script" path="res://Stats.gd" id="10_dt6v4"]
 [ext_resource type="PackedScene" uid="uid://dqux4yrt2qht5" path="res://StatBar.tscn" id="12_xieyx"]
 [ext_resource type="Script" path="res://GridManager.gd" id="13_2234k"]
+[ext_resource type="Script" path="res://EnclosureDebug.gd" id="14_c4t04"]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_s0aak"]
 
@@ -29,7 +30,7 @@ y_sort_enabled = true
 
 [node name="Player" type="RigidBody2D" parent="."]
 unique_name_in_owner = true
-position = Vector2(157, 157)
+position = Vector2(296, 172)
 gravity_scale = 0.0
 lock_rotation = true
 script = ExtResource("2_jq1fc")
@@ -49,15 +50,47 @@ offset = Vector2(0, -20)
 [node name="Navigation" type="NavigationAgent2D" parent="Player"]
 
 [node name="Item" parent="." instance=ExtResource("5_ie426")]
-position = Vector2(192, 300)
+position = Vector2(558, 68)
 typeName = "chalk"
 
 [node name="Item2" parent="." instance=ExtResource("5_ie426")]
 position = Vector2(322, 122)
 
 [node name="Item3" parent="." instance=ExtResource("5_ie426")]
+position = Vector2(-64, 288)
+typeName = "wall"
+
+[node name="Item6" parent="." instance=ExtResource("5_ie426")]
+position = Vector2(64, 192)
+typeName = "wall"
+
+[node name="Item8" parent="." instance=ExtResource("5_ie426")]
+position = Vector2(192, 288)
+typeName = "wall"
+
+[node name="Item9" parent="." instance=ExtResource("5_ie426")]
+position = Vector2(192, 480)
+typeName = "wall"
+
+[node name="Item11" parent="." instance=ExtResource("5_ie426")]
 position = Vector2(64, 384)
-typeName = "ceiling"
+typeName = "wall"
+
+[node name="Item14" parent="." instance=ExtResource("5_ie426")]
+position = Vector2(-64, 384)
+typeName = "wall"
+
+[node name="Item15" parent="." instance=ExtResource("5_ie426")]
+position = Vector2(192, 384)
+typeName = "wall"
+
+[node name="Item12" parent="." instance=ExtResource("5_ie426")]
+position = Vector2(64, 576)
+typeName = "wall"
+
+[node name="Item13" parent="." instance=ExtResource("5_ie426")]
+position = Vector2(-64, 480)
+typeName = "wall"
 
 [node name="Item4" parent="." instance=ExtResource("5_ie426")]
 position = Vector2(704, 351)
@@ -192,10 +225,10 @@ script = ExtResource("13_2234k")
 unique_name_in_owner = true
 script = ExtResource("13_2234k")
 
-[node name="Item5" parent="." instance=ExtResource("5_ie426")]
-position = Vector2(-64, 192)
-collision_layer = 1
-typeName = "wall"
+[node name="EnclosureDebug" type="Node2D" parent="."]
+unique_name_in_owner = true
+z_index = 20
+script = ExtResource("14_c4t04")
 
 [connection signal="changed" from="GUI/Inventory" to="GUI/Crafts" method="_on_inventory_changed"]
 [connection signal="gui_input" from="GUI/Crafts" to="GUI/Crafts" method="_on_gui_input"]

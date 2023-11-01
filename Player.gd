@@ -27,6 +27,15 @@ func setNavTarget(to:Vector2, interact):
 	interactWith = interact
 	using = null
 
+func interactionName(it:Item):
+	if it.type.canTake:
+		return "Pick up " + it.type.name
+	if %Inventory.selectedItem() and it.type.use.has(%Inventory.selectedItem().name):
+		return it.type.use.get(%Inventory.selectedItem().name).name
+	if it.type.use.has("any"):
+		return it.type.use.get("any").name
+	return ""
+
 func interact(it:Item):
 	if it.type.canTake and %Inventory.add(it.type, it.durability):
 		it.unregister()

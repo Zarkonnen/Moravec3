@@ -6,7 +6,8 @@ var texCopied = false
 var type:ItemType = ItemType.ofName("bush"):
 	set(t):
 		type = t
-		set_collision_layer_value(1, t.wall)
+		$Label.position.y = -t.texRect.size.y - 30
+		set_collision_layer_value(1, t.wall and not t.door)
 		$Sprite2D.z_index = 3 if t.ceiling else 0
 		if t.snapToGrid and Engine.is_editor_hint():
 			snapToGridAndRegister()
@@ -26,10 +27,11 @@ var rotTimeout = 0
 			type = t
 		typeName = value
 
-@export var highlight = false:
+@export var highlight:String = "":
 	set(value):
 		$Sprite2D.material.set_shader_parameter("strength", 0.2 if value else 0.0)
 		highlight = value
+		$Label.text = value
 
 func get_rect():
 	var sr:Rect2 = $Sprite2D.get_rect()
@@ -50,6 +52,7 @@ func unregister():
 	if type.snapToGrid:
 		if type.wall and $/root/Node2D/Walls.g(gridX(), gridY()) == self:
 			$/root/Node2D/Walls.p(gridX(), gridY(), null)
+			$/root/Node2D/Walls.wallRemoved(gridX(), gridY())
 		if type.ceiling and $/root/Node2D/Ceilings.g(gridX(), gridY()) == self:
 			$/root/Node2D/Ceilings.p(gridX(), gridY(), null)
 
@@ -61,16 +64,22 @@ func snapToGridAndRegister():
 	if not Engine.is_editor_hint():
 		if type.wall:
 			$/root/Node2D/Walls.p(gridX, gridY, self)
+			$/root/Node2D/Walls.wallAdded(gridX, gridY)
 		if type.ceiling:
 			$/root/Node2D/Ceilings.p(gridX, gridY, self)
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
 	$Sprite2D.material = $Sprite2D.material.duplicate()
+	$Label.position.y = -type.texRect.size.y - 30
 	if type.snapToGrid:
 		snapToGridAndRegister()
 	
 func _process(delta):
+	if type.wall and get_node("../Player") and abs(get_node("../Player").position.x - position.x) <= 64 and get_node("../Player").position.y < position.y and get_node("../Player").position.y > position.y - 96 * 2:
+		$Sprite2D.material.set_shader_parameter("a", 0.35)
+	else:
+		$Sprite2D.material.set_shader_parameter("a", 1)
 	if type.rotInterval:
 		rotTimeout -= delta
 		if rotTimeout <= 0:
