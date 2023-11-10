@@ -15,6 +15,11 @@ var toDrop:ItemType = null:
 		else:
 			visible = false
 
+var quantity:int = 1:
+	set(value):
+		quantity = value
+		$Quantity.text = "" if quantity < 2 else str(quantity)
+
 func _process(delta):
 	if visible:
 		position = get_viewport().get_mouse_position() - Vector2(get_viewport().size) / 2 + %Player.position + %Camera.offset
@@ -40,12 +45,17 @@ func _canPlace(position):
 	else:
 		return false
 
-func createItem(type:ItemType, at, durability):
-	#if _canPlace(at):
+func createItem(type:ItemType, at, durability, quantity=1):
+	if type.snapToGrid:
+		if type.wall and %Walls.g(Item.xToGrid(at.x), Item.yToGrid(at.y)):
+			return
+		if type.ceiling and %Ceilings.g(Item.xToGrid(at.x), Item.yToGrid(at.y)):
+			return
 	var item:Item = itemScene.instantiate()
 	item.position = at
 	item.type = type
 	item.durability = durability
+	item.quantity = quantity
 	$/root/Node2D.add_child(item)
 	if type.snapToGrid:
 		item.snapToGridAndRegister()
@@ -57,11 +67,11 @@ func doDrop(dropAt):
 		visible = true
 	else:
 		return
-	var removed = %Inventory.remove(toDrop)
+	var removed = %Inventory.remove(toDrop, quantity)
 	if toDrop.snapToGrid:
 		dropAt.y += 96
 	if removed:
-		createItem(toDrop, dropAt, removed[1])
+		createItem(toDrop, dropAt, removed[1], quantity)
 		toDrop = null
 		%World.ignoreNextClick = true
 	else:

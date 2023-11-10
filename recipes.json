@@ -3,5 +3,10 @@
         "time": 5,
         "inputs": [["antler", 1]],
         "output": "antler knife"
+    },
+    {
+        "time": 1,
+        "inputs": [["chalk", 1]],
+        "output": "wall"
     }
 ]

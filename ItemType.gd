@@ -2,12 +2,14 @@ class_name ItemType
 
 var name:String
 var texRect:Rect2
+var texRect2:Rect2
 var canTake:bool = false
 var stacking:int = 1
 var use:Dictionary = {}
 var durability:int = 1
 var rotInterval:int = 0
 var rotInto:String
+var containerSize = 0
 var snapToGrid:bool = false
 var wall:bool = false
 var door:bool = false
@@ -36,11 +38,14 @@ static func loadTypes():
 	var ts = []
 	for i in l:
 		var it = ItemType.new(i["name"], Rect2(i["x"], i["y"], i["w"], i["h"]))
+		if i.has("x2"):
+			it.texRect2 = Rect2(i["x2"], i["y2"], i["w2"], i["h2"])
 		it.canTake = i.get("canTake", false)
 		it.stacking = i.get("stacking", 1)
 		it.durability = i.get("durability", 1)
 		it.rotInterval = i.get("rotInterval", 0)
 		it.rotInto = i.get("rotInto", "")
+		it.containerSize = i.get("containerSize", 0)
 		it.snapToGrid = i.get("snapToGrid", false)
 		it.wall = i.get("wall", false)
 		it.door = i.get("door", false)

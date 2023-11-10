@@ -7,4 +7,4 @@ func _on_gui_input(event):
 		if event.button_index == 1:
 			%Inventory.selectSlot(index)
 		if event.button_index == 2:
-			%Inventory.dropSlot(index)
+			%Inventory.dropSlot(index, not Input.is_action_pressed("split"))

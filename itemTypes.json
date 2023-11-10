@@ -80,16 +80,30 @@
 		"canTake": true, "stacking": 10
 	},
 	{
-		"name": "wall",
-		"x": 512, "y": 144, "w": 128, "h": 144,
+		"name": "basket",
+		"x": 169, "y": 629, "w": 55, "h": 43,
 		"canTake": true,
+		"containerSize": 4
+	},
+	{
+		"name": "wall",
+		"x": 1148, "y": 25, "w": 140, "h": 174,
+		"canTake": false,
+		"wall": true,
+		"snapToGrid": true,
+	},
+	{
+		"name": "door",
+		"x": 1148, "y": 25, "w": 140, "h": 174,
+		"x2": 1826, "y2": 690, "w2": 58, "h2": 174,
+		"canTake": false,
 		"wall": true,
 		"snapToGrid": true,
 		"door": true
 	},
 	{
 		"name": "ceiling",
-		"x": 640, "y": 144, "w": 128, "h": 144,
+		"x": 1393, "y": 89, "w": 156, "h": 174,
 		"canTake": false,
 		"ceiling": true,
 		"snapToGrid": true,

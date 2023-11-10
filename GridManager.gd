@@ -1,4 +1,5 @@
 extends Node
+class_name GridManager
 
 var neg:Array = []
 var pos:Array = []
@@ -97,6 +98,7 @@ class Enclosure:
 	static var enclosureCounter = 0
 	var tiles:Array = []
 	var number = 0
+	var hasCeilings:bool = false
 	func _init(tiles):
 		self.tiles = tiles
 		enclosureCounter += 1
@@ -108,7 +110,7 @@ func getEnclosure(x, y, except=[]) -> Enclosure:
 	var xy = [x, y]
 	return Util.first(enclosures, func(e): return e not in except and xy in e.tiles)
 
-func wallAdded(x, y):
+func wallAdded(x, y, ceilings):
 	%EnclosureDebug.queue_redraw()
 	#print("wa " + str(x) + ", " + str(y))
 	# In enclosure:
@@ -127,12 +129,14 @@ func wallAdded(x, y):
 				if enc:
 					# Update existing enclosure.
 					enc.tiles = fill
+					_updateCeilings(enc, ceilings)
 					enc = null
 				elif not encs.any(func(e): return start in e.tiles):
 					# We need a new enclosure.
 					var newEnc = Enclosure.new(fill)
 					enclosures.append(newEnc)
 					encs.append(newEnc)
+					_updateCeilings(newEnc, ceilings)
 		if enc:
 			# Never got used, so delete it.
 			enclosures.erase(enc)
@@ -145,9 +149,11 @@ func wallAdded(x, y):
 			#print(fill)
 			if fill:
 				#print("new enc")
-				enclosures.append(Enclosure.new(fill))
+				var newEnc = Enclosure.new(fill)
+				enclosures.append(newEnc)
+				_updateCeilings(newEnc, ceilings)
 	
-func wallRemoved(x, y):
+func wallRemoved(x, y, ceilings):
 	%EnclosureDebug.queue_redraw()
 	#print("wr " + str(x) + ", " + str(y))
 	var enc = getEnclosure(x, y)
@@ -176,7 +182,20 @@ func wallRemoved(x, y):
 					#print("updated")
 					enc.tiles = fill
 					encs.append(enc)
+					_updateCeilings(enc, ceilings)
 					
+
+func ceilingAdded(x, y, ceilings):
+	%EnclosureDebug.queue_redraw()
+	var enc = getEnclosure(x, y)
+	if enc:
+		_updateCeilings(enc, ceilings)
+		
+func ceilingRemoved(x, y, ceilings):
+	%EnclosureDebug.queue_redraw()
+	var enc = getEnclosure(x, y)
+	if enc:
+		enc.hasCeilings = false
 
 func _enclosureFill(x, y, maxDist=10):
 	# Flood fill, starting at x, y. If we reach a tile that is more than maxdist away, return null.
@@ -212,3 +231,6 @@ func _enclosureFill(x, y, maxDist=10):
 				queue.append([t[0], t[1]+1])
 	return reached
 
+func _updateCeilings(enc:Enclosure, ceilings):
+	enc.hasCeilings = enc.tiles.all(func(t): return ceilings.g(t[0], t[1]))
+	

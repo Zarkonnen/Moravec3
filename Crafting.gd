@@ -23,6 +23,7 @@ func showCrafting():
 		outSlot.get_node("Texture").texture = outSlot.get_node("Texture").texture.duplicate()
 		outSlot.get_node("Texture").setImage(r.output.texRect)
 		outSlot.tooltip_text = "Craft " + r.output.name
+		outSlot.get_node("Border").color = Color("7892ab") if canCraft(r) else Color("d53846")
 		$/root/Node2D/GUI.add_child(outSlot)
 		var x2 = x + 70
 		for i in r.inputs:
@@ -46,10 +47,20 @@ func hideCrafting():
 		n.queue_free()
 	show = false
 
-func craft(r:Recipe):
+func canCraft(r:Recipe):
 	for i in r.inputs:
 		if not %Inventory.has(i[0], i[1]):
-			return
+			return false
+	if r.output.snapToGrid:
+		if r.output.wall and %Walls.g(Item.xToGrid(%Player.position.x), Item.yToGrid(%Player.position.y)):
+			return false
+		if r.output.ceiling and %Ceilings.g(Item.xToGrid(%Player.position.x), Item.yToGrid(%Player.position.y)):
+			return false
+	return true
+
+func craft(r:Recipe):
+	if not canCraft(r):
+		return
 	%Player.craft(r)
 	hideCrafting()
 

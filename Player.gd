@@ -1,4 +1,5 @@
 extends RigidBody2D
+class_name Player
 
 @export var speed = 300.0
 
@@ -28,7 +29,15 @@ func setNavTarget(to:Vector2, interact):
 	using = null
 
 func interactionName(it:Item):
-	if it.type.canTake:
+	var iname = mainInteractionName(it)
+	if it.type.containerSize > 0:
+		if iname.length() > 0:
+			iname += "\n"
+		iname += "Right-click to open"
+	return iname
+
+func mainInteractionName(it:Item):
+	if it.type.canTake and it.contents.isEmpty():
 		return "Pick up " + it.type.name
 	if %Inventory.selectedItem() and it.type.use.has(%Inventory.selectedItem().name):
 		return it.type.use.get(%Inventory.selectedItem().name).name
@@ -37,12 +46,14 @@ func interactionName(it:Item):
 	return ""
 
 func interact(it:Item):
-	if it.type.canTake and %Inventory.add(it.type, it.durability):
-		it.unregister()
-		if it.type.wall or it.type.ceiling:
-			%Walls.collapseCeilings(it.gridX(), it.gridY(), %Ceilings)
-		it.queue_free()
-		return
+	if it.type.canTake:
+		it.quantity -= %Inventory.add(it.type, it.durability, it.quantity)
+		if it.quantity <= 0:
+			it.unregister()
+			if it.type.wall or it.type.ceiling:
+				%Walls.collapseCeilings(it.gridX(), it.gridY(), %Ceilings)
+			it.queue_free()
+			return
 	if %Inventory.selectedItem() and it.type.use.has(%Inventory.selectedItem().name):
 		use(it, it.type.use.get(%Inventory.selectedItem().name))
 		return
@@ -107,6 +118,12 @@ func _process(delta):
 			crafting = null
 	else:
 		%UseProgress.visible = false
+
+func gridX():
+	return int(floor(position.x / 128))
+
+func gridY():
+	return int(floor(position.y / 96)) - 1
 
 func _physics_process(delta):
 	var mv = Vector2(0, 0)
