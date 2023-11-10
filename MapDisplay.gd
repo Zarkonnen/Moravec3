@@ -20,7 +20,7 @@ func _process(delta):
 		ignoreNextClick = false
 		mouseDown = false
 	var mp = get_viewport().get_mouse_position()
-	if get_tree().get_nodes_in_group("MoveOpaque").any(func(n): return n.get_rect().has_point(mp)):
+	if get_tree().get_nodes_in_group("MoveOpaque").any(func(n): return n.visible and n.get_rect().has_point(mp)):
 		return
 	if Input.is_mouse_button_pressed(2):
 		%DropItem.toDrop = null
@@ -49,11 +49,9 @@ func _process(delta):
 					%Player.dropAt = mp
 					%DropItem.visible = false
 					mp -= distance.normalized() * (irange - 20)
-					print("move and drop")
 					doMove = true
 				else:
 					%DropItem.doDrop(mp)
-					print("drop")
 					doMove = false
 			elif closest:
 				var distance = closest.position - %Player.position
@@ -69,6 +67,9 @@ func _process(delta):
 		if doMove:
 			%Player.using = null
 			%Player.crafting = null
+			if %ContainerContents.container:
+				%ContainerContents.container = null
+				%Inventory.updateAllSlots()
 	if Input.is_action_pressed("use"):
 		# Find something to interact with.
 		var target = Util.most(get_tree().get_nodes_in_group("Items").filter(inSearchRange).filter(canInteract), playerCloseness)

@@ -1,4 +1,4 @@
-[gd_scene load_steps=18 format=3 uid="uid://cb3icp3ox1m3k"]
+[gd_scene load_steps=20 format=3 uid="uid://cb3icp3ox1m3k"]
 
 [ext_resource type="TileSet" uid="uid://cat3g8vk3uxca" path="res://ground_tile_set.tres" id="1_xbrc4"]
 [ext_resource type="Script" path="res://Player.gd" id="2_jq1fc"]
@@ -11,7 +11,9 @@
 [ext_resource type="Texture2D" uid="uid://dpw40sh7lxy63" path="res://crafting.png" id="8_fuffq"]
 [ext_resource type="Script" path="res://Crafting.gd" id="9_x6lxk"]
 [ext_resource type="Script" path="res://Stats.gd" id="10_dt6v4"]
+[ext_resource type="Script" path="res://ContainerContents.gd" id="12_osken"]
 [ext_resource type="PackedScene" uid="uid://dqux4yrt2qht5" path="res://StatBar.tscn" id="12_xieyx"]
+[ext_resource type="PackedScene" uid="uid://bumsyb8rwcl42" path="res://ContainerSlot.tscn" id="13_7dd51"]
 [ext_resource type="Script" path="res://GridManager.gd" id="13_2234k"]
 [ext_resource type="Script" path="res://EnclosureDebug.gd" id="14_c4t04"]
 
@@ -221,6 +223,169 @@ script = ExtResource("10_dt6v4")
 [node name="Food" parent="GUI/Stats" instance=ExtResource("12_xieyx")]
 offset_top = 40.0
 offset_bottom = 40.0
+
+[node name="ContainerContents" type="Control" parent="GUI"]
+unique_name_in_owner = true
+visible = false
+layout_mode = 3
+anchors_preset = 0
+script = ExtResource("12_osken")
+
+[node name="Label" type="Label" parent="GUI/ContainerContents"]
+layout_mode = 1
+anchors_preset = 1
+anchor_left = 1.0
+anchor_right = 1.0
+offset_left = 903.0
+offset_top = 8.0
+offset_right = 1050.0
+offset_bottom = 34.0
+grow_horizontal = 0
+text = "ContainerContents
+"
+
+[node name="ContainerSlot" parent="GUI/ContainerContents" instance=ExtResource("13_7dd51")]
+visible = false
+layout_mode = 1
+offset_left = 903.0
+offset_top = 40.0
+offset_right = 963.0
+offset_bottom = 100.0
+
+[node name="ContainerSlot2" parent="GUI/ContainerContents" instance=ExtResource("13_7dd51")]
+visible = false
+layout_mode = 1
+offset_left = 967.0
+offset_top = 40.0
+offset_right = 1027.0
+offset_bottom = 100.0
+index = 1
+
+[node name="ContainerSlot3" parent="GUI/ContainerContents" instance=ExtResource("13_7dd51")]
+visible = false
+layout_mode = 1
+offset_left = 1031.0
+offset_top = 40.0
+offset_right = 1091.0
+offset_bottom = 100.0
+index = 2
+
+[node name="ContainerSlot4" parent="GUI/ContainerContents" instance=ExtResource("13_7dd51")]
+visible = false
+layout_mode = 1
+offset_left = 1095.0
+offset_top = 40.0
+offset_right = 1155.0
+offset_bottom = 100.0
+index = 3
+
+[node name="ContainerSlot5" parent="GUI/ContainerContents" instance=ExtResource("13_7dd51")]
+visible = false
+layout_mode = 1
+offset_left = 903.0
+offset_top = 104.0
+offset_right = 963.0
+offset_bottom = 164.0
+index = 4
+
+[node name="ContainerSlot6" parent="GUI/ContainerContents" instance=ExtResource("13_7dd51")]
+visible = false
+layout_mode = 1
+offset_left = 967.0
+offset_top = 104.0
+offset_right = 1027.0
+offset_bottom = 164.0
+index = 5
+
+[node name="ContainerSlot7" parent="GUI/ContainerContents" instance=ExtResource("13_7dd51")]
+visible = false
+layout_mode = 1
+offset_left = 1031.0
+offset_top = 104.0
+offset_right = 1091.0
+offset_bottom = 164.0
+index = 6
+
+[node name="ContainerSlot8" parent="GUI/ContainerContents" instance=ExtResource("13_7dd51")]
+visible = false
+layout_mode = 1
+offset_left = 1095.0
+offset_top = 104.0
+offset_right = 1155.0
+offset_bottom = 164.0
+index = 7
+
+[node name="ContainerSlot9" parent="GUI/ContainerContents" instance=ExtResource("13_7dd51")]
+visible = false
+layout_mode = 1
+offset_left = 903.0
+offset_top = 168.0
+offset_right = 963.0
+offset_bottom = 228.0
+index = 8
+
+[node name="ContainerSlot10" parent="GUI/ContainerContents" instance=ExtResource("13_7dd51")]
+visible = false
+layout_mode = 1
+offset_left = 967.0
+offset_top = 168.0
+offset_right = 1027.0
+offset_bottom = 228.0
+index = 9
+
+[node name="ContainerSlot11" parent="GUI/ContainerContents" instance=ExtResource("13_7dd51")]
+visible = false
+layout_mode = 1
+offset_left = 1031.0
+offset_top = 168.0
+offset_right = 1091.0
+offset_bottom = 228.0
+index = 10
+
+[node name="ContainerSlot12" parent="GUI/ContainerContents" instance=ExtResource("13_7dd51")]
+visible = false
+layout_mode = 1
+offset_left = 1095.0
+offset_top = 168.0
+offset_right = 1155.0
+offset_bottom = 228.0
+index = 11
+
+[node name="ContainerSlot13" parent="GUI/ContainerContents" instance=ExtResource("13_7dd51")]
+visible = false
+layout_mode = 1
+offset_left = 903.0
+offset_top = 232.0
+offset_right = 963.0
+offset_bottom = 292.0
+index = 12
+
+[node name="ContainerSlot14" parent="GUI/ContainerContents" instance=ExtResource("13_7dd51")]
+visible = false
+layout_mode = 1
+offset_left = 967.0
+offset_top = 232.0
+offset_right = 1027.0
+offset_bottom = 292.0
+index = 13
+
+[node name="ContainerSlot15" parent="GUI/ContainerContents" instance=ExtResource("13_7dd51")]
+visible = false
+layout_mode = 1
+offset_left = 1031.0
+offset_top = 232.0
+offset_right = 1091.0
+offset_bottom = 292.0
+index = 14
+
+[node name="ContainerSlot16" parent="GUI/ContainerContents" instance=ExtResource("13_7dd51")]
+visible = false
+layout_mode = 1
+offset_left = 1095.0
+offset_top = 232.0
+offset_right = 1155.0
+offset_bottom = 292.0
+index = 15
 
 [node name="DropItem" type="Sprite2D" parent="."]
 unique_name_in_owner = true

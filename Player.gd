@@ -29,16 +29,10 @@ func setNavTarget(to:Vector2, interact):
 	using = null
 
 func interactionName(it:Item):
-	var iname = mainInteractionName(it)
-	if it.type.containerSize > 0:
-		if iname.length() > 0:
-			iname += "\n"
-		iname += "Right-click to open"
-	return iname
-
-func mainInteractionName(it:Item):
-	if it.type.canTake and it.contents.isEmpty():
+	if it.type.canTake and it.contents.isEmpty() and (it.type.containerSize == 0 or %ContainerContents.container == it):
 		return "Pick up " + it.type.name
+	if it.type.containerSize > 0:
+		return "Open " + it.type.name
 	if %Inventory.selectedItem() and it.type.use.has(%Inventory.selectedItem().name):
 		return it.type.use.get(%Inventory.selectedItem().name).name
 	if it.type.use.has("any"):
@@ -46,7 +40,7 @@ func mainInteractionName(it:Item):
 	return ""
 
 func interact(it:Item):
-	if it.type.canTake:
+	if it.type.canTake and it.contents.isEmpty() and (it.type.containerSize == 0 or %ContainerContents.container == it):
 		it.quantity -= %Inventory.add(it.type, it.durability, it.quantity)
 		if it.quantity <= 0:
 			it.unregister()
@@ -54,6 +48,10 @@ func interact(it:Item):
 				%Walls.collapseCeilings(it.gridX(), it.gridY(), %Ceilings)
 			it.queue_free()
 			return
+	if it.type.containerSize > 0:
+		%ContainerContents.container = it
+		%Inventory.updateAllSlots()
+		return
 	if %Inventory.selectedItem() and it.type.use.has(%Inventory.selectedItem().name):
 		use(it, it.type.use.get(%Inventory.selectedItem().name))
 		return
@@ -163,6 +161,9 @@ func _physics_process(delta):
 		using = null
 		navigate = false
 		crafting = null
+		if %ContainerContents.container:
+			%ContainerContents.container = null
+			%Inventory.updateAllSlots()
 		nextNavTarget = Vector2.ZERO
 	if not navigate:
 		mv = mv.normalized() * speed * Util.RATIO * delta

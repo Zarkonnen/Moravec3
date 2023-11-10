@@ -53,7 +53,10 @@ func updateSlot(i):
 	if c.type:
 		islot.get_node("Texture").setImage(c.type.texRect)
 		islot.get_node("Texture").visible = true
-		islot.tooltip_text = c.type.name + "\nLeft click to use/select\nRight click to drop\nShift-right click to split"
+		if %ContainerContents.container:
+			islot.tooltip_text = c.type.name + "\nLeft click to transfer\nShift-left click to split"
+		else:
+			islot.tooltip_text = c.type.name + "\nLeft click to use/select\nRight click to drop\nShift-right click to split"
 		if c.durability < c.type.durability:
 			islot.get_node("Durability").size.x = (46 * c.durability / c.type.durability)
 			islot.get_node("Durability").color = Color("d53846") if c.durability <= c.type.durability / 4 else Color("d0d1cb")
