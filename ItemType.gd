@@ -9,7 +9,8 @@ var use:Dictionary = {}
 var durability:int = 1
 var rotInterval:int = 0
 var rotInto:String
-var containerSize = 0
+var containerSize:int = 0
+var containerTimeMult:float = 1.0
 var snapToGrid:bool = false
 var wall:bool = false
 var door:bool = false
@@ -46,6 +47,7 @@ static func loadTypes():
 		it.rotInterval = i.get("rotInterval", 0)
 		it.rotInto = i.get("rotInto", "")
 		it.containerSize = i.get("containerSize", 0)
+		it.containerTimeMult = i.get("containerTimeMult", 1.0)
 		it.snapToGrid = i.get("snapToGrid", false)
 		it.wall = i.get("wall", false)
 		it.door = i.get("door", false)

@@ -120,6 +120,7 @@ func _process(delta):
 			elif player.gridX() == gridX() and player.gridY() == gridY():
 				alpha = 0.3
 	$Sprite2D.material.set_shader_parameter("a", alpha)
+	contents.update(delta * type.containerTimeMult)
 	if type.rotInterval:
 		rotTimeout -= delta
 		if rotTimeout <= 0:

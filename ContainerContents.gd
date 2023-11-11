@@ -13,6 +13,8 @@ func _process(delta):
 		container = null
 		update()
 		%Inventory.updateAllSlots()
+	else:
+		update()
 
 func transferToPlayer(i, all:bool):
 	var from:ItemContainer.Slot = container.contents.g(i)
@@ -60,6 +62,7 @@ func update():
 				islot.get_node("Texture").setImage(c.type.texRect)
 				islot.get_node("Texture").visible = true
 				islot.tooltip_text = c.type.name + "\nLeft click to take\nShift-left click to take one"
+				islot.get_node("Quantity").text = "" if c.quantity < 2 else str(c.quantity)
 				if c.durability < c.type.durability:
 					islot.get_node("Durability").size.x = (46 * c.durability / c.type.durability)
 					islot.get_node("Durability").color = Color("d53846") if c.durability <= c.type.durability / 4 else Color("d0d1cb")
@@ -70,7 +73,7 @@ func update():
 				islot.get_node("Texture").visible = false
 				islot.get_node("Durability").visible = false
 				islot.tooltip_text = ""
-			islot.get_node("Quantity").text = "" if c.quantity < 2 else str(c.quantity)
+				islot.get_node("Quantity").text = ""
 			islot.visible = true
 		else:
 			islot.visible = false

@@ -1,7 +1,9 @@
 extends TileMap
+class_name MapDisplay
 
 var highlit = null
 var ignoreNextClick = false
+var usePause = 0
 
 var mouseDown = false
 
@@ -70,7 +72,9 @@ func _process(delta):
 			if %ContainerContents.container:
 				%ContainerContents.container = null
 				%Inventory.updateAllSlots()
-	if Input.is_action_pressed("use"):
+	if usePause > 0:
+		usePause -= delta
+	elif Input.is_action_pressed("use"):
 		# Find something to interact with.
 		var target = Util.most(get_tree().get_nodes_in_group("Items").filter(inSearchRange).filter(canInteract), playerCloseness)
 		if target and target != %Player.using:

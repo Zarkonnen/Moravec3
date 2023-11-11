@@ -83,7 +83,8 @@
 		"name": "basket",
 		"x": 169, "y": 629, "w": 55, "h": 43,
 		"canTake": true,
-		"containerSize": 4
+		"containerSize": 4,
+		"containerTimeMult": 10
 	},
 	{
 		"name": "wall",

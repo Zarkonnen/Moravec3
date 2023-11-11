@@ -11,13 +11,14 @@ class Slot:
 			if rotTimer <= 0:
 				durability -= 1
 				rotTimer = type.rotInterval
-				if quantity <= 0:
+				if durability <= 0:
 					var rotInto = ItemType.ofName(type.rotInto)
 					if rotInto:
 						type = rotInto
 						durability = rotInto.durability
 					else:
 						type = null
+						quantity = 0
 
 var slots:Array = []
 var size:int = 0:
@@ -28,6 +29,12 @@ var size:int = 0:
 
 func _init(sz=0):
 	size = sz
+
+func update(delta) -> bool:
+	var changed = false
+	for slot in slots:
+		changed = slot.update(delta) or changed
+	return changed
 
 func isEmpty():
 	return slots.all(func(s): return s.quantity <= 0)

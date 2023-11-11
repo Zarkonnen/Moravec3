@@ -40,6 +40,8 @@ func interactionName(it:Item):
 	return ""
 
 func interact(it:Item):
+	interactWith = null
+	%World.usePause = 0.35
 	if it.type.canTake and it.contents.isEmpty() and (it.type.containerSize == 0 or %ContainerContents.container == it):
 		it.quantity -= %Inventory.add(it.type, it.durability, it.quantity)
 		if it.quantity <= 0:
@@ -79,9 +81,15 @@ func craft(r:Recipe):
 	usingInInventory = null
 	useTime = 0
 
+func localBrightness():
+	return %Weather.brightness()
+
+func localTemperature():
+	return %Weather.temperature()
+
 func _process(delta):
 	if using or usingInInventory or crafting:
-		useTime += delta
+		useTime += delta * localBrightness()
 		%UseProgress.visible = true
 		var time = crafting.time if crafting else useType.time
 		%UseProgressBar.size.x = clamp(96 * useTime / time, 0, 96)
