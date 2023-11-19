@@ -7,7 +7,8 @@
 				"name": "Pick berries",
 				"time": 3,
 				"turnInto": "emptyBush",
-				"spawn": [["berries", 3]]
+				"spawn": [["berries", 3]],
+				"xp": 2
 			}
 		}
 	},
@@ -33,7 +34,8 @@
 				"name": "Eat berries",
 				"time": 1,
 				"destroy": true,
-				"stats": {"Food": 10}
+				"stats": {"Food": 10},
+				"xp": 5
 			}
 		}
 	},
@@ -133,10 +135,18 @@
 	    "attackPlayerWhenInjuredDist": 300,
 	    "loot": [["antler", 2]],
 	    "use": {
+	        "antler knife": {
+				"name": "Attack",
+				"time": 0.5,
+				"damage": 10,
+				"xp": 2,
+				"toolDurability": -5
+			},
 			"any": {
 				"name": "Attack",
 				"time": 0.5,
-				"damage": 3
+				"damage": 3,
+				"xp": 2
 			}
 		}
 	}

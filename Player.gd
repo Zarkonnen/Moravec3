@@ -21,6 +21,21 @@ var useTime = 0
 
 var ouch = 0
 
+var xp:float = 0:
+	set(value):
+		xp = value
+		%XPLabel.text = "XP: " + str(value)
+		xpPulse = 1
+
+var xpPulse = 0
+
+var xpSourcesUsed = []
+
+func gainXP(source:String, amt:int):
+	if amt and not source in xpSourcesUsed:
+		xp += amt
+		xpSourcesUsed.append(source)
+
 func _ready():
 	call_deferred("actor_setup")
 
@@ -95,6 +110,9 @@ func _process(delta):
 	if ouch > 0:
 		ouch = max(0, ouch - delta * 5)
 		$Sprite2D.scale = Vector2(1 - ouch * 0.1, 1 - ouch * 0.1)
+	if xpPulse > 0:
+		xpPulse = max(0, xpPulse - delta * 5)
+		%XPLabel.scale = Vector2(1 + xpPulse * 0.3, 1 + xpPulse * 0.3)
 	if using or usingInInventory or crafting:
 		useTime += delta * localBrightness()
 		%UseProgress.visible = true
@@ -104,6 +122,7 @@ func _process(delta):
 			if crafting:
 				%Crafts.finishCrafting(crafting)
 			else:
+				gainXP(useType.xpKey, useType.xp)
 				%Inventory.useTool(ItemType.ofName(useType.tool), useType.toolDurability)
 				for entry in useType.spawn:
 					var t:ItemType = ItemType.ofName(entry[0])

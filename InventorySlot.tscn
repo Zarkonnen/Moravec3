@@ -25,7 +25,7 @@ layout_mode = 0
 offset_right = 60.0
 offset_bottom = 60.0
 mouse_filter = 1
-color = Color(0.815686, 0.819608, 0.796078, 1)
+color = Color(0.184314, 0.156863, 0.117647, 1)
 
 [node name="Inner" type="ColorRect" parent="."]
 layout_mode = 0

@@ -3,27 +3,35 @@ class_name Recipe
 var inputs:Array = []
 var output:ItemType = null
 var time:int = 1
+var xp:int = 5
+var unlocked = false
 
-static var list = null:
+# List of [name, list of recipes]
+static var categories = null:
 	get:
-		if not list:
+		if not categories:
 			loadTypes()
-		return list
+		return categories
 
 static func ofName(name:String) -> Recipe:
-	for it in list:
-		if it.name == name:
-			return it
+	for cat in categories:
+		for it in cat[1]:
+			if it.name == name:
+				return it
 	return null
 
 static func loadTypes():
 	var l:Array = JSON.parse_string(FileAccess.open("res://recipes.json", FileAccess.READ).get_as_text())
-	var rs = []
-	for i in l:
-		var r = Recipe.new()
-		r.time = i.get("time", 1)
-		r.output = ItemType.ofName(i["output"])
-		r.inputs = i["inputs"].map(func(e): return [ItemType.ofName(e[0]), e[1]])
-		rs.append(r)
-	list = rs
+	var cats = []
+	for c in l:
+		var cat = [c.get("name"), []]
+		cats.append(cat)
+		for i in c.get("recipes"):
+			var r = Recipe.new()
+			r.time = i.get("time", 1)
+			r.output = ItemType.ofName(i["output"])
+			r.inputs = i["inputs"].map(func(e): return [ItemType.ofName(e[0]), e[1]])
+			r.xp = i.get("xp", 5)
+			cat[1].append(r)
+	categories = cats
 

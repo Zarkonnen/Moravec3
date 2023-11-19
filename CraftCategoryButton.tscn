@@ -1,0 +1,35 @@
+[gd_scene load_steps=2 format=3 uid="uid://dvr0nvkkdls5n"]
+
+[ext_resource type="Script" path="res://CraftCategoryButton.gd" id="1_hejfe"]
+
+[node name="CraftCategoryButton" type="Control" groups=["CraftCategoryButtons", "MoveOpaque"]]
+layout_mode = 3
+anchors_preset = 0
+script = ExtResource("1_hejfe")
+
+[node name="Border" type="ColorRect" parent="."]
+layout_mode = 0
+offset_right = 120.0
+offset_bottom = 30.0
+mouse_filter = 1
+color = Color(0.815686, 0.819608, 0.796078, 1)
+
+[node name="Inner" type="ColorRect" parent="."]
+layout_mode = 0
+offset_left = 5.0
+offset_top = 5.0
+offset_right = 115.0
+offset_bottom = 25.0
+mouse_filter = 1
+color = Color(0.494118, 0.490196, 0.470588, 1)
+
+[node name="Label" type="Label" parent="."]
+layout_mode = 0
+offset_left = 8.0
+offset_top = 3.0
+offset_right = 56.0
+offset_bottom = 29.0
+mouse_filter = 1
+text = "Fishes"
+
+[connection signal="gui_input" from="." to="." method="_on_gui_input"]

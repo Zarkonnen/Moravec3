@@ -106,6 +106,8 @@ static func loadTypes():
 				u.stats = useV.get("stats", {})
 				u.toolDurability = useV.get("toolDurability", 0)
 				u.damage = useV.get("damage", 0)
+				u.xp = useV.get("xp", 0)
+				u.xpKey = useV.get("xpKey", u.name + " " + u.tool)
 				it.use[useK] = u
 		ts.append(it)
 	types = ts
@@ -120,3 +122,5 @@ class Use:
 	var stats:Dictionary = {}
 	var toolDurability = 0
 	var damage = 0
+	var xpKey = ""
+	var xp = 0

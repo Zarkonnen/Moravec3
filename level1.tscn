@@ -288,6 +288,18 @@ offset_bottom = 70.0
 offset_top = 100.0
 offset_bottom = 100.0
 
+[node name="XPLabel" type="Label" parent="GUI/Stats"]
+unique_name_in_owner = true
+anchors_preset = 1
+anchor_left = 1.0
+anchor_right = 1.0
+offset_left = -106.0
+offset_top = 127.0
+offset_right = -66.0
+offset_bottom = 153.0
+grow_horizontal = 0
+text = "XP: 0"
+
 [node name="ContainerContents" type="Control" parent="GUI"]
 unique_name_in_owner = true
 visible = false

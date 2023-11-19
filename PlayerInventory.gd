@@ -68,7 +68,7 @@ func updateSlot(i):
 		islot.get_node("Durability").visible = false
 		islot.tooltip_text = ""
 	islot.get_node("Quantity").text = "" if c.quantity < 2 else str(c.quantity)
-	islot.get_node("Border").color = Color("2f281e") if i == selectedSlot else Color("d0d1cb")
+	islot.get_node("Border").color = Color("d0d1cb") if i == selectedSlot else Color("2f281e")
 
 func dropSlot(i, all:bool=true):
 	if contents.g(i).type:

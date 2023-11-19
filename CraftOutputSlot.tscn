@@ -29,14 +29,6 @@ offset_bottom = 55.0
 mouse_filter = 1
 color = Color(0.494118, 0.490196, 0.470588, 1)
 
-[node name="Quantity" type="Label" parent="."]
-layout_mode = 0
-offset_left = 8.0
-offset_top = 33.0
-offset_right = 48.0
-offset_bottom = 59.0
-mouse_filter = 1
-
 [node name="Texture" type="TextureRect" parent="."]
 layout_mode = 0
 offset_left = 10.0
@@ -46,5 +38,13 @@ offset_bottom = 52.0
 texture = SubResource("AtlasTexture_28fyw")
 expand_mode = 2
 script = ExtResource("3_6i64h")
+
+[node name="Label" type="Label" parent="."]
+layout_mode = 0
+offset_left = 8.0
+offset_top = 33.0
+offset_right = 48.0
+offset_bottom = 59.0
+mouse_filter = 1
 
 [connection signal="gui_input" from="." to="." method="_on_gui_input"]
