@@ -19,6 +19,8 @@ var usingInInventory:ItemType = null
 var useType:ItemType.Use = null
 var useTime = 0
 
+var ouch = 0
+
 func _ready():
 	call_deferred("actor_setup")
 
@@ -90,6 +92,9 @@ func localTemperature():
 	return %Weather.temperature()
 
 func _process(delta):
+	if ouch > 0:
+		ouch = max(0, ouch - delta * 5)
+		$Sprite2D.scale = Vector2(1 - ouch * 0.1, 1 - ouch * 0.1)
 	if using or usingInInventory or crafting:
 		useTime += delta * localBrightness()
 		%UseProgress.visible = true
@@ -102,9 +107,10 @@ func _process(delta):
 				%Inventory.useTool(ItemType.ofName(useType.tool), useType.toolDurability)
 				for entry in useType.spawn:
 					var t:ItemType = ItemType.ofName(entry[0])
-					for i in range(entry[1]):
-						if not %Inventory.add(t, t.durability):
-							%DropItem.createItem(t, using.position if using else position, t.durability)
+					var amt = entry[1]
+					amt -= %Inventory.add(t, t.durability, amt)
+					if amt:
+						%DropItem.createItem(t, using.position if using else position, t.durability, amt)
 				var turnInto:ItemType = ItemType.ofName(useType.turnInto) if useType.turnInto else null
 				if turnInto:
 					if using:
@@ -119,6 +125,15 @@ func _process(delta):
 						using.queue_free()
 					else:
 						%Inventory.remove(usingInInventory)
+				elif useType.damage and using:
+					using.hp -= useType.damage
+					using.ouch = 1
+					if using.hp <= 0:
+						for entry in using.type.loot:
+							var t:ItemType = ItemType.ofName(entry[0])
+							%DropItem.createItem(t, using.position, t.durability, entry[1])
+						using.unregister()
+						using.queue_free()
 				for statName in useType.stats.keys():
 					%Stats.change(statName, useType.stats[statName])
 			using = null

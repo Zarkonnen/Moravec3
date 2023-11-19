@@ -8,6 +8,8 @@ var type:ItemType = ItemType.ofName("bush"):
 		type = t
 		contents.size = type.containerSize
 		rotTimeout = t.rotInterval
+		hp = t.hp
+		attackTimeout = t.attackCooldown
 		if type.heatEmission:
 			add_to_group("HeatEmitter")
 		else:
@@ -44,6 +46,11 @@ var type:ItemType = ItemType.ofName("bush"):
 		
 var durability = 0
 var rotTimeout = 0
+var hp = 1
+var attackTimeout = 0
+var pathTimeout = 0
+var moveTo:Vector2 = Vector2.ZERO
+var ouch = 0
 
 @export var typeName:String = "bush":
 	set(value):
@@ -109,15 +116,21 @@ func _ready():
 	$Layer2.material = $Layer2.material.duplicate()
 	$Label.position.y = -type.texRect.size.y - 30
 	$Quantity.text = "" if quantity < 2 else str(quantity)
+	moveTo = position
 	if type.snapToGrid:
 		snapToGridAndRegister()
 	
 func _process(delta):
 	if Engine.is_editor_hint():
 		return
+	if ouch > 0:
+		ouch = max(0, ouch - delta * 5)
+		$Sprite2D.scale = Vector2(1 - ouch * 0.1, 1 - ouch * 0.1)
 	var alpha = 1.0
 	var player:Player = get_node("../Player")
 	if player:
+		if type.creature:
+			_creatureProcess(delta)
 		if type.wall and\
 				abs(player.position.x - position.x) <= 64 and\
 				player.position.y < position.y and\
@@ -144,3 +157,28 @@ func _process(delta):
 					durability = rotInto.durability
 				else:
 					queue_free()
+
+func _creatureProcess(delta):
+	if attackTimeout > 0 and type.attackDamage:
+		attackTimeout -= delta
+	if type.attackDamage and attackTimeout <= 0 and position.distance_squared_to(%Player.position) < 40 * 40:
+		%Stats.change("HP", -type.attackDamage)
+		attackTimeout = type.attackCooldown
+		%Player.ouch = 1
+	pathTimeout -= delta * (2 if hp < type.hp else 1)
+	if pathTimeout <= 0:
+		pathTimeout = randf_range(2, 8)
+		moveTo = position
+		var dsq = position.distance_squared_to(%Player.position)
+		var injured = hp < type.hp
+		if dsq < type.fleeFromPlayerDist * type.fleeFromPlayerDist or\
+				(injured and dsq < type.fleeFromPlayerWhenInjuredDist * type.fleeFromPlayerWhenInjuredDist):
+			moveTo = position + (position - %Player.position).normalized() * 500
+		elif dsq < type.attackPlayerDist * type.attackPlayerDist or\
+				(injured and dsq < type.attackPlayerWhenInjuredDist * type.attackPlayerWhenInjuredDist):
+			moveTo = %Player.position
+		elif type.roamRandomly:
+			moveTo = position + Vector2(randf_range(-500, 500), randf_range(-500, 500))
+	if position.distance_squared_to(moveTo) > 100:
+		var sp = type.moveSpeed if hp < type.hp else type.idleMoveSpeed
+		position += (moveTo - position).normalized() * sp * Util.RATIO * delta

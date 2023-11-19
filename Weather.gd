@@ -1,6 +1,6 @@
 extends Node2D
 
-var t = 80
+var t = 10
 @export var dayRamp:Texture2D = null
 
 const DAWN_LENGTH = 10

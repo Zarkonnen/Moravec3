@@ -120,4 +120,24 @@
 		"lightEmission": 1.4,
 		"lightColor": "ff5567"
 	},
+	{
+	    "name": "antlermander",
+	    "x": 1299, "y": 407, "w": 83, "h": 59,
+	    "creature": true,
+	    "hp": 10,
+	    "idleMoveSpeed": 60,
+	    "moveSpeed": 200,
+	    "roamRandomly": true,
+	    "attackDamage": 7,
+	    "attackCooldown": 4,
+	    "attackPlayerWhenInjuredDist": 300,
+	    "loot": [["antler", 2]],
+	    "use": {
+			"any": {
+				"name": "Attack",
+				"time": 0.5,
+				"damage": 3
+			}
+		}
+	}
 ]

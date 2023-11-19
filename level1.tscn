@@ -1,4 +1,4 @@
-[gd_scene load_steps=25 format=3 uid="uid://cb3icp3ox1m3k"]
+[gd_scene load_steps=24 format=3 uid="uid://cb3icp3ox1m3k"]
 
 [ext_resource type="TileSet" uid="uid://cat3g8vk3uxca" path="res://ground_tile_set.tres" id="1_xbrc4"]
 [ext_resource type="Script" path="res://Player.gd" id="2_jq1fc"]
@@ -16,7 +16,6 @@
 [ext_resource type="PackedScene" uid="uid://bumsyb8rwcl42" path="res://ContainerSlot.tscn" id="13_7dd51"]
 [ext_resource type="Script" path="res://GridManager.gd" id="13_2234k"]
 [ext_resource type="Script" path="res://EnclosureDebug.gd" id="14_c4t04"]
-[ext_resource type="Texture2D" uid="uid://bqp8w6yr6gbes" path="res://light_tex_2.png" id="17_b04al"]
 [ext_resource type="Script" path="res://Weather.gd" id="17_vosn5"]
 [ext_resource type="Texture2D" uid="uid://d4i8bjh0fkpsr" path="res://dayramp2.png" id="18_f24wg"]
 
@@ -486,12 +485,7 @@ typeName = "ceiling"
 
 [node name="Item7" parent="." instance=ExtResource("5_ie426")]
 position = Vector2(840, 126)
-typeName = "campfire"
-
-[node name="ExampleLight" type="PointLight2D" parent="."]
-visible = false
-position = Vector2(453, 282)
-texture = ExtResource("17_b04al")
+typeName = "antlermander"
 
 [connection signal="changed" from="GUI/Inventory" to="GUI/Crafts" method="_on_inventory_changed"]
 [connection signal="gui_input" from="GUI/Crafts" to="GUI/Crafts" method="_on_gui_input"]
