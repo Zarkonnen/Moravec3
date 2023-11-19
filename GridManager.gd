@@ -99,6 +99,8 @@ class Enclosure:
 	var tiles:Array = []
 	var number = 0
 	var hasCeilings:bool = false
+	var averageInsulation:float = 0
+	var temperature:float = 20.0
 	func _init(tiles):
 		self.tiles = tiles
 		enclosureCounter += 1
@@ -130,6 +132,7 @@ func wallAdded(x, y, ceilings):
 					# Update existing enclosure.
 					enc.tiles = fill
 					_updateCeilings(enc, ceilings)
+					_updateInsulation(enc, ceilings)
 					enc = null
 				elif not encs.any(func(e): return start in e.tiles):
 					# We need a new enclosure.
@@ -137,6 +140,7 @@ func wallAdded(x, y, ceilings):
 					enclosures.append(newEnc)
 					encs.append(newEnc)
 					_updateCeilings(newEnc, ceilings)
+					_updateInsulation(enc, ceilings)
 		if enc:
 			# Never got used, so delete it.
 			enclosures.erase(enc)
@@ -152,6 +156,7 @@ func wallAdded(x, y, ceilings):
 				var newEnc = Enclosure.new(fill)
 				enclosures.append(newEnc)
 				_updateCeilings(newEnc, ceilings)
+				_updateInsulation(newEnc, ceilings)
 	
 func wallRemoved(x, y, ceilings):
 	%EnclosureDebug.queue_redraw()
@@ -190,12 +195,14 @@ func ceilingAdded(x, y, ceilings):
 	var enc = getEnclosure(x, y)
 	if enc:
 		_updateCeilings(enc, ceilings)
+		_updateInsulation(enc, ceilings)
 		
 func ceilingRemoved(x, y, ceilings):
 	%EnclosureDebug.queue_redraw()
 	var enc = getEnclosure(x, y)
 	if enc:
 		enc.hasCeilings = false
+		enc.averageInsulation = 0
 
 func _enclosureFill(x, y, maxDist=10):
 	# Flood fill, starting at x, y. If we reach a tile that is more than maxdist away, return null.
@@ -233,4 +240,45 @@ func _enclosureFill(x, y, maxDist=10):
 
 func _updateCeilings(enc:Enclosure, ceilings):
 	enc.hasCeilings = enc.tiles.all(func(t): return ceilings.g(t[0], t[1]))
-	
+
+func _updateInsulation(enc:Enclosure, ceilings):
+	if not enc.hasCeilings:
+		enc.averageInsulation = 0
+		return
+	var total = 0.0
+	var n = 0
+	for t in enc.tiles:
+		total += ceilings.g(t[0], t[1]).type.insulation
+		n += 1
+		if g(t[0] - 1, t[1]):
+			total += g(t[0] - 1, t[1]).type.insulation
+			n += 1
+		if g(t[0] + 1, t[1]):
+			total += g(t[0] + 1, t[1]).type.insulation
+			n += 1
+		if g(t[0], t[1] - 1):
+			total += g(t[0], t[1] - 1).type.insulation
+			n += 1
+		if g(t[0], t[1] + 1):
+			total += g(t[0], t[1] + 1).type.insulation
+			n += 1
+	if n == 0:
+		enc.averageInsulation = 1
+	else:
+		enc.averageInsulation = total / n
+
+func _process(delta):
+	for enc in enclosures:
+		_updateTemperature(enc)
+
+func _updateTemperature(enc:Enclosure):
+	var temp = %Weather.temperature()
+	if not enc.hasCeilings:
+		enc.temperature = temp
+		return
+	var emitters = get_tree().get_nodes_in_group("HeatEmitter")
+	emitters = emitters.filter(func(it): return getEnclosure(it.gridX(), it.gridY()) == enc)
+	var heatAdded = Util.sum(emitters, func(it): return it.type.heatEmission)
+	#print("heatAdded " + str(heatAdded) + " tiles " + str(enc.tiles.size()) + " insulation " + str(enc.averageInsulation))
+	enc.temperature = min(30, temp + heatAdded / enc.tiles.size() * enc.averageInsulation)
+	#print(str(enc.temperature) + " vs " + str(temp))

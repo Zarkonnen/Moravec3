@@ -8,6 +8,17 @@ var type:ItemType = ItemType.ofName("bush"):
 		type = t
 		contents.size = type.containerSize
 		rotTimeout = t.rotInterval
+		if type.heatEmission:
+			add_to_group("HeatEmitter")
+		else:
+			remove_from_group("HeatEmitter")
+		if type.lightEmission:
+			$Light.enabled = true
+			$Light.scale = Vector2(type.lightEmission, type.lightEmission)
+			$Light.color = type.lightColor
+			$Light.position.y = -t.texRect.size.y / 2
+		else:
+			$Light.enabled = false
 		$Label.position.y = -t.texRect.size.y - 30
 		set_collision_layer_value(1, t.wall and not t.door)
 		$Sprite2D.z_index = 3 if t.ceiling else 0

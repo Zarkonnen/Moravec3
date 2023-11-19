@@ -17,6 +17,10 @@ var door:bool = false
 var ceiling:bool = false
 var wallSupportRange = 2
 var spawnOnCollapse:Array = []
+var heatEmission:float = 0
+var insulation:float = 0
+var lightEmission:float = 0
+var lightColor:Color = Color.WHITE
 
 func _init(name, texRect):
 	self.name = name
@@ -54,6 +58,11 @@ static func loadTypes():
 		it.ceiling = i.get("ceiling", false)
 		it.wallSupportRange = i.get("wallSupportRange", 2)
 		it.spawnOnCollapse = i.get("spawnOnCollapse", [])
+		it.heatEmission = i.get("heatEmission", 0)
+		it.insulation = i.get("insulation", 0)
+		it.lightEmission = i.get("lightEmission", 0)
+		if i.has("lightColor"):
+			it.lightColor = Color(i.get("lightColor"))
 		if i.has("use"):
 			var uses:Dictionary = i.get("use")
 			for useK in uses.keys():

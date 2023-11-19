@@ -26,26 +26,22 @@
 atlas = ExtResource("2_sqygo")
 region = Rect2(50.4266, 201.428, 25.0864, 86.9136)
 
-[sub_resource type="AtlasTexture" id="AtlasTexture_regq1"]
-atlas = ExtResource("2_sqygo")
-region = Rect2(313.926, 586.892, 17.0753, 15.7094)
-
 [sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_sk5uc"]
 emission_shape = 3
-emission_box_extents = Vector3(10000, 10000, 1)
+emission_box_extents = Vector3(2000, 2000, 1)
 particle_flag_disable_z = true
 direction = Vector3(1, 1, 0)
 spread = 0.0
 gravity = Vector3(0, 10, 0)
-initial_velocity_min = 300.0
-initial_velocity_max = 400.0
+initial_velocity_min = 600.0
+initial_velocity_max = 800.0
 orbit_velocity_min = 0.0
 orbit_velocity_max = 0.0
 color = Color(0.635294, 0.776471, 0.909804, 1)
 
 [sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_i6wll"]
 emission_shape = 3
-emission_box_extents = Vector3(10000, 10000, 1)
+emission_box_extents = Vector3(2000, 2000, 1)
 particle_flag_disable_z = true
 direction = Vector3(0, 1, 0)
 spread = 0.0
@@ -56,6 +52,10 @@ orbit_velocity_min = 0.0
 orbit_velocity_max = 0.0
 scale_min = 2.0
 scale_max = 4.0
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_regq1"]
+atlas = ExtResource("2_sqygo")
+region = Rect2(313.926, 586.892, 17.0753, 15.7094)
 
 [node name="Node2D" type="Node2D"]
 y_sort_enabled = true
@@ -80,6 +80,33 @@ unique_name_in_owner = true
 offset = Vector2(0, -20)
 
 [node name="Navigation" type="NavigationAgent2D" parent="Player"]
+
+[node name="Weather" type="Node2D" parent="Player"]
+unique_name_in_owner = true
+script = ExtResource("17_vosn5")
+dayRamp = ExtResource("18_f24wg")
+
+[node name="Rain" type="GPUParticles2D" parent="Player/Weather"]
+emitting = false
+amount = 200
+process_material = SubResource("ParticleProcessMaterial_sk5uc")
+lifetime = 5.0
+visibility_rect = Rect2(0, 0, 2000, 2000)
+local_coords = true
+trail_enabled = true
+trail_lifetime = 0.2
+trail_sections = 2
+trail_section_subdivisions = 1
+
+[node name="Snow" type="GPUParticles2D" parent="Player/Weather"]
+emitting = false
+amount = 1000
+process_material = SubResource("ParticleProcessMaterial_i6wll")
+lifetime = 2.0
+visibility_rect = Rect2(0, 0, 2000, 2000)
+local_coords = true
+
+[node name="Ambient" type="CanvasModulate" parent="Player/Weather"]
 
 [node name="Item" parent="." instance=ExtResource("5_ie426")]
 position = Vector2(558, 68)
@@ -253,6 +280,14 @@ script = ExtResource("10_dt6v4")
 [node name="Food" parent="GUI/Stats" instance=ExtResource("12_xieyx")]
 offset_top = 40.0
 offset_bottom = 40.0
+
+[node name="Warmth" parent="GUI/Stats" instance=ExtResource("12_xieyx")]
+offset_top = 70.0
+offset_bottom = 70.0
+
+[node name="Wetness" parent="GUI/Stats" instance=ExtResource("12_xieyx")]
+offset_top = 100.0
+offset_bottom = 100.0
 
 [node name="ContainerContents" type="Control" parent="GUI"]
 unique_name_in_owner = true
@@ -450,33 +485,8 @@ position = Vector2(64, 288)
 typeName = "ceiling"
 
 [node name="Item7" parent="." instance=ExtResource("5_ie426")]
-position = Vector2(769, 97)
-typeName = "basket"
-
-[node name="Weather" type="Node" parent="."]
-unique_name_in_owner = true
-script = ExtResource("17_vosn5")
-dayRamp = ExtResource("18_f24wg")
-
-[node name="Rain" type="GPUParticles2D" parent="Weather"]
-emitting = false
-amount = 30000
-process_material = SubResource("ParticleProcessMaterial_sk5uc")
-lifetime = 5.0
-visibility_rect = Rect2(-5000, -5000, 10000, 10000)
-trail_enabled = true
-trail_lifetime = 0.2
-trail_sections = 2
-trail_section_subdivisions = 1
-
-[node name="Snow" type="GPUParticles2D" parent="Weather"]
-emitting = false
-amount = 10000
-process_material = SubResource("ParticleProcessMaterial_i6wll")
-lifetime = 2.0
-visibility_rect = Rect2(-5000, -5000, 10000, 10000)
-
-[node name="Ambient" type="CanvasModulate" parent="Weather"]
+position = Vector2(840, 126)
+typeName = "campfire"
 
 [node name="ExampleLight" type="PointLight2D" parent="."]
 visible = false

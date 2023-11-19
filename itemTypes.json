@@ -92,6 +92,7 @@
 		"canTake": false,
 		"wall": true,
 		"snapToGrid": true,
+		"insulation": 0.5
 	},
 	{
 		"name": "door",
@@ -100,7 +101,8 @@
 		"canTake": false,
 		"wall": true,
 		"snapToGrid": true,
-		"door": true
+		"door": true,
+		"insulation": 0.5
 	},
 	{
 		"name": "ceiling",
@@ -108,6 +110,14 @@
 		"canTake": false,
 		"ceiling": true,
 		"snapToGrid": true,
-		"spawnOnCollapse": [["chalk", 1]]
+		"spawnOnCollapse": [["chalk", 1]],
+		"insulation": 0.5
+	},
+	{
+		"name": "campfire",
+		"x": 79, "y": 720, "w": 46, "h": 48,
+		"heatEmission": 100,
+		"lightEmission": 1.4,
+		"lightColor": "ff5567"
 	},
 ]

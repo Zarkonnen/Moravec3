@@ -9,7 +9,8 @@ class Stat:
 	var autoChangeAmount
 	var autoChangeInterval
 	var autoChangeTimeout
-	func _init(name, color, value, autoChangeAmount=0, autoChangeInterval=5):
+	var warnOnBelow:int
+	func _init(name, color, value, autoChangeAmount=0, autoChangeInterval=5, warnOnBelow=-1):
 		self.name = name
 		self.color = color
 		self.value = value
@@ -18,8 +19,16 @@ class Stat:
 		self.autoChangeAmount = autoChangeAmount
 		self.autoChangeInterval = autoChangeInterval
 		self.autoChangeTimeout = autoChangeInterval
+		self.warnOnBelow = warnOnBelow
 
-var stats = [Stat.new("Food", Color("597646"), 100, -1, 10), Stat.new("HP", Color("d53846"), 50, 1, 20)]
+var t = 0
+
+var stats = [\
+		Stat.new("Food", Color("597646"), 100, -1, 10, 20),\
+		Stat.new("HP", Color("d53846"), 50, 1, 20, 20),\
+		Stat.new("Warmth", Color("90242a"), 100, 0, 5, 20),\
+		Stat.new("Wetness", Color("62798d"), 0, 0, 1),\
+		]
 var byName = {}
 
 func _ready():
@@ -36,14 +45,45 @@ func getValue(name) -> int:
 	return byName[name].value
 
 func _process(delta):
+	t += delta
 	for stat in stats:
+		updateWarning(stat)
 		stat.valueChangeTimeout -= delta
 		if stat.valueChangeTimeout <= 0:
 			stat.recentValue = stat.value
 			update(stat)
 		stat.autoChangeTimeout -= delta
 		if stat.autoChangeTimeout <= 0:
-			change(stat.name, stat.autoChangeAmount)
+			var amt = stat.autoChangeAmount
+			if stat.name == "Warmth":
+				var temp = %Player.temperature()
+				if temp < 0:
+					amt = -5
+				elif temp < 10:
+					amt = -2
+				elif temp < 15:
+					amt = -1
+				elif temp >= 20 and temp < 25:
+					amt = 2
+				else:
+					amt = 4
+				var wet = getValue("Wetness")
+				if wet > 50:
+					amt -= 3
+				elif wet > 20:
+					amt -= 1
+			if stat.name == "Wetness":
+				if %Ceilings.g(%Player.gridX(), %Player.gridY()):
+					amt = -1
+				else:
+					amt = %Weather.wetnessPerTime()
+				if amt < 0:
+					var temp = %Player.temperature()
+					if temp >= 30:
+						amt -= 2
+					elif temp >= 22:
+						amt -= 1
+			change(stat.name, amt)
 			stat.autoChangeTimeout = stat.autoChangeInterval
 		
 func update(stat):
@@ -61,3 +101,7 @@ func update(stat):
 		ch.visible = true
 	else:
 		ch.visible = false
+
+func updateWarning(stat):
+	get_node(stat.name).get_node("Border").color = "ffffff" if stat.value < stat.warnOnBelow and fmod(t, 1) < 0.5 else "7e7d78"
+	

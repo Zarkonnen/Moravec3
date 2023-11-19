@@ -1,13 +1,14 @@
-[gd_scene load_steps=8 format=3 uid="uid://pb415w1j1u0k"]
+[gd_scene load_steps=9 format=3 uid="uid://pb415w1j1u0k"]
 
 [ext_resource type="Script" path="res://Item.gd" id="1_3t73v"]
 [ext_resource type="Texture2D" uid="uid://cg232q4ygjq8b" path="res://tiles.png" id="1_qxv04"]
 [ext_resource type="Shader" path="res://Item.gdshader" id="2_o8jvu"]
+[ext_resource type="Texture2D" uid="uid://bqp8w6yr6gbes" path="res://light_tex_2.png" id="4_74mbt"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_x2o0v"]
 size = Vector2(128, 96)
 
-[sub_resource type="ShaderMaterial" id="ShaderMaterial_8xibs"]
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_hpt7f"]
 shader = ExtResource("2_o8jvu")
 shader_parameter/strength = 0.0
 shader_parameter/a = 1.0
@@ -16,7 +17,7 @@ shader_parameter/a = 1.0
 atlas = ExtResource("1_qxv04")
 region = Rect2(406, 29, 63, 66)
 
-[sub_resource type="ShaderMaterial" id="ShaderMaterial_653cm"]
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_45l1j"]
 shader = ExtResource("2_o8jvu")
 shader_parameter/strength = 0.0
 shader_parameter/a = 1.0
@@ -30,13 +31,13 @@ position = Vector2(0, -48)
 shape = SubResource("RectangleShape2D_x2o0v")
 
 [node name="Sprite2D" type="Sprite2D" parent="."]
-material = SubResource("ShaderMaterial_8xibs")
+material = SubResource("ShaderMaterial_hpt7f")
 texture = SubResource("AtlasTexture_ccgmh")
 offset = Vector2(0, -33)
 
 [node name="Layer2" type="Sprite2D" parent="."]
 visible = false
-material = SubResource("ShaderMaterial_653cm")
+material = SubResource("ShaderMaterial_45l1j")
 texture = SubResource("AtlasTexture_ccgmh")
 offset = Vector2(0, -33)
 
@@ -53,3 +54,7 @@ offset_top = -3.0
 offset_right = 64.0
 offset_bottom = 23.0
 horizontal_alignment = 1
+
+[node name="Light" type="PointLight2D" parent="."]
+enabled = false
+texture = ExtResource("4_74mbt")

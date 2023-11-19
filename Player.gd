@@ -1,6 +1,8 @@
 extends RigidBody2D
 class_name Player
 
+const HEAT_EMIT_DIST = 128
+
 @export var speed = 300.0
 
 @onready var navigation_agent:NavigationAgent2D = $Navigation
@@ -131,6 +133,14 @@ func gridX():
 func gridY():
 	return int(floor(position.y / 96)) - 1
 
+func temperature():
+	var enc = %Walls.getEnclosure(gridX(), gridY())
+	var temp = enc.temperature if enc else %Weather.temperature()
+	for it in get_tree().get_nodes_in_group("HeatEmitter"):
+		if self.position.distance_squared_to(it.position) <= HEAT_EMIT_DIST * HEAT_EMIT_DIST:
+			temp = max(temp, it.type.heatEmission)
+	return temp
+
 func _physics_process(delta):
 	var mv = Vector2(0, 0)
 	var moveTo = Vector2(0, 0)
@@ -174,11 +184,11 @@ func _physics_process(delta):
 			%Inventory.updateAllSlots()
 		nextNavTarget = Vector2.ZERO
 	if not navigate:
-		mv = mv.normalized() * speed * Util.RATIO * delta
+		mv = mv.normalized() * speed * %Weather.moveSpeedMult() * Util.RATIO * delta
 	else:
-		if ((moveTo - position) / Util.RATIO).length() <= speed * delta:
+		if ((moveTo - position) / Util.RATIO).length() <= speed * %Weather.moveSpeedMult() * delta:
 			mv = moveTo - position
 			moveTo = Vector2.ZERO
 		else:
-			mv = ((moveTo - position) / Util.RATIO).normalized() * speed * Util.RATIO * delta
+			mv = ((moveTo - position) / Util.RATIO).normalized() * speed * %Weather.moveSpeedMult() * Util.RATIO * delta
 	move_and_collide(mv)
