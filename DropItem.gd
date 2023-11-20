@@ -33,9 +33,9 @@ func _process(delta):
 func _canPlace(position):
 	var gridX = int(floor(position.x / 128))
 	var gridY = int(floor(position.y / 96))
-	if %World.tileAtIsFloor(position) and not %Walls.g(gridX, gridY):
+	if %World.tileAtIsFloor(position) and not %Grid.g(gridX, gridY):
 		if toDrop.ceiling:
-			if %Ceilings.g(gridX, gridY) or %Walls.wallSupportStrength(gridX, gridY, %Ceilings) < 1:
+			if %Grid.g(gridX, gridY).ceiling or %Grid.wallSupportStrength(gridX, gridY) < 1:
 				return false
 		elif toDrop.snapToGrid:
 			for it in get_tree().get_nodes_in_group("Items"):
@@ -47,16 +47,16 @@ func _canPlace(position):
 
 func createItem(type:ItemType, at, durability, quantity=1):
 	if type.snapToGrid:
-		if type.wall and %Walls.g(Item.xToGrid(at.x), Item.yToGrid(at.y)):
+		if type.wall and %Grid.g(Item.xToGrid(at.x), Item.yToGrid(at.y)).wall:
 			return
-		if type.ceiling and %Ceilings.g(Item.xToGrid(at.x), Item.yToGrid(at.y)):
+		if type.ceiling and %Grid.g(Item.xToGrid(at.x), Item.yToGrid(at.y)).ceiling:
 			return
 	var item:Item = itemScene.instantiate()
 	item.position = at
 	item.type = type
 	item.durability = durability
 	item.quantity = quantity
-	$/root/Node2D.add_child(item)
+	$/root/Node2D/Items.add_child(item)
 	if type.snapToGrid:
 		item.snapToGridAndRegister()
 

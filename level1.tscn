@@ -78,8 +78,6 @@ offset = Vector2(0, -43)
 unique_name_in_owner = true
 offset = Vector2(0, -20)
 
-[node name="Navigation" type="NavigationAgent2D" parent="Player"]
-
 [node name="Weather" type="Node2D" parent="Player"]
 unique_name_in_owner = true
 script = ExtResource("17_vosn5")
@@ -107,71 +105,11 @@ local_coords = true
 
 [node name="Ambient" type="CanvasModulate" parent="Player/Weather"]
 
-[node name="Item" parent="." instance=ExtResource("5_ie426")]
-position = Vector2(558, 68)
-quantity = 3
-typeName = "chalk"
-
-[node name="Item2" parent="." instance=ExtResource("5_ie426")]
-position = Vector2(322, 122)
-
-[node name="Item3" parent="." instance=ExtResource("5_ie426")]
-position = Vector2(-64, 288)
-collision_layer = 1
-typeName = "wall"
-
-[node name="Item6" parent="." instance=ExtResource("5_ie426")]
-position = Vector2(64, 192)
-collision_layer = 1
-typeName = "wall"
-
-[node name="Item8" parent="." instance=ExtResource("5_ie426")]
-position = Vector2(192, 288)
-collision_layer = 1
-typeName = "wall"
-
-[node name="Item9" parent="." instance=ExtResource("5_ie426")]
-position = Vector2(192, 480)
-collision_layer = 1
-typeName = "wall"
-
-[node name="Item11" parent="." instance=ExtResource("5_ie426")]
-position = Vector2(64, 384)
-typeName = "ceiling"
-
-[node name="Item16" parent="." instance=ExtResource("5_ie426")]
-position = Vector2(64, 480)
-typeName = "ceiling"
-
-[node name="Item14" parent="." instance=ExtResource("5_ie426")]
-position = Vector2(-64, 384)
-collision_layer = 1
-typeName = "wall"
-
-[node name="Item15" parent="." instance=ExtResource("5_ie426")]
-position = Vector2(192, 384)
-collision_layer = 1
-typeName = "wall"
-
-[node name="Item12" parent="." instance=ExtResource("5_ie426")]
-position = Vector2(64, 576)
-typeName = "door"
-
-[node name="Item13" parent="." instance=ExtResource("5_ie426")]
-position = Vector2(-64, 481)
-collision_layer = 1
-typeName = "wall"
-
-[node name="Item4" parent="." instance=ExtResource("5_ie426")]
-position = Vector2(704, 351)
-typeName = "antler"
-
 [node name="World" type="TileMap" parent="."]
 unique_name_in_owner = true
 z_index = -1
 tile_set = ExtResource("1_xbrc4")
 format = 2
-layer_0/tile_data = PackedInt32Array(327689, 131072, 5, 262153, 131072, 5, 196617, 262144, 6, 131081, 262144, 6, 65545, 393216, 8, 9, 393216, 7, 327688, 196608, 8, 262152, 196608, 6, 196616, 196608, 1, 131080, 262144, 8, 65544, 393216, 7, 8, 393216, 7, 327687, 131072, 2, 262151, 131072, 3, 196615, 131072, 1, 131079, 327680, 6, 65543, 327680, 7, 7, 327680, 7, 327686, 65536, 2, 262150, 458752, 6, 196614, 65536, 1, 131078, 262144, 6, 65542, 327680, 8, 6, 327680, 7, 327685, 393216, 7, 262149, 393216, 7, 196613, 327680, 7, 131077, 393216, 6, 65541, 327680, 8, 5, 327680, 6, 327684, 327680, 7, 262148, 196608, 4, 196612, 196608, 3, 131076, 196608, 6, 65540, 196608, 1, 4, 393216, 7, 327683, 262144, 7, 262147, 131072, 4, 196611, 131072, 2, 131075, 458752, 9, 65539, 65536, 1, 3, 262144, 6, 327682, 262144, 8, 262146, 65536, 4, 196610, 65536, 3, 131074, 65536, 1, 65538, 262144, 7, 2, 393216, 6, 327681, 262144, 7, 262145, 327680, 8, 196609, 327680, 8, 131073, 393216, 6, 65537, 262144, 7, 1, 262144, 8, 327680, 393216, 7, 262144, 327680, 8, 196608, 327680, 8, 131072, 393216, 8, 65536, 327680, 6, 0, 393216, 6, 524297, 327680, 7, 458761, 327680, 8, 393225, 131072, 5, 524296, 262144, 7, 458760, 196608, 4, 393224, 196608, 3, 524295, 327680, 7, 458759, 262144, 5, 393223, 131072, 3, 524294, 327680, 7, 458758, 65536, 4, 393222, 458752, 6, 524293, 327680, 8, 458757, 327680, 8, 393221, 262144, 8, 524292, 393216, 6, 458756, 262144, 8, 393220, 393216, 8, 524291, 196608, 4, 458755, 196608, 1, 393219, 131072, 5, 524290, 393216, 5, 458754, 262144, 9, 393218, 131072, 5, 524289, 65536, 4, 458753, 65536, 1, 393217, 327680, 8, 524288, 393216, 6, 458752, 327680, 8, 393216, 393216, 7, 65535, 393216, 8, 589823, 393216, 6, 524287, 393216, 6, 458751, 327680, 7, 393215, 262144, 8, 327679, 393216, 8, 262143, 393216, 7, 196607, 327680, 6, 131071, 262144, 8, 589822, 458752, 14, 524286, 0, 12, 458750, 458752, 11, 393214, 327680, 7, 327678, 196608, 4, 262142, 196608, 6, 196606, 196608, 3, 131070, 196608, 2, 65534, 196608, 8, 589821, 196608, 11, 524285, 393216, 13, 458749, 393216, 11, 393213, 393216, 7, 327677, 65536, 4, 262141, 458752, 7, 196605, 458752, 6, 131069, 458752, 8, 65533, 65536, 2, 589820, 196608, 11, 524284, 393216, 13, 458748, 0, 15, 393212, 458752, 11, 327676, 327680, 8, 262140, 393216, 6, 196604, 262144, 8, 131068, 393216, 7, 65532, 262144, 6, -2, 196608, 1, -65538, 262144, 7, -3, 65536, 1, -65539, 327680, 6, -4, 327680, 6, -65540, 393216, 8, 589819, 393216, 14, 524283, 393216, 13, 458747, 393216, 12, 393211, 0, 15, 327675, 458752, 11, 262139, 262144, 8, 196603, 327680, 15, 131067, 327680, 8, 65531, 393216, 8, -5, 393216, 7, -65541, 327680, 7, 589818, 327680, 14, 524282, 327680, 12, 458746, 262144, 13, 393210, 327680, 13, 327674, 327680, 11, 262138, 393216, 8, 196602, 393216, 6, 131066, 393216, 6, 65530, 262144, 8, -6, 327680, 7, -65542, 262144, 8, -65527, 262144, 8, -131063, 327680, 8, -196599, 393216, 8, -262135, 327680, 7, -327671, 327680, 7, -65528, 262144, 6, -131064, 327680, 8, -196600, 262144, 7, -262136, 262144, 6, -327672, 327680, 8, -65529, 327680, 8, -131065, 393216, 7, -196601, 262144, 7, -262137, 327680, 6, -327673, 262144, 8, -65530, 262144, 7, -131066, 262144, 7, -196602, 262144, 8, -262138, 262144, 6, -327674, 327680, 7, -65531, 393216, 6, -131067, 327680, 7, -196603, 262144, 7, -262139, 393216, 7, -327675, 393216, 6, -65532, 196608, 4, -131068, 196608, 8, -196604, 196608, 2, -262140, 196608, 1, -327676, 262144, 7, -65533, 131072, 4, -131069, 131072, 2, -196605, 131072, 3, -262141, 393216, 9, -327677, 262144, 7, -65534, 393216, 5, -131070, 131072, 3, -196606, 131072, 3, -262142, 131072, 1, -327678, 393216, 7, -65535, 393216, 5, -131071, 131072, 3, -196607, 131072, 2, -262143, 262144, 9, -327679, 393216, 7, -65536, 65536, 4, -131072, 65536, 2, -196608, 65536, 2, -262144, 65536, 1, -327680, 327680, 7, -1, 393216, 7, -65537, 327680, 8, -131073, 393216, 8, -196609, 393216, 6, -262145, 393216, 8, -131074, 393216, 6, -196610, 327680, 7, -262146, 262144, 6, -131075, 327680, 7, -196611, 262144, 7, -262147, 262144, 8, -131076, 393216, 7, -196612, 262144, 8, -262148, 262144, 8, -131077, 327680, 7, -196613, 327680, 8, -262149, 393216, 8, -131078, 262144, 6, -196614, 393216, 8, -262150, 262144, 6)
 script = ExtResource("4_u3xq3")
 
 [node name="GUI" type="CanvasLayer" parent="."]
@@ -477,11 +415,7 @@ offset_right = 20.0
 offset_bottom = 46.0
 horizontal_alignment = 1
 
-[node name="Walls" type="Node" parent="."]
-unique_name_in_owner = true
-script = ExtResource("13_2234k")
-
-[node name="Ceilings" type="Node" parent="."]
+[node name="Grid" type="Node" parent="."]
 unique_name_in_owner = true
 script = ExtResource("13_2234k")
 
@@ -491,13 +425,74 @@ visible = false
 z_index = 20
 script = ExtResource("14_c4t04")
 
-[node name="Item5" parent="." instance=ExtResource("5_ie426")]
-position = Vector2(64, 288)
+[node name="Items" type="Node" parent="."]
+
+[node name="Item5" parent="Items" instance=ExtResource("5_ie426")]
+position = Vector2(458, 397)
 typeName = "ceiling"
 
-[node name="Item7" parent="." instance=ExtResource("5_ie426")]
-position = Vector2(840, 126)
+[node name="Item7" parent="Items" instance=ExtResource("5_ie426")]
+position = Vector2(1234, 235)
 typeName = "antlermander"
+
+[node name="Item" parent="Items" instance=ExtResource("5_ie426")]
+position = Vector2(952, 177)
+quantity = 3
+typeName = "chalk"
+
+[node name="Item2" parent="Items" instance=ExtResource("5_ie426")]
+position = Vector2(716, 231)
+
+[node name="Item3" parent="Items" instance=ExtResource("5_ie426")]
+position = Vector2(330, 397)
+collision_layer = 1
+typeName = "wall"
+
+[node name="Item6" parent="Items" instance=ExtResource("5_ie426")]
+position = Vector2(458, 301)
+collision_layer = 1
+typeName = "wall"
+
+[node name="Item8" parent="Items" instance=ExtResource("5_ie426")]
+position = Vector2(586, 397)
+collision_layer = 1
+typeName = "wall"
+
+[node name="Item9" parent="Items" instance=ExtResource("5_ie426")]
+position = Vector2(586, 589)
+collision_layer = 1
+typeName = "wall"
+
+[node name="Item11" parent="Items" instance=ExtResource("5_ie426")]
+position = Vector2(458, 493)
+typeName = "ceiling"
+
+[node name="Item16" parent="Items" instance=ExtResource("5_ie426")]
+position = Vector2(458, 589)
+typeName = "ceiling"
+
+[node name="Item14" parent="Items" instance=ExtResource("5_ie426")]
+position = Vector2(330, 493)
+collision_layer = 1
+typeName = "wall"
+
+[node name="Item15" parent="Items" instance=ExtResource("5_ie426")]
+position = Vector2(586, 493)
+collision_layer = 1
+typeName = "wall"
+
+[node name="Item12" parent="Items" instance=ExtResource("5_ie426")]
+position = Vector2(458, 685)
+typeName = "door"
+
+[node name="Item13" parent="Items" instance=ExtResource("5_ie426")]
+position = Vector2(330, 589)
+collision_layer = 1
+typeName = "wall"
+
+[node name="Item4" parent="Items" instance=ExtResource("5_ie426")]
+position = Vector2(1098, 460)
+typeName = "antler"
 
 [connection signal="changed" from="GUI/Inventory" to="GUI/Crafts" method="_on_inventory_changed"]
 [connection signal="gui_input" from="GUI/Crafts" to="GUI/Crafts" method="_on_gui_input"]

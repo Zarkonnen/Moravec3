@@ -5,7 +5,7 @@ func _draw():
 	#	for x in range(-10, 10):
 	#		if %Walls.g(x, y):
 	#			draw_rect(Rect2(x * 128, y * 96, 128, 96), Color.GREEN)
-	for enc in %Walls.enclosures:
+	for enc in %Grid.enclosures:
 		#print(str(enc.number))
 		#print(enc.hasCeilings)
 		var clr = Color(fmod(enc.number * 0.3, 1), fmod(enc.number * 0.1, 1), fmod(enc.number * 0.07, 1))

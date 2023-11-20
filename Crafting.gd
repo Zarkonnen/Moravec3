@@ -74,9 +74,9 @@ func canCraft(r:Recipe):
 		if not %Inventory.has(i[0], i[1]):
 			return false
 	if r.output.snapToGrid:
-		if r.output.wall and %Walls.g(Item.xToGrid(%Player.position.x), Item.yToGrid(%Player.position.y)):
+		if r.output.wall and %Grid.g(Item.xToGrid(%Player.position.x), Item.yToGrid(%Player.position.y)).wall:
 			return false
-		if r.output.ceiling and %Ceilings.g(Item.xToGrid(%Player.position.x), Item.yToGrid(%Player.position.y)):
+		if r.output.ceiling and %Grid.g(Item.xToGrid(%Player.position.x), Item.yToGrid(%Player.position.y)).ceiling:
 			return false
 	return true
 

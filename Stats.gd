@@ -73,7 +73,7 @@ func _process(delta):
 				elif wet > 20:
 					amt -= 1
 			if stat.name == "Wetness":
-				if %Ceilings.g(%Player.gridX(), %Player.gridY()):
+				if %Grid.g(%Player.gridX(), %Player.gridY()) and %Grid.g(%Player.gridX(), %Player.gridY()).ceiling:
 					amt = -1
 				else:
 					amt = %Weather.wetnessPerTime()

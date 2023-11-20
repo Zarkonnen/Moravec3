@@ -1,0 +1,31 @@
+[
+    {
+        "name": "Grass",
+        "x": 4,
+        "y": 6,
+        "terrain": 0
+    },
+    {
+        "name": "Water",
+        "x": 2,
+        "y": 2,
+        "terrain": 1,
+        "traversable": false
+    },
+    {
+        "name": "Desert",
+        "x": 6,
+        "y": 12,
+        "terrain": 2
+    },
+    {
+        "name": "Mud",
+        "x": 2,
+        "y": 5
+    },
+    {
+        "name": "Flooded",
+        "x": 6,
+        "y": 15
+    }
+]

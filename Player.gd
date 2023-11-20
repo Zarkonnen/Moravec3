@@ -5,7 +5,8 @@ const HEAT_EMIT_DIST = 128
 
 @export var speed = 300.0
 
-@onready var navigation_agent:NavigationAgent2D = $Navigation
+var navPath = null
+var navPathIndex = 0
 var navigate = false
 var prevTile = Vector2i.ZERO
 var canSetNavTarget = true
@@ -66,7 +67,7 @@ func interact(it:Item):
 		if it.quantity <= 0:
 			it.unregister()
 			if it.type.wall or it.type.ceiling:
-				%Walls.collapseCeilings(it.gridX(), it.gridY(), %Ceilings)
+				%Grid.collapseCeilings(it.gridX(), it.gridY())
 			it.queue_free()
 			return
 	if it.type.containerSize > 0:
@@ -168,7 +169,7 @@ func gridY():
 	return int(floor(position.y / 96)) - 1
 
 func temperature():
-	var enc = %Walls.getEnclosure(gridX(), gridY())
+	var enc = %Grid.getEnclosure(gridX(), gridY())
 	var temp = enc.temperature if enc else %Weather.temperature()
 	for it in get_tree().get_nodes_in_group("HeatEmitter"):
 		if self.position.distance_squared_to(it.position) <= HEAT_EMIT_DIST * HEAT_EMIT_DIST:
@@ -181,11 +182,15 @@ func _physics_process(delta):
 	if not is_instance_valid(interactWith):
 		interactWith = null
 	if canSetNavTarget and nextNavTarget != Vector2.ZERO:
-		navigation_agent.target_position = nextNavTarget
+		navPath = %Grid.navigate(position, nextNavTarget)
+		navPathIndex = 0
 		navigate = true
 		canSetNavTarget = false
 		nextNavTarget = Vector2.ZERO
-	if navigation_agent.is_navigation_finished():
+	if navPath and position.distance_squared_to(navPath[navPathIndex]) < 10 * 10:
+		navPathIndex += 1
+	if navPath and navPathIndex >= navPath.size():
+		navPath = null
 		navigate = false
 		canSetNavTarget = true
 		if nextNavTarget == Vector2.ZERO:
@@ -195,8 +200,8 @@ func _physics_process(delta):
 			elif dropAt != Vector2.ZERO and %DropItem.toDrop:
 				%DropItem.doDrop(dropAt)
 				dropAt = Vector2.ZERO
-	else:
-		moveTo = navigation_agent.get_next_path_position()
+	elif navPath:
+		moveTo = navPath[navPathIndex]
 		var gridPos = Vector2i(floor(position.x / 128), floor(position.y / 96))
 		if gridPos != prevTile: # This is needed because if we update the nav target faster, the agent breaks.
 			canSetNavTarget = true
@@ -225,4 +230,6 @@ func _physics_process(delta):
 			moveTo = Vector2.ZERO
 		else:
 			mv = ((moveTo - position) / Util.RATIO).normalized() * speed * %Weather.moveSpeedMult() * Util.RATIO * delta
+	mv.x = clampf(mv.x, -position.x + 1, %Grid.grid[0].size() * 128 - position.x - 1)
+	mv.y = clampf(mv.y, -position.y + 1, %Grid.grid.size() * 96 - position.y - 1)
 	move_and_collide(mv)

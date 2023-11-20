@@ -49,6 +49,8 @@ var rotTimeout = 0
 var hp = 1
 var attackTimeout = 0
 var pathTimeout = 0
+var navPath = null
+var navPathIndex = 0
 var moveTo:Vector2 = Vector2.ZERO
 var ouch = 0
 
@@ -90,12 +92,12 @@ func gridY():
 
 func unregister():
 	if type.snapToGrid:
-		if type.wall and $/root/Node2D/Walls.g(gridX(), gridY()) == self:
-			$/root/Node2D/Walls.p(gridX(), gridY(), null)
-			$/root/Node2D/Walls.wallRemoved(gridX(), gridY(), $/root/Node2D/Ceilings)
-		if type.ceiling and $/root/Node2D/Ceilings.g(gridX(), gridY()) == self:
-			$/root/Node2D/Ceilings.p(gridX(), gridY(), null)
-			$/root/Node2D/Walls.ceilingRemoved(gridX(), gridY(), $/root/Node2D/Ceilings)
+		if type.wall and $/root/Node2D/Grid.g(gridX(), gridY()).wall == self:
+			$/root/Node2D/Grid.g(gridX(), gridY()).wall = null
+			$/root/Node2D/Grid.wallRemoved(gridX(), gridY())
+		if type.ceiling and $/root/Node2D/Grid.g(gridX(), gridY()).ceiling == self:
+			$/root/Node2D/Grid.g(gridX(), gridY()).ceiling = null
+			$/root/Node2D/Grid.ceilingRemoved(gridX(), gridY())
 
 func snapToGridAndRegister():
 	var gridX = gridX()
@@ -104,11 +106,11 @@ func snapToGridAndRegister():
 	position.y = gridY * 96 + 96
 	if not Engine.is_editor_hint():
 		if type.wall:
-			$/root/Node2D/Walls.p(gridX, gridY, self)
-			$/root/Node2D/Walls.wallAdded(gridX, gridY, $/root/Node2D/Ceilings)
+			$/root/Node2D/Grid.g(gridX, gridY).wall = self
+			$/root/Node2D/Grid.wallAdded(gridX, gridY)
 		if type.ceiling:
-			$/root/Node2D/Ceilings.p(gridX, gridY, self)
-			$/root/Node2D/Walls.ceilingAdded(gridX, gridY, $/root/Node2D/Ceilings)
+			$/root/Node2D/Grid.g(gridX, gridY).ceiling = self
+			$/root/Node2D/Grid.ceilingAdded(gridX, gridY)
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
@@ -127,7 +129,7 @@ func _process(delta):
 		ouch = max(0, ouch - delta * 5)
 		$Sprite2D.scale = Vector2(1 - ouch * 0.1, 1 - ouch * 0.1)
 	var alpha = 1.0
-	var player:Player = get_node("../Player")
+	var player:Player = get_node("../../Player")
 	if player:
 		if type.creature:
 			_creatureProcess(delta)
@@ -137,8 +139,8 @@ func _process(delta):
 				player.position.y > position.y - 96 * 2:
 			alpha = 0.3
 		elif type.ceiling:
-			var playerEnclosure:GridManager.Enclosure = get_node("../Walls").getEnclosure(player.gridX(), player.gridY())
-			var myEnclosure:GridManager.Enclosure = get_node("../Walls").getEnclosure(gridX(), gridY())
+			var playerEnclosure:GridManager.Enclosure = get_node("../../Grid").getEnclosure(player.gridX(), player.gridY())
+			var myEnclosure:GridManager.Enclosure = get_node("../../Grid").getEnclosure(gridX(), gridY())
 			if playerEnclosure and playerEnclosure == myEnclosure:
 				alpha = 0.3
 			elif player.gridX() == gridX() and player.gridY() == gridY():
@@ -179,6 +181,15 @@ func _creatureProcess(delta):
 			moveTo = %Player.position
 		elif type.roamRandomly:
 			moveTo = position + Vector2(randf_range(-500, 500), randf_range(-500, 500))
-	if position.distance_squared_to(moveTo) > 100:
+		navPath = %Grid.navigate(position, moveTo)
+		navPathIndex = 0
+	if navPath and position.distance_squared_to(navPath[navPathIndex]) < 10 * 10:
+		navPathIndex += 1
+		if navPathIndex >= navPath.size():
+			navPath = null
+	if navPath:
 		var sp = type.moveSpeed if hp < type.hp else type.idleMoveSpeed
-		position += (moveTo - position).normalized() * sp * Util.RATIO * delta
+		if ((navPath[navPathIndex] - position) / Util.RATIO).length() <= sp * delta:
+			position = navPath[navPathIndex]
+		else:
+			position += (navPath[navPathIndex] - position).normalized() * sp * Util.RATIO * delta
