@@ -158,7 +158,7 @@ position = Vector2(64, 576)
 typeName = "door"
 
 [node name="Item13" parent="." instance=ExtResource("5_ie426")]
-position = Vector2(-64, 480)
+position = Vector2(-64, 481)
 collision_layer = 1
 typeName = "wall"
 

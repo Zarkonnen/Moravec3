@@ -8,7 +8,7 @@
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_x2o0v"]
 size = Vector2(128, 96)
 
-[sub_resource type="ShaderMaterial" id="ShaderMaterial_pcw8k"]
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_4rb3g"]
 shader = ExtResource("2_o8jvu")
 shader_parameter/strength = 0.0
 shader_parameter/a = 1.0
@@ -17,7 +17,7 @@ shader_parameter/a = 1.0
 atlas = ExtResource("1_qxv04")
 region = Rect2(406, 29, 63, 66)
 
-[sub_resource type="ShaderMaterial" id="ShaderMaterial_rp7lx"]
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_mfd6m"]
 shader = ExtResource("2_o8jvu")
 shader_parameter/strength = 0.0
 shader_parameter/a = 1.0
@@ -31,13 +31,13 @@ position = Vector2(0, -48)
 shape = SubResource("RectangleShape2D_x2o0v")
 
 [node name="Sprite2D" type="Sprite2D" parent="."]
-material = SubResource("ShaderMaterial_pcw8k")
+material = SubResource("ShaderMaterial_4rb3g")
 texture = SubResource("AtlasTexture_ccgmh")
 offset = Vector2(0, -33)
 
 [node name="Layer2" type="Sprite2D" parent="."]
 visible = false
-material = SubResource("ShaderMaterial_rp7lx")
+material = SubResource("ShaderMaterial_mfd6m")
 texture = SubResource("AtlasTexture_ccgmh")
 offset = Vector2(0, -33)
 
