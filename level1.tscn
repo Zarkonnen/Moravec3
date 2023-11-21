@@ -1,4 +1,4 @@
-[gd_scene load_steps=24 format=3 uid="uid://cb3icp3ox1m3k"]
+[gd_scene load_steps=27 format=3 uid="uid://cb3icp3ox1m3k"]
 
 [ext_resource type="TileSet" uid="uid://cat3g8vk3uxca" path="res://ground_tile_set.tres" id="1_xbrc4"]
 [ext_resource type="Script" path="res://Player.gd" id="2_jq1fc"]
@@ -9,8 +9,10 @@
 [ext_resource type="PackedScene" uid="uid://cq7lggbfun7va" path="res://InventorySlot.tscn" id="6_tj3ja"]
 [ext_resource type="Script" path="res://DropItem.gd" id="8_7mnix"]
 [ext_resource type="Texture2D" uid="uid://dpw40sh7lxy63" path="res://crafting.png" id="8_fuffq"]
+[ext_resource type="Texture2D" uid="uid://bfw75c5m1fxge" path="res://basket.png" id="9_ce43d"]
 [ext_resource type="Script" path="res://Crafting.gd" id="9_x6lxk"]
 [ext_resource type="Script" path="res://Stats.gd" id="10_dt6v4"]
+[ext_resource type="Texture2D" uid="uid://ccymkaoubvh3k" path="res://shirt.png" id="10_ef5wb"]
 [ext_resource type="Script" path="res://ContainerContents.gd" id="12_osken"]
 [ext_resource type="PackedScene" uid="uid://dqux4yrt2qht5" path="res://StatBar.tscn" id="12_xieyx"]
 [ext_resource type="PackedScene" uid="uid://bumsyb8rwcl42" path="res://ContainerSlot.tscn" id="13_7dd51"]
@@ -18,6 +20,7 @@
 [ext_resource type="Script" path="res://EnclosureDebug.gd" id="14_c4t04"]
 [ext_resource type="Script" path="res://Weather.gd" id="17_vosn5"]
 [ext_resource type="Texture2D" uid="uid://d4i8bjh0fkpsr" path="res://dayramp2.png" id="18_f24wg"]
+[ext_resource type="Script" path="res://WorldGen.gd" id="21_5vlla"]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_s0aak"]
 
@@ -123,9 +126,9 @@ anchors_preset = 2
 anchor_top = 1.0
 anchor_right = 0.0
 offset_left = 10.0
-offset_top = -70.0
+offset_top = -69.0
 offset_right = 70.0
-offset_bottom = -10.0
+offset_bottom = -9.0
 grow_horizontal = 1
 grow_vertical = 0
 
@@ -164,6 +167,136 @@ offset_bottom = -10.0
 grow_horizontal = 1
 grow_vertical = 0
 index = 3
+
+[node name="InventorySlot5" parent="GUI/Inventory" instance=ExtResource("6_tj3ja")]
+anchors_preset = 2
+anchor_top = 1.0
+anchor_right = 0.0
+offset_left = 290.0
+offset_top = -70.0
+offset_right = 350.0
+offset_bottom = -10.0
+grow_horizontal = 1
+grow_vertical = 0
+index = 4
+
+[node name="InventorySlot6" parent="GUI/Inventory" instance=ExtResource("6_tj3ja")]
+anchors_preset = 2
+anchor_top = 1.0
+anchor_right = 0.0
+offset_left = 360.0
+offset_top = -70.0
+offset_right = 420.0
+offset_bottom = -10.0
+grow_horizontal = 1
+grow_vertical = 0
+index = 5
+
+[node name="InventorySlot7" parent="GUI/Inventory" instance=ExtResource("6_tj3ja")]
+anchors_preset = 2
+anchor_top = 1.0
+anchor_right = 0.0
+offset_left = 430.0
+offset_top = -70.0
+offset_right = 490.0
+offset_bottom = -10.0
+grow_horizontal = 1
+grow_vertical = 0
+index = 6
+
+[node name="InventorySlot8" parent="GUI/Inventory" instance=ExtResource("6_tj3ja")]
+anchors_preset = 2
+anchor_top = 1.0
+anchor_right = 0.0
+offset_left = 500.0
+offset_top = -70.0
+offset_right = 560.0
+offset_bottom = -10.0
+grow_horizontal = 1
+grow_vertical = 0
+index = 7
+
+[node name="InventorySlot9" parent="GUI/Inventory" instance=ExtResource("6_tj3ja")]
+anchors_preset = 2
+anchor_top = 1.0
+anchor_right = 0.0
+offset_left = 570.0
+offset_top = -70.0
+offset_right = 630.0
+offset_bottom = -10.0
+grow_horizontal = 1
+grow_vertical = 0
+index = 8
+
+[node name="InventorySlot10" parent="GUI/Inventory" instance=ExtResource("6_tj3ja")]
+anchors_preset = 2
+anchor_top = 1.0
+anchor_right = 0.0
+offset_left = 640.0
+offset_top = -70.0
+offset_right = 700.0
+offset_bottom = -10.0
+grow_horizontal = 1
+grow_vertical = 0
+index = 9
+
+[node name="BagSlot" parent="GUI/Inventory" instance=ExtResource("6_tj3ja")]
+unique_name_in_owner = true
+anchors_preset = 3
+anchor_left = 1.0
+anchor_top = 1.0
+offset_left = -140.0
+offset_top = -70.0
+offset_right = -80.0
+offset_bottom = -10.0
+grow_horizontal = 0
+grow_vertical = 0
+index = -1
+
+[node name="ClothingSlot" parent="GUI/Inventory" instance=ExtResource("6_tj3ja")]
+unique_name_in_owner = true
+anchors_preset = 3
+anchor_left = 1.0
+anchor_top = 1.0
+offset_left = -70.0
+offset_top = -70.0
+offset_right = -10.0
+offset_bottom = -10.0
+grow_horizontal = 0
+grow_vertical = 0
+index = -2
+
+[node name="TextureRect" type="TextureRect" parent="GUI/Inventory"]
+modulate = Color(1, 1, 1, 0.501961)
+anchors_preset = 3
+anchor_left = 1.0
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = -128.0
+offset_top = -113.0
+offset_right = 384.0
+offset_bottom = 399.0
+grow_horizontal = 0
+grow_vertical = 0
+scale = Vector2(0.07, 0.07)
+texture = ExtResource("9_ce43d")
+
+[node name="TextureRect2" type="TextureRect" parent="GUI/Inventory"]
+modulate = Color(1, 1, 1, 0.501961)
+anchors_preset = 3
+anchor_left = 1.0
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = -57.0
+offset_top = -113.0
+offset_right = 455.0
+offset_bottom = 399.0
+grow_horizontal = 0
+grow_vertical = 0
+scale = Vector2(0.07, 0.07)
+texture = ExtResource("10_ef5wb")
 
 [node name="UseProgress" type="ColorRect" parent="GUI"]
 unique_name_in_owner = true
@@ -237,6 +370,20 @@ offset_right = -66.0
 offset_bottom = 153.0
 grow_horizontal = 0
 text = "XP: 0"
+
+[node name="DropItem" type="Sprite2D" parent="GUI"]
+unique_name_in_owner = true
+visible = false
+z_index = 10
+texture = SubResource("AtlasTexture_regq1")
+script = ExtResource("8_7mnix")
+
+[node name="Quantity" type="Label" parent="GUI/DropItem"]
+offset_left = -20.0
+offset_top = 20.0
+offset_right = 20.0
+offset_bottom = 46.0
+horizontal_alignment = 1
 
 [node name="ContainerContents" type="Control" parent="GUI"]
 unique_name_in_owner = true
@@ -401,20 +548,6 @@ offset_right = 1155.0
 offset_bottom = 292.0
 index = 15
 
-[node name="DropItem" type="Sprite2D" parent="."]
-unique_name_in_owner = true
-visible = false
-z_index = 10
-texture = SubResource("AtlasTexture_regq1")
-script = ExtResource("8_7mnix")
-
-[node name="Quantity" type="Label" parent="DropItem"]
-offset_left = -20.0
-offset_top = 20.0
-offset_right = 20.0
-offset_bottom = 46.0
-horizontal_alignment = 1
-
 [node name="Grid" type="Node" parent="."]
 unique_name_in_owner = true
 script = ExtResource("13_2234k")
@@ -428,12 +561,12 @@ script = ExtResource("14_c4t04")
 [node name="Items" type="Node" parent="."]
 
 [node name="Item5" parent="Items" instance=ExtResource("5_ie426")]
-position = Vector2(458, 397)
+position = Vector2(448, 384)
 typeName = "ceiling"
 
 [node name="Item7" parent="Items" instance=ExtResource("5_ie426")]
 position = Vector2(1234, 235)
-typeName = "antlermander"
+typeName = "leaf sling"
 
 [node name="Item" parent="Items" instance=ExtResource("5_ie426")]
 position = Vector2(952, 177)
@@ -442,57 +575,60 @@ typeName = "chalk"
 
 [node name="Item2" parent="Items" instance=ExtResource("5_ie426")]
 position = Vector2(716, 231)
+typeName = "leaf sling"
 
 [node name="Item3" parent="Items" instance=ExtResource("5_ie426")]
-position = Vector2(330, 397)
+position = Vector2(320, 384)
 collision_layer = 1
 typeName = "wall"
 
 [node name="Item6" parent="Items" instance=ExtResource("5_ie426")]
-position = Vector2(458, 301)
+position = Vector2(448, 288)
 collision_layer = 1
 typeName = "wall"
 
 [node name="Item8" parent="Items" instance=ExtResource("5_ie426")]
-position = Vector2(586, 397)
+position = Vector2(576, 384)
 collision_layer = 1
 typeName = "wall"
 
 [node name="Item9" parent="Items" instance=ExtResource("5_ie426")]
-position = Vector2(586, 589)
+position = Vector2(576, 576)
 collision_layer = 1
 typeName = "wall"
 
 [node name="Item11" parent="Items" instance=ExtResource("5_ie426")]
-position = Vector2(458, 493)
+position = Vector2(448, 480)
 typeName = "ceiling"
 
 [node name="Item16" parent="Items" instance=ExtResource("5_ie426")]
-position = Vector2(458, 589)
+position = Vector2(448, 576)
 typeName = "ceiling"
 
 [node name="Item14" parent="Items" instance=ExtResource("5_ie426")]
-position = Vector2(330, 493)
+position = Vector2(320, 480)
 collision_layer = 1
 typeName = "wall"
 
 [node name="Item15" parent="Items" instance=ExtResource("5_ie426")]
-position = Vector2(586, 493)
+position = Vector2(576, 480)
 collision_layer = 1
 typeName = "wall"
 
 [node name="Item12" parent="Items" instance=ExtResource("5_ie426")]
-position = Vector2(458, 685)
+position = Vector2(448, 672)
 typeName = "door"
 
 [node name="Item13" parent="Items" instance=ExtResource("5_ie426")]
-position = Vector2(330, 589)
+position = Vector2(320, 576)
 collision_layer = 1
 typeName = "wall"
 
 [node name="Item4" parent="Items" instance=ExtResource("5_ie426")]
 position = Vector2(1098, 460)
-typeName = "antler"
+typeName = "feather poncho"
 
-[connection signal="changed" from="GUI/Inventory" to="GUI/Crafts" method="_on_inventory_changed"]
+[node name="WorldGen" type="Node" parent="."]
+script = ExtResource("21_5vlla")
+
 [connection signal="gui_input" from="GUI/Crafts" to="GUI/Crafts" method="_on_gui_input"]

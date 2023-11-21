@@ -21,6 +21,11 @@ var heatEmission:float = 0
 var insulation:float = 0
 var lightEmission:float = 0
 var lightColor:Color = Color.WHITE
+var bagCapacity:int = 0
+var clothing:bool = false
+var clothingWetnessMult:float = 1
+var clothingDamageMult:float = 1
+var clothingDamageAbsorb:float = 0
 
 # Creature stuff
 var creature:bool = false
@@ -75,6 +80,11 @@ static func loadTypes():
 		it.heatEmission = i.get("heatEmission", 0)
 		it.insulation = i.get("insulation", 0)
 		it.lightEmission = i.get("lightEmission", 0)
+		it.bagCapacity = i.get("bagCapacity", 0)
+		it.clothing = i.get("clothing", false)
+		it.clothingWetnessMult = i.get("clothingWetnessMult", 1)
+		it.clothingDamageMult = i.get("clothingDamageMult", 1)
+		it.clothingDamageAbsorb = i.get("clothingDamageAbsorb", 0)
 		
 		# Creature stuff
 		it.creature = i.get("creature", false)

@@ -29,13 +29,12 @@ func navigate(from:Vector2, to:Vector2):
 
 func _init():
 	var grass = GroundType.ofName("Grass")
-	var water = GroundType.ofName("Water")
 	var tidCounter = 0
 	for y in range(0, MAP_SIZE):
 		var row = []
 		grid.append(row)
 		for x in range(0, MAP_SIZE):
-			row.append(Tile.new(tidCounter, x, y, water if x > 3 and x < 7 and y > 3 and y < 8 else grass))
+			row.append(Tile.new(tidCounter, x, y, grass))
 			nav.add_point(tidCounter, Vector2(x * 128 + 64, y * 96 + 48))
 			tidCounter += 1
 	for y in range(1, MAP_SIZE - 1):
@@ -65,6 +64,9 @@ func updateTileMap():
 	for gt in GroundType.types:
 		if gt.terrain != -1:
 			tm.set_cells_terrain_connect(0, tm.get_used_cells_by_id(0, -1, gt.atlasTile), 0, gt.terrain)
+
+func tileAt(x, y) -> Tile:
+	return g(int(floor(x / 128)), int(floor(y / 96)))
 
 func g(x, y):
 	if x < 0 or y < 0 or y >= grid.size() or x >= grid[0].size():

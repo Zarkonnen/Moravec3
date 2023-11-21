@@ -149,5 +149,17 @@
 				"xp": 2
 			}
 		}
-	}
+	},
+	{
+		"name": "leaf sling",
+		"x": 39, "y": 589, "w": 39, "h": 32,
+		"canTake": true,
+		"bagCapacity": 3
+	},
+	{
+		"name": "feather poncho",
+		"x": 1592, "y": 1209, "w": 69, "h": 87,
+		"canTake": true,
+		"clothing": true
+	},
 ]

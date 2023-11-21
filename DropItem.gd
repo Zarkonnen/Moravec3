@@ -20,22 +20,25 @@ var quantity:int = 1:
 		quantity = value
 		$Quantity.text = "" if quantity < 2 else str(quantity)
 
+var preferredSlot:int = ItemContainer.ANY_SLOT
+
 func _process(delta):
 	if visible:
-		position = get_viewport().get_mouse_position() - Vector2(get_viewport().size) / 2 + %Player.position + %Camera.offset
-		modulate = Color.WHITE if _canPlace(position) else Color.DARK_RED
+		position = get_viewport().get_mouse_position()
+		var worldPosition = position - Vector2(get_viewport().size) / 2 + %Player.position + %Camera.offset
+		modulate = Color.WHITE if _canPlace(worldPosition) else Color.DARK_RED
 		if toDrop.snapToGrid:
-			var gridX = int(floor(position.x / 128))
-			var gridY = int(floor(position.y / 96))
-			position.x = gridX * 128 + 64
-			position.y = gridY * 96 + 96
+			var gridX = int(floor(worldPosition.x / 128))
+			var gridY = int(floor(worldPosition.y / 96))
+			position = Vector2(gridX * 128 + 64, gridY * 96 + 96) + Vector2(get_viewport().size) / 2 - %Player.position - %Camera.offset
 
 func _canPlace(position):
 	var gridX = int(floor(position.x / 128))
 	var gridY = int(floor(position.y / 96))
-	if %World.tileAtIsFloor(position) and not %Grid.g(gridX, gridY):
+	var tile = %Grid.g(gridX, gridY)
+	if tile and tile.traversable():
 		if toDrop.ceiling:
-			if %Grid.g(gridX, gridY).ceiling or %Grid.wallSupportStrength(gridX, gridY) < 1:
+			if tile.ceiling or %Grid.wallSupportStrength(gridX, gridY) < 1:
 				return false
 		elif toDrop.snapToGrid:
 			for it in get_tree().get_nodes_in_group("Items"):
@@ -67,7 +70,7 @@ func doDrop(dropAt):
 		visible = true
 	else:
 		return
-	var removed = %Inventory.remove(toDrop, quantity)
+	var removed = %Inventory.remove(toDrop, quantity, preferredSlot)
 	if toDrop.snapToGrid:
 		dropAt.y += 96
 	if removed:

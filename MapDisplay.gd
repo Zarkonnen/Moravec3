@@ -64,7 +64,7 @@ func _process(delta):
 				else:
 					%Player.interact(closest)
 					doMove = false
-		if doMove and tileAt(mp):
+		if doMove and %Grid.tileAt(mp.x, mp.y):
 			%Player.setNavTarget(mp, closest)
 		if doMove:
 			%Player.using = null
@@ -94,11 +94,3 @@ func canInteract(it):
 	
 func playerCloseness(item):
 	return -%Player.position.distance_squared_to(item.position)
-
-func tileAt(mp) -> TileData:
-	var gridPos = Vector2i(floor(mp.x / tile_set.tile_size.x), floor(mp.y / tile_set.tile_size.y))
-	return get_cell_tile_data(0, gridPos)
-
-func tileAtIsFloor(mp) -> bool:
-	var td = tileAt(mp)
-	return td and td.terrain == 0

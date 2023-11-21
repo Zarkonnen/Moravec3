@@ -164,9 +164,13 @@ func _creatureProcess(delta):
 	if attackTimeout > 0 and type.attackDamage:
 		attackTimeout -= delta
 	if type.attackDamage and attackTimeout <= 0 and position.distance_squared_to(%Player.position) < 40 * 40:
-		%Stats.change("HP", -type.attackDamage)
+		var dmg = type.attackDamage
+		if %Inventory.clothing:
+			dmg = dmg * %Inventory.clothing.clothingDamageMult - %Inventory.clothing.clothingDamageAbsorb
+		%Stats.change("HP", -max(0, dmg))
 		attackTimeout = type.attackCooldown
-		%Player.ouch = 1
+		if dmg > 0:
+			%Player.ouch = 1
 	pathTimeout -= delta * (2 if hp < type.hp else 1)
 	if pathTimeout <= 0:
 		pathTimeout = randf_range(2, 8)

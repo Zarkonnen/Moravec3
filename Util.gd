@@ -5,24 +5,24 @@ static var RATIO = Vector2(1, ASPECT)
 
 static func minL(l, f):
 	var minV = 0
-	var set = false
+	var isSet = false
 	for e in l:
 		var v = f.call(e)
-		if not set:
+		if not isSet:
 			minV = v
-			set = true
+			isSet = true
 		else:
 			minV = min(v, minV)
 	return minV
 	
 static func maxL(l, f):
 	var maxV = 0
-	var set = false
+	var isSet = false
 	for e in l:
 		var v = f.call(e)
-		if not set:
+		if not isSet:
 			maxV = v
-			set = true
+			isSet = true
 		else:
 			maxV = max(v, maxV)
 	return maxV
@@ -34,16 +34,16 @@ static func first(l, q):
 	return null
 
 static func most(l, f):
-	var most = null
+	var theMost = null
 	var found = false
 	var quality = 0
 	for x in l:
 		var q = f.call(x)
 		if not found or q > quality:
 			found = true
-			most = x
+			theMost = x
 			quality = q
-	return most
+	return theMost
 
 static func sum(l, f):
 	var amt = 0

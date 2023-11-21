@@ -83,6 +83,8 @@ func _process(delta):
 						amt -= 2
 					elif temp >= 22:
 						amt -= 1
+				if amt > 0 and %Inventory.clothing:
+					amt *= %Inventory.clothing.clothingWetnessMult
 			change(stat.name, amt)
 			stat.autoChangeTimeout = stat.autoChangeInterval
 		

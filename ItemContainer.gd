@@ -1,5 +1,7 @@
 class_name ItemContainer
 
+const ANY_SLOT = -99
+
 class Slot:
 	var type:ItemType = null
 	var quantity:int = 0
@@ -67,11 +69,28 @@ func useTool(i:int, it:ItemType, toolDurabilityChange:int) -> bool:
 	return true
 
 # Returns the number of successfully added items.
-func add(it:ItemType, durability, quantity=1) -> int:
+func add(it:ItemType, durability, quantity=1, preferredSlot=ANY_SLOT) -> int:
 	if not it.canTake:
 		return 0
-	# Can we stack?
 	var remaining = quantity
+	# Do we want a specific slot?
+	if preferredSlot != ANY_SLOT:
+		var slot = slots[preferredSlot]
+		if slot.type == it:
+			var canPut = min(remaining, it.stacking - slot.quantity)
+			remaining -= canPut
+			slot.durability = round((slot.durability * slot.quantity + durability * canPut) / (slot.quantity + canPut))
+			slot.quantity += canPut
+		elif not slot.type:
+			var canPut = min(remaining, it.stacking)
+			remaining -= canPut
+			slot.type = it
+			slot.durability = durability
+			slot.quantity = canPut
+			slot.rotTimer = it.rotInterval
+		if remaining == 0:
+			return quantity
+	# Can we stack?
 	for slot in slots:
 		if slot.type == it:
 			var canPut = min(remaining, it.stacking - slot.quantity)
@@ -80,6 +99,7 @@ func add(it:ItemType, durability, quantity=1) -> int:
 			slot.quantity += canPut
 			if remaining == 0:
 				return quantity
+	# Find a new slot
 	for slot in slots:
 		if slot.type == null:
 			var canPut = min(remaining, it.stacking)
@@ -93,12 +113,13 @@ func add(it:ItemType, durability, quantity=1) -> int:
 	return quantity - remaining
 
 # Returns [item type, durability]
-func remove(it:ItemType, quantity:int=1):
+func remove(it:ItemType, quantity:int=1, preferredSlot=ANY_SLOT):
 	if not has(it, quantity):
 		return null
 	var q = quantity
 	var durabilitySum = 0
-	for slot in slots:
+	if preferredSlot != ANY_SLOT:
+		var slot = slots[preferredSlot]
 		if slot.type == it:
 			var rm = min(quantity, slot.quantity)
 			slot.quantity -= rm
@@ -106,4 +127,13 @@ func remove(it:ItemType, quantity:int=1):
 			durabilitySum += rm * slot.durability
 			if slot.quantity == 0:
 				slot.type = null
+	if quantity:
+		for slot in slots:
+			if slot.type == it:
+				var rm = min(quantity, slot.quantity)
+				slot.quantity -= rm
+				quantity -= rm
+				durabilitySum += rm * slot.durability
+				if slot.quantity == 0:
+					slot.type = null
 	return [it, round(durabilitySum / q)]
