@@ -20,9 +20,9 @@ func generate():
 	grid.updateTileMap()
 	
 	# Clear test items
-	for item in get_tree().get_nodes_in_group("Items"):
-		item.unregister()
-		item.queue_free()
+#	for item in get_tree().get_nodes_in_group("Items"):
+#		item.unregister()
+#		item.queue_free()
 	
 	for isr in ItemSpawnRegion.types:
 		for n in range(isr.quantity):
@@ -35,3 +35,5 @@ func generate():
 				if not grid.tileAt(ix, iy) or not grid.tileAt(ix, iy).traversable():
 					continue
 				%DropItem.createItem(isr.type, Vector2(ix, iy), isr.type.durability)
+				
+	grid.updateNavigation()

@@ -191,6 +191,7 @@ func wallAdded(x, y):
 				enclosures.append(newEnc)
 				_updateCeilings(newEnc)
 				_updateInsulation(newEnc)
+	updateNavigation()
 	
 func wallRemoved(x, y):
 	nav.set_point_disabled(g(x, y).id, not g(x, y).traversable())
@@ -223,6 +224,7 @@ func wallRemoved(x, y):
 					enc.tiles = fill
 					encs.append(enc)
 					_updateCeilings(enc)
+	updateNavigation()
 					
 
 func ceilingAdded(x, y):
