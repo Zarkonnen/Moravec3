@@ -32,7 +32,8 @@ func generate():
 			for j in range(isr.itemQuantity):
 				var ix = randf_range(x - isr.radius, x + isr.radius)
 				var iy = randf_range(y - isr.radius, y + isr.radius)
-				if not grid.tileAt(ix, iy) or not grid.tileAt(ix, iy).traversable():
+				var t:GridManager.Tile = grid.tileAt(ix, iy)
+				if not t or not t.traversable() or (isr.ground and isr.ground != t.ground):
 					continue
 				%DropItem.createItem(isr.type, Vector2(ix, iy), isr.type.durability)
 				

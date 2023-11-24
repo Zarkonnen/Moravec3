@@ -1,6 +1,7 @@
 [
     {
-        "type": "bush",
+        "type": "red berry bush with berries",
+        "ground": "grass",
         "quantity": 7,
         "radius": 300,
         "itemQuantity": 5

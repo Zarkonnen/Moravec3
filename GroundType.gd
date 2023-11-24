@@ -1,6 +1,7 @@
 class_name GroundType
 
 var name:String
+var comment:String
 var atlasTile:Vector2i
 var traversable:bool
 var terrain = -1
@@ -28,5 +29,6 @@ static func loadTypes():
 		var gt = GroundType.new(i["name"], i["x"], i["y"])
 		gt.traversable = i.get("traversable", true)
 		gt.terrain = i.get("terrain", -1)
+		gt.comment = i.get("comment", "")
 		ts.append(gt)
 	types = ts

@@ -1,30 +1,47 @@
 [
+    {
+		"name": "needle grass",
+		"x": 176, "y": 51, "w": 34, "h": 44,
+		"use": {
+			"any": {
+				"name": "Pick needles",
+				"time": 2,
+				"spawn": [["needles", 1]],
+				"stats": {"HP": -5, "Stamina": -5},
+				"xp": 2,
+				"comment": "Ouch.",
+				"sound": "rustle"
+			}
+		}
+	},
 	{
-		"name": "bush",
+		"name": "needles",
+		"x": 18, "y": 120, "w": 22, "h": 39,
+		"canTake": true, "stacking": 10
+	},
+	{
+		"name": "red berry bush with berries",
 		"x": 406, "y": 29, "w": 63, "h": 66,
 		"use": {
 			"any": {
 				"name": "Pick berries",
 				"time": 3,
-				"turnInto": "emptyBush",
-				"spawn": [["berries", 3]],
-				"xp": 2
+				"turnInto": "red berry bush",
+				"spawn": [["red berries", 3]],
+				"stats": {"Stamina": -5},
+				"xp": 2,
+				"sound": "rustle"
 			}
 		}
 	},
 	{
-		"name": "emptyBush",
+		"name": "red berry bush",
 		"x": 228, "y": 4, "w": 63, "h": 66,
-		"rotInterval": 1000,
-		"rotInto": "bush"
+		"rotInterval": 3000,
+		"rotInto": "red berry bush with berries"
 	},
 	{
-		"name": "chalk",
-		"x": 306, "y": 75, "w": 25, "h": 20,
-		"canTake": true, "stacking": 10
-	},
-	{
-		"name": "berries",
+		"name": "red berries",
 		"x": 780, "y": 29, "w": 31, "h": 28,
 		"canTake": true, "stacking": 10,
 		"durability": 100,
@@ -35,9 +52,231 @@
 				"time": 1,
 				"destroy": true,
 				"stats": {"Food": 10},
-				"xp": 5
+				"xp": 5,
+				"sound": "eat"
 			}
 		}
+	},
+	{
+		"name": "black berry bush with berries",
+		"x": 1047, "y": 40, "w": 64, "h": 47,
+		"use": {
+			"any": {
+				"name": "Pick berries",
+				"time": 3,
+				"turnInto": "black berry bush",
+				"spawn": [["black berries", 3]],
+				"stats": {"Stamina": -5},
+				"xp": 2,
+				"sound": "rustle"
+			}
+		}
+	},
+	{
+		"name": "black berry bush",
+		"x": 1049, "y": 403, "w": 58, "h": 41,
+		"rotInterval": 3000,
+		"rotInto": "black berry bush with berries"
+	},
+	{
+		"name": "black berries",
+		"x": 1093, "y": 7, "w": 26, "h": 26,
+		"canTake": true, "stacking": 10,
+		"durability": 100,
+		"rotInterval": 3,
+		"use": {
+			"consume": {
+				"name": "Eat berries",
+				"time": 1,
+				"destroy": true,
+				"stats": {"Food": 10, "HP": -5},
+				"xp": 5,
+				"comment": "Bitter.",
+				"sound": "eat"
+			}
+		}
+	},
+	{
+		"name": "chalk",
+		"x": 306, "y": 75, "w": 25, "h": 20,
+		"canTake": true, "stacking": 10
+	},
+	{
+		"name": "gourd plant",
+		"x": 545, "y": 54, "w": 54, "h": 40,
+		"use": {
+			"any": {
+				"name": "Harvest gourd",
+				"time": 8,
+				"destroy": true,
+				"spawn": [["gourd", 1]],
+				"stats": {"Stamina": -20},
+				"xp": 2,
+				"sound": "dig"
+			}
+		}
+	},
+	{
+		"name": "gourd",
+		"x": 682, "y": 11, "w": 54, "h": 84,
+		"canTake": true, "stacking": 4
+	},
+	{
+		"name": "fertilized gourd plant",
+		"x": 545, "y": 54, "w": 54, "h": 40,
+		"rotInterval": 3000,
+		"rotInto": "large gourd plant"
+	},
+	{
+		"name": "large gourd plant",
+		"x": 545, "y": 54, "w": 54, "h": 40,
+		"use": {
+			"any": {
+				"name": "Harvest large gourd",
+				"time": 15,
+				"destroy": true,
+				"spawn": [["large gourd", 1], ["leaf", 5]],
+				"stats": {"Stamina": -30},
+				"xp": 2,
+				"sound": "dig"
+			}
+		}
+	},
+	{
+		"name": "large gourd",
+		"x": 530, "y": 286, "w": 49, "h": 58,
+		"canTake": true
+	},
+	{
+		"name": "large bowl",
+		"x": 623, "y": 326, "w": 54, "h": 41,
+		"canTake": true
+	},
+	{
+		"name": "tanning bowl",
+		"x": 694, "y": 327, "w": 54, "h": 41,
+		"rotInterval": 4000,
+		"rotInto": "finished tanning bowl"
+	},
+	{
+		"name": "finished tanning bowl",
+		"x": 694, "y": 327, "w": 54, "h": 41,
+		"use": {
+			"any": {
+				"name": "Take leather",
+				"time": 0.5,
+				"turnInto": "large bowl",
+				"spawn": [["leather", 1]],
+				"stats": {"Stamina": -5},
+				"sound": "splash"
+			}
+		}
+	},
+	{
+		"name": "brick mold",
+		"x": 770, "y": 312, "w": 60, "h": 36,
+		"canTake": true, "stacking": 4,
+		"use": {
+			"bowl with black sap": {
+				"name": "Fill mold",
+				"time": 1,
+				"turnInto": "filled brick mold",
+				"stats": {"Stamina": -5},
+				"toolDurability": -20,
+				"sound": "pour"
+			}
+		}
+	},
+	{
+		"name": "filled brick mold",
+		"x": 770, "y": 312, "w": 60, "h": 36,
+		"rotInterval": 500,
+		"rotInto": "hardened brick mold"
+	},
+	{
+		"name": "hardened brick mold",
+		"x": 770, "y": 312, "w": 60, "h": 36,
+		"use": {
+			"any": {
+				"name": "Take brick",
+				"time": 0.1,
+				"turnInto": "brick mold",
+				"spawn": [["brick", 1]],
+				"sound": "take"
+			}
+		}
+	},
+	{
+		"name": "shingle mold",
+		"x": 905, "y": 315, "w": 45, "h": 36,
+		"canTake": true, "stacking": 4,
+		"use": {
+			"bowl with black sap": {
+				"name": "Fill mold",
+				"time": 1,
+				"turnInto": "filled shingle mold",
+				"stats": {"Stamina": -5},
+				"toolDurability": -20,
+				"sound": "pour"
+			}
+		}
+	},
+	{
+		"name": "filled shingle mold",
+		"x": 906, "y": 354, "w": 45, "h": 36,
+		"rotInterval": 500,
+		"rotInto": "hardened shingle mold"
+	},
+	{
+		"name": "hardened shingle mold",
+		"x": 906, "y": 354, "w": 45, "h": 36,
+		"use": {
+			"any": {
+				"name": "Take shingle",
+				"time": 0.1,
+				"turnInto": "shingle mold",
+				"spawn": [["shingle", 1]],
+				"sound": "take"
+			}
+		}
+	},
+	{
+		"name": "leaf",
+		"x": 70, "y": 129, "w": 29, "h": 43,
+		"canTake": true, "stacking": 10
+	},
+	{
+		"name": "gourd seeds",
+		"x": 653, "y": 15, "w": 24, "h": 20,
+		"canTake": true, "stacking": 10
+	},
+	{
+		"name": "planted gourd seed",
+		"x": 1313, "y": 123, "w": 24, "h": 14,
+		"rotInterval": 2000,
+		"rotInto": "sprouting gourd plant"
+	},
+	{
+		"name": "sprouting gourd plant",
+		"x": 1336, "y": 224, "w": 7, "h": 19,
+		"rotInterval": 4000,
+		"rotInto": "gourd plant"
+	},
+	{
+		"name": "bowl",
+		"x": 815, "y": 74, "w": 29, "h": 21,
+		"canTake": true,
+	},
+	{
+		"name": "bowl with red sap",
+		"x": 829, "y": 42, "w": 29, "h": 21,
+		"canTake": true,
+	},
+	{
+		"name": "bowl with black sap",
+		"x": 815, "y": 74, "w": 29, "h": 21,
+		"canTake": true,
+		"durability": 100
 	},
 	{
 		"name": "antler",
@@ -45,7 +284,7 @@
 		"canTake": true
 	},
 	{
-		"name": "antler knife",
+		"name": "knife",
 		"x": 55, "y": 438, "w": 30, "h": 28,
 		"canTake": true,
 		"durability": 100
@@ -54,66 +293,136 @@
 		"name": "finger tree",
 		"x": 406, "y": 29, "w": 63, "h": 66,
 		"use": {
-			"antler knife": {
+		    "bladewing axe": {
 				"name": "Harvest tree",
-				"time": 3,
+				"time": 4,
 				"toolDurability": -5,
 				"destroy": true,
-				"spawn": [["tree fibres", 3], ["tree mulch", 1]]
+				"stats": {"Stamina": -15},
+				"spawn": [["tree fibres", 3], ["tree mulch", 1], ["finger tree seeds", 2]]
+			},
+			"knife": {
+				"name": "Harvest tree",
+				"time": 10,
+				"toolDurability": -10,
+				"destroy": true,
+				"stats": {"Stamina": -30},
+				"spawn": [["tree fibres", 3], ["tree mulch", 1], ["finger tree seeds", 2]]
 			}
 		}
 	},
 	{
 		"name": "tree fibres",
 		"x": 13, "y": 300, "w": 35, "h": 45,
-		"canTake": true, "stacking": 20,
+		"canTake": true, "stacking": 10,
+	},
+	{
+		"name": "finger tree seeds",
+		"x": 780, "y": 29, "w": 31, "h": 28,
+		"canTake": true, "stacking": 10,
 	},
 	{
 		"name": "tree mulch",
 		"x": 68, "y": 299, "w": 49, "h": 31,
-		"canTake": true,
+		"canTake": true, "stacking": 4,
 		"durability": 100,
-		"rotInterval": 1,
+		"rotInterval": 50,
 		"rotInto": "dried tree mulch"
 	},
 	{
 		"name": "dried tree mulch",
 		"x": 58, "y": 338, "w": 50, "h": 35,
-		"canTake": true, "stacking": 10
+		"canTake": true, "stacking": 4
 	},
 	{
-		"name": "basket",
-		"x": 169, "y": 629, "w": 55, "h": 43,
-		"canTake": true,
-		"containerSize": 4,
-		"containerTimeMult": 10
+		"name": "small finger tree",
+		"x": 406, "y": 29, "w": 63, "h": 66,
+		"rotInterval": 8000,
+		"rotInto": "finger tree"
 	},
 	{
-		"name": "wall",
+		"name": "sprouting finger tree",
+		"x": 1336, "y": 224, "w": 7, "h": 19,
+		"rotInterval": 4000,
+		"rotInto": "small finger tree"
+	},
+	{
+		"name": "planted finger tree seed",
+		"x": 1313, "y": 123, "w": 24, "h": 14,
+		"rotInterval": 2000,
+		"rotInto": "sprouting finger tree"
+	},
+	{
+		"name": "woven wall",
 		"x": 1148, "y": 25, "w": 140, "h": 174,
-		"canTake": false,
 		"wall": true,
 		"snapToGrid": true,
 		"insulation": 0.5
 	},
 	{
-		"name": "door",
+		"name": "woven wall with door",
 		"x": 1148, "y": 25, "w": 140, "h": 174,
 		"x2": 1826, "y2": 690, "w2": 58, "h2": 174,
-		"canTake": false,
 		"wall": true,
 		"snapToGrid": true,
 		"door": true,
 		"insulation": 0.5
 	},
 	{
-		"name": "ceiling",
+		"name": "stone wall",
+		"x": 637, "y": 136, "w": 134, "h": 157,
+		"wall": true,
+		"snapToGrid": true,
+		"insulation": 0.7
+	},
+	{
+		"name": "stone wall with door",
+		"x": 637, "y": 136, "w": 134, "h": 157,
+		"x2": 1826, "y2": 690, "w2": 58, "h2": 174,
+		"wall": true,
+		"snapToGrid": true,
+		"door": true,
+		"insulation": 0.7
+	},
+	{
+		"name": "brick wall",
+		"x": 1149, "y": 230, "w": 138, "h": 161,
+		"wall": true,
+		"snapToGrid": true,
+		"insulation": 0.8
+	},
+	{
+		"name": "brick wall with door",
+		"x": 1149, "y": 230, "w": 138, "h": 161,
+		"x2": 1826, "y2": 690, "w2": 58, "h2": 174,
+		"wall": true,
+		"snapToGrid": true,
+		"door": true,
+		"insulation": 0.8
+	},
+	{
+		"name": "woven ceiling",
 		"x": 1393, "y": 89, "w": 156, "h": 174,
-		"canTake": false,
 		"ceiling": true,
 		"snapToGrid": true,
-		"spawnOnCollapse": [["chalk", 1]],
+		"spawnOnCollapse": [["tree fibres", 3]],
 		"insulation": 0.5
+	},
+	{
+		"name": "leaf ceiling",
+		"x": 1650, "y": 85, "w": 156, "h": 174,
+		"ceiling": true,
+		"snapToGrid": true,
+		"spawnOnCollapse": [["leaf", 3]],
+		"insulation": 0.5
+	},
+	{
+		"name": "brick ceiling",
+		"x": 1851, "y": 83, "w": 156, "h": 174,
+		"ceiling": true,
+		"snapToGrid": true,
+		"spawnOnCollapse": [["brick", 3]],
+		"insulation": 0.8
 	},
 	{
 		"name": "campfire",
@@ -132,34 +441,938 @@
 	    "roamRandomly": true,
 	    "attackDamage": 7,
 	    "attackCooldown": 4,
+	    "attackSound": "eat",
 	    "attackPlayerWhenInjuredDist": 300,
 	    "loot": [["antler", 2]],
+	    "rotInterval": 8000,
+	    "rotInto": "one-antlered antlermander",
+	    "spawnOnRotOutside": [["antler", 1], ["meat", 3]],
 	    "use": {
-	        "antler knife": {
+	        "beetle horn": {
+				"name": "Attack",
+				"time": 1,
+				"damage": 15,
+				"xp": 2,
+				"toolDurability": -10,
+				"sound": "stab",
+				"stats": {"Stamina": -5},
+			},
+			"bladewing axe": {
 				"name": "Attack",
 				"time": 0.5,
-				"damage": 10,
+				"damage": 9,
 				"xp": 2,
-				"toolDurability": -5
+				"toolDurability": -5,
+				"sound": "stab",
+				"stats": {"Stamina": -5},
+			},
+	        "knife": {
+				"name": "Attack",
+				"time": 0.5,
+				"damage": 6,
+				"xp": 2,
+				"toolDurability": -5,
+				"sound": "stab",
+				"stats": {"Stamina": -5},
 			},
 			"any": {
 				"name": "Attack",
 				"time": 0.5,
 				"damage": 3,
-				"xp": 2
+				"xp": 2,
+				"sound": "take",
+				"stats": {"Stamina": -5},
 			}
 		}
 	},
 	{
-		"name": "leaf sling",
+	    "name": "one-antlered antlermander",
+	    "x": 1309, "y": 503, "w": 83, "h": 59,
+	    "creature": true,
+	    "hp": 10,
+	    "idleMoveSpeed": 60,
+	    "moveSpeed": 200,
+	    "roamRandomly": true,
+	    "attackDamage": 7,
+	    "attackCooldown": 4,
+	    "attackSound": "eat",
+	    "attackPlayerWhenInjuredDist": 300,
+	    "loot": [["antler", 1]],
+	    "rotInterval": 800,
+	    "rotInto": "no-antlered antlermander",
+	    "spawnOnRotOutside": [["antler", 1], ["meat", 3]],
+	    "use": {
+	        "beetle horn": {
+				"name": "Attack",
+				"time": 1,
+				"damage": 15,
+				"xp": 2,
+				"toolDurability": -10,
+				"sound": "stab",
+				"stats": {"Stamina": -5},
+			},
+			"bladewing axe": {
+				"name": "Attack",
+				"time": 0.5,
+				"damage": 9,
+				"xp": 2,
+				"toolDurability": -5,
+				"sound": "stab",
+				"stats": {"Stamina": -5},
+			},
+	        "knife": {
+				"name": "Attack",
+				"time": 0.5,
+				"damage": 6,
+				"xp": 2,
+				"toolDurability": -5,
+				"sound": "stab",
+				"stats": {"Stamina": -5},
+			},
+			"any": {
+				"name": "Attack",
+				"time": 0.5,
+				"damage": 3,
+				"xp": 2,
+				"sound": "take",
+				"stats": {"Stamina": -5},
+			}
+		}
+	},
+	{
+	    "name": "no-antlered antlermander",
+	    "x": 1402, "y": 504, "w": 83, "h": 59,
+	    "creature": true,
+	    "hp": 10,
+	    "idleMoveSpeed": 60,
+	    "moveSpeed": 200,
+	    "roamRandomly": true,
+	    "attackDamage": 7,
+	    "attackCooldown": 4,
+	    "attackSound": "eat",
+	    "attackPlayerWhenInjuredDist": 300,
+	    "loot": [["meat", 3]],
+	    "rotInterval": 8000,
+	    "rotInto": "antlermander",
+	    "use": {
+	        "beetle horn": {
+				"name": "Attack",
+				"time": 1,
+				"damage": 15,
+				"xp": 2,
+				"toolDurability": -10,
+				"sound": "stab",
+				"stats": {"Stamina": -5},
+			},
+			"bladewing axe": {
+				"name": "Attack",
+				"time": 0.5,
+				"damage": 9,
+				"xp": 2,
+				"toolDurability": -5,
+				"sound": "stab",
+				"stats": {"Stamina": -5},
+			},
+	        "knife": {
+				"name": "Attack",
+				"time": 0.5,
+				"damage": 6,
+				"xp": 2,
+				"toolDurability": -5,
+				"sound": "stab",
+				"stats": {"Stamina": -5},
+			},
+			"any": {
+				"name": "Attack",
+				"time": 0.5,
+				"damage": 3,
+				"xp": 2,
+				"sound": "take",
+				"stats": {"Stamina": -5},
+			}
+		}
+	},
+	{
+	    "name": "grub",
+	    "x": 1299, "y": 407, "w": 83, "h": 59,
+	    "creature": true,
+	    "canTake": true, "stacking": 4,
+	    "idleMoveSpeed": 30,
+	    "roamRandomly": true,
+	    "use": {
+			"consume": {
+				"name": "Eat grub",
+				"time": 3,
+				"destroy": true,
+				"stats": {"Food": 10},
+				"xp": 5,
+				"sound": "glibber"
+			}
+		}
+	},
+	{
+		"name": "leaf carrier",
 		"x": 39, "y": 589, "w": 39, "h": 32,
 		"canTake": true,
 		"bagCapacity": 3
 	},
 	{
-		"name": "feather poncho",
-		"x": 1592, "y": 1209, "w": 69, "h": 87,
+		"name": "basket",
+		"x": 169, "y": 629, "w": 55, "h": 43,
 		"canTake": true,
-		"clothing": true
+		"containerSize": 4,
+		"containerTimeMult": 0.3,
+		"bagCapacity": 4
+	},
+	{
+		"name": "leather bag",
+		"x": 1822, "y": 590, "w": 45, "h": 68,
+		"canTake": true,
+		"containerSize": 5,
+		"containerTimeMult": 0.2,
+		"bagCapacity": 5
+	},
+	{
+		"name": "storage cairn",
+		"x": 1174, "y": 824, "w": 52, "h": 34,
+		"containerSize": 3,
+		"containerTimeMult": 0.6,
+	},
+	{
+		"name": "stone pile",
+		"x": 1061, "y": 1002, "w": 59, "h": 17,
+		"use": {
+			"any": {
+				"name": "Find stone",
+				"time": 12,
+				"xp": 2,
+				"sound": "scrape",
+				"spawn": [["chalk", 1]],
+				"stats": {"Stamina": -10},
+			}
+		}
+	},
+	{
+		"name": "leather poncho",
+		"x": 1465, "y": 1212, "w": 67, "h": 69,
+		"canTake": true,
+		"clothing": true,
+		"clothingDamageMult": 0.7,
+		"clothingWetnessMult": 0.1
+	},
+	{
+		"name": "leaf poncho",
+		"x": 1929, "y": 597, "w": 56, "h": 70,
+		"canTake": true,
+		"clothing": true,
+		"clothingDamageMult": 0.9,
+		"clothingWetnessMult": 0.4,
+		"durability": 100,
+		"rotInterval": 30
+	},
+	{
+		"name": "shingle",
+		"x": 819, "y": 211, "w": 30, "h": 25,
+		"canTake": true, "stacking": 10,
+	},
+	{
+		"name": "brick",
+		"x": 806, "y": 260, "w": 39, "h": 23,
+		"canTake": true, "stacking": 10,
+	},
+	{
+		"name": "fungal tree",
+		"x": 922, "y": 108, "w": 71, "h": 63
+	},
+	{
+		"name": "white tangle",
+		"x": 1052, "y": 199, "w": 77, "h": 77
+	},
+	{
+		"name": "white tangle with nest with eggs",
+		"x": 1048, "y": 598, "w": 77, "h": 85,
+		"use": {
+			"any": {
+				"name": "Steal eggs",
+				"time": 5,
+				"turnInto": "white tangle with nest",
+				"spawn": [["egg", 2]],
+				"xp": 2,
+				"sound": "rustle",
+				"stats": {"Stamina": -10},
+			}
+		}
+	},
+	{
+		"name": "white tangle with nest",
+		"x": 1161, "y": 601, "w": 77, "h": 85,
+		"rotInterval": 5000,
+		"rotInto": "white tangle with nest with eggs"
+	},
+	{
+		"name": "egg",
+		"x": 1292, "y": 595, "w": 20, "h": 30,
+		"canTake": true, "stacking": 4,
+		"durability": 100,
+		"rotInterval": 1,
+		"use": {
+			"consume": {
+				"name": "Eat egg",
+				"time": 1,
+				"destroy": true,
+				"stats": {"Food": 30},
+				"xp": 5,
+				"sound": "glibber"
+			}
+		}
+	},
+	{
+		"name": "meat",
+		"x": 1444, "y": 426, "w": 36, "h": 29,
+		"canTake": true, "stacking": 4,
+		"durability": 100,
+		"rotInterval": 50,
+		"use": {
+			"consume": {
+				"name": "Eat meat",
+				"time": 1,
+				"destroy": true,
+				"stats": {"Food": 40},
+				"xp": 5,
+				"sound": "eat"
+			}
+		}
+	},
+	{
+		"name": "insect meat",
+		"x": 1670, "y": 431, "w": 40, "h": 38,
+		"canTake": true, "stacking": 4,
+		"durability": 100,
+		"rotInterval": 10,
+		"use": {
+			"consume": {
+				"name": "Eat meat",
+				"time": 1,
+				"destroy": true,
+				"stats": {"Food": 40},
+				"xp": 5,
+				"sound": "eat"
+			}
+		}
+	},
+	{
+	    "name": "glowsnake",
+	    "x": 1299, "y": 407, "w": 83, "h": 59,
+	    "creature": true,
+	    "hp": 8,
+	    "idleMoveSpeed": 60,
+	    "moveSpeed": 120,
+	    "roamRandomly": true,
+	    "fleeFromPlayerDist": 300,
+	    "loot": [["meat", 2]],
+	    "lightEmission": 0.8,
+		"lightColor": "7892ab",
+	    "use": {
+	        "beetle horn": {
+				"name": "Attack",
+				"time": 1,
+				"damage": 15,
+				"xp": 2,
+				"toolDurability": -10,
+				"sound": "stab",
+				"stats": {"Stamina": -5},
+			},
+			"bladewing axe": {
+				"name": "Attack",
+				"time": 0.5,
+				"damage": 9,
+				"xp": 2,
+				"toolDurability": -5,
+				"sound": "stab",
+				"stats": {"Stamina": -5},
+			},
+	        "knife": {
+				"name": "Attack",
+				"time": 0.5,
+				"damage": 6,
+				"xp": 2,
+				"toolDurability": -5,
+				"sound": "stab",
+				"stats": {"Stamina": -5},
+			},
+			"any": {
+				"name": "Attack",
+				"time": 0.5,
+				"damage": 3,
+				"xp": 2,
+				"sound": "take",
+				"stats": {"Stamina": -5},
+			}
+		}
+	},
+	{
+		"name": "white mushroom in ground",
+		"x": 988, "y": 321, "w": 42, "h": 40,
+		"use": {
+			"any": {
+				"name": "Pick mushroom",
+				"time": 1,
+				"turnInto": "white mushroom mycelium",
+				"spawn": [["white mushroom", 1]],
+				"xp": 2,
+				"sound": "stab",
+				"stats": {"Stamina": -5},
+			}
+		}
+	},
+	{
+		"name": "white mushroom",
+		"x": 988, "y": 321, "w": 42, "h": 40,
+		"canTake": true, "stacking": 10,
+		"durability": 100,
+		"rotInterval": 20,
+		"use": {
+			"consume": {
+				"name": "Eat mushroom",
+				"time": 1,
+				"destroy": true,
+				"stats": {"Food": 5},
+				"xp": 5,
+				"sound": "eat",
+				"stats": {"Stamina": -5},
+			}
+		}
+	},
+	{
+		"name": "white mushroom mycelium",
+		"x": 1313, "y": 123, "w": 24, "h": 14,
+		"rotInterval": 4000,
+		"rotInto": "white mushroom in ground"
+	},
+	
+	{
+		"name": "ash mushroom in ground",
+		"x": 1301, "y": 690, "w": 43, "h": 49,
+		"use": {
+			"any": {
+				"name": "Pick mushroom",
+				"time": 1,
+				"turnInto": "ash mushroom mycelium",
+				"spawn": [["ash mushroom", 1]],
+				"xp": 2,
+				"sound": "stab",
+				"stats": {"Stamina": -5},
+			}
+		}
+	},
+	{
+		"name": "ash mushroom",
+		"x": 1301, "y": 690, "w": 43, "h": 49,
+		"canTake": true, "stacking": 10,
+		"durability": 100,
+		"rotInterval": 1,
+		"use": {
+			"consume": {
+				"name": "Eat mushroom",
+				"time": 1,
+				"destroy": true,
+				"stats": {"HP": 5},
+				"xp": 5,
+				"sound": "eat"
+			}
+		}
+	},
+	{
+		"name": "ash mushroom mycelium",
+		"x": 1313, "y": 123, "w": 24, "h": 14,
+		"rotInterval": 4000,
+		"rotInto": "ash mushroom in ground"
+	},
+	
+	{
+		"name": "finger mushroom in ground",
+		"x": 1059, "y": 323, "w": 35, "h": 35,
+		"use": {
+			"any": {
+				"name": "Pick mushroom",
+				"time": 1,
+				"turnInto": "finger mushroom mycelium",
+				"spawn": [["finger mushroom", 1]],
+				"xp": 2,
+				"sound": "stab"
+			}
+		}
+	},
+	{
+		"name": "finger mushroom",
+		"x": 1059, "y": 323, "w": 35, "h": 35,
+		"canTake": true, "stacking": 10,
+		"durability": 100,
+		"rotInterval": 40,
+		"use": {
+			"consume": {
+				"name": "Eat mushroom",
+				"time": 1,
+				"destroy": true,
+				"stats": {"HP": -20},
+				"xp": 5,
+				"sound": "eat"
+			}
+		}
+	},
+	{
+		"name": "finger mushroom mycelium",
+		"x": 1313, "y": 123, "w": 24, "h": 14,
+		"rotInterval": 4000,
+		"rotInto": "finger mushroom in ground"
+	},
+	{
+		"name": "peashroom with peas",
+		"x": 537, "y": 411, "w": 60, "h": 44,
+		"use": {
+		    "knife": {
+				"name": "Harvest mushroom peas",
+				"time": 1,
+				"turnInto": "peashroom",
+				"spawn": [["mushroom peas", 3]],
+				"xp": 2,
+				"xpKey": "Pick mushroom peas",
+				"toolDurability": -2,
+				"sound": "rustle",
+				"stats": {"Stamina": -5},
+			},
+			"any": {
+				"name": "Pick mushroom peas",
+				"time": 10,
+				"turnInto": "peashroom",
+				"spawn": [["mushroom peas", 3]],
+				"xp": 2,
+				"xpKey": "Pick mushroom peas",
+				"sound": "rustle",
+				"stats": {"Stamina": -10},
+			}
+		}
+	},
+	{
+		"name": "peashroom",
+		"x": 619, "y": 424, "w": 48, "h": 36,
+		"rotInterval": 2500,
+		"rotInto": "peashroom with peas"
+	},
+	{
+		"name": "mushroom peas",
+		"x": 695, "y": 401, "w": 29, "h": 29,
+		"canTake": true, "stacking": 10,
+		"durability": 100,
+		"rotInterval": 100,
+		"use": {
+			"consume": {
+				"name": "Eat peas",
+				"time": 1,
+				"destroy": true,
+				"stats": {"Food": 5},
+				"xp": 5,
+				"sound": "eat"
+			}
+		}
+	},
+	{
+		"name": "green moss",
+		"x": 790, "y": 422, "w": 59, "h": 32,
+	},
+	{
+		"name": "root plant",
+		"x": 906, "y": 417, "w": 44, "h": 32,
+		"use": {
+			"any": {
+				"name": "Harvest root",
+				"time": 8,
+				"destroy": true,
+				"spawn": [["root", 1]],
+				"xp": 2,
+				"sound": "dig",
+				"stats": {"Stamina": -15},
+			}
+		}
+	},
+	{
+		"name": "root",
+		"x": 966, "y": 412, "w": 19, "h": 54,
+		"canTake": true, "stacking": 10,
+		"durability": 100,
+		"rotInterval": 5,
+		"use": {
+			"consume": {
+				"name": "Eat root",
+				"time": 2,
+				"turnInto": "root seeds",
+				"stats": {"Food": 20},
+				"xp": 5,
+				"sound": "eat"
+			}
+		}
+	},
+	{
+		"name": "root seeds",
+		"x": 663, "y": 23, "w": 14, "h": 12,
+		"canTake": true, "stacking": 10
+	},
+	{
+		"name": "planted root seed",
+		"x": 1313, "y": 123, "w": 24, "h": 14,
+		"rotInterval": 2000,
+		"rotInto": "sprouting root plant"
+	},
+	{
+		"name": "sprouting root plant",
+		"x": 1336, "y": 224, "w": 7, "h": 19,
+		"rotInterval": 3000,
+		"rotInto": "root plant"
+	},
+	{
+		"name": "fatty meat",
+		"x": 1183, "y": 424, "w": 43, "h": 34,
+		"canTake": true, "stacking": 4,
+		"durability": 100,
+		"rotInterval": 20,
+		"use": {
+			"consume": {
+				"name": "Eat meat",
+				"time": 1,
+				"destroy": true,
+				"stats": {"Food": 50},
+				"xp": 5,
+				"sound": "eat"
+			}
+		}
+	},
+	{
+	    "name": "unicorn beetle",
+	    "x": 1299, "y": 407, "w": 83, "h": 59,
+	    "creature": true,
+	    "hp": 25,
+	    "idleMoveSpeed": 30,
+	    "moveSpeed": 300,
+	    "roamRandomly": true,
+	    "attackDamage": 20,
+	    "attackCooldown": 4,
+	    "attackSound": "stab",
+	    "attackPlayerDist": 500,
+	    "loot": [["beetle horn", 1], ["insect meat", 3]],
+	    "use": {
+	        "beetle horn": {
+				"name": "Attack",
+				"time": 1,
+				"damage": 15,
+				"xp": 2,
+				"toolDurability": -10,
+				"sound": "stab",
+				"stats": {"Stamina": -5},
+			},
+			"bladewing axe": {
+				"name": "Attack",
+				"time": 0.5,
+				"damage": 9,
+				"xp": 2,
+				"toolDurability": -5,
+				"sound": "stab",
+				"stats": {"Stamina": -5},
+			},
+	        "knife": {
+				"name": "Attack",
+				"time": 0.5,
+				"damage": 6,
+				"xp": 2,
+				"toolDurability": -5,
+				"sound": "stab",
+				"stats": {"Stamina": -5},
+			},
+			"any": {
+				"name": "Attack",
+				"time": 0.5,
+				"damage": 3,
+				"xp": 2,
+				"sound": "take",
+				"stats": {"Stamina": -5},
+			}
+		}
+	},
+	{
+		"name": "beetle horn",
+		"x": 1556, "y": 513, "w": 43, "h": 45,
+		"canTake": true,
+		"durability": 100
+	},
+	{
+	    "name": "log insect",
+	    "x": 1675, "y": 504, "w": 72, "h": 64,
+	    "creature": true,
+	    "hp": 12,
+	    "idleMoveSpeed": 120,
+	    "moveSpeed": 500,
+	    "roamRandomly": true,
+	    "fleeFromPlayerWhenInjuredDist": 200,
+	    "loot": [["insect meat", 3]],
+	    "use": {
+	        "beetle horn": {
+				"name": "Attack",
+				"time": 1,
+				"damage": 15,
+				"xp": 2,
+				"toolDurability": -10,
+				"sound": "stab",
+				"stats": {"Stamina": -5},
+			},
+			"bladewing axe": {
+				"name": "Attack",
+				"time": 0.5,
+				"damage": 9,
+				"xp": 2,
+				"toolDurability": -5,
+				"sound": "stab",
+				"stats": {"Stamina": -5},
+			},
+	        "knife": {
+				"name": "Attack",
+				"time": 0.5,
+				"damage": 6,
+				"xp": 2,
+				"toolDurability": -5,
+				"sound": "stab",
+				"stats": {"Stamina": -5},
+			},
+			"any": {
+				"name": "Attack",
+				"time": 0.5,
+				"damage": 3,
+				"xp": 2,
+				"sound": "take",
+				"stats": {"Stamina": -5},
+			}
+		}
+	},
+	{
+	    "name": "bladewing beetle",
+	    "x": 1675, "y": 504, "w": 72, "h": 64,
+	    "creature": true,
+	    "hp": 12,
+	    "idleMoveSpeed": 120,
+	    "moveSpeed": 500,
+	    "roamRandomly": true,
+	    "fleeFromPlayerWhenInjuredDist": 200,
+	    "loot": [["insect meat", 3]],
+	    "use": {
+			"any": {
+				"name": "Catch",
+				"time": 3,
+				"destroy": true,
+				"spawn": [["blade wing", 2], ["insect meat", 1]],
+				"xp": 2,
+				"sound": "catch",
+				"stats": {"Stamina": -20},
+			}
+		}
+	},
+	{
+		"name": "blade wing",
+		"x": 56, "y": 500, "w": 19, "h": 21,
+		"canTake": true, "stacking": 10
+	},
+	{
+		"name": "bladewing axe",
+		"x": 93, "y": 496, "w": 18, "h": 37,
+		"canTake": true,
+		"durability": 100
+	},
+	{
+	    "name": "halohorn deer",
+	    "x": 1168, "y": 484, "w": 78, "h": 89,
+	    "creature": true,
+	    "hp": 30,
+	    "idleMoveSpeed": 80,
+	    "moveSpeed": 200,
+	    "roamRandomly": true,
+	    "attackDamage": 12,
+	    "attackCooldown": 5,
+	    "attackSound": "stab",
+	    "attackPlayerWhenInjuredDist": 300,
+	    "loot": [["halo horn", 2], ["fatty meat", 4], ["halohorn pelt", 1]],
+	    "use": {
+	        "beetle horn": {
+				"name": "Attack",
+				"time": 1,
+				"damage": 15,
+				"xp": 2,
+				"toolDurability": -10,
+				"sound": "stab",
+				"stats": {"Stamina": -5},
+			},
+			"bladewing axe": {
+				"name": "Attack",
+				"time": 0.5,
+				"damage": 9,
+				"xp": 2,
+				"toolDurability": -5,
+				"sound": "stab",
+				"stats": {"Stamina": -5},
+			},
+	        "knife": {
+				"name": "Attack",
+				"time": 0.5,
+				"damage": 6,
+				"xp": 2,
+				"toolDurability": -5,
+				"sound": "stab",
+				"stats": {"Stamina": -5},
+			},
+			"any": {
+				"name": "Attack",
+				"time": 0.5,
+				"damage": 3,
+				"xp": 2,
+				"sound": "take",
+				"stats": {"Stamina": -5},
+			}
+		}
+	},
+	{
+		"name": "halohorn pelt",
+		"x": 1071, "y": 489, "w": 53, "h": 73,
+		"canTake": true, "stacking": 4
+	},
+	{
+		"name": "leather",
+		"x": 1436, "y": 681, "w": 58, "h": 64,
+		"canTake": true, "stacking": 4
+	},
+	{
+		"name": "halo horn",
+		"x": 1172, "y": 719, "w": 28, "h": 41,
+		"canTake": true, "stacking": 4
+	},
+	{
+	    "name": "quadbird",
+	    "x": 1137, "y": 598, "w": 90, "h": 31,
+	    "creature": true,
+	    "hp": 5,
+	    "idleMoveSpeed": 800,
+	    "moveSpeed": 800,
+	    "roamRandomly": true
+	},
+	{
+	    "name": "land octopus",
+	    "x": 1556, "y": 591, "w": 72, "h": 65,
+	    "creature": true,
+	    "hp": 14,
+	    "idleMoveSpeed": 80,
+	    "moveSpeed": 80,
+	    "roamRandomly": true,
+	    "attackDamage": 4,
+	    "attackCooldown": 1,
+	    "attackSound": "glibber",
+	    "attackPlayerWhenInjuredDist": 200,
+	    "loot": [["octopus ring", 4]],
+	    "use": {
+	        "beetle horn": {
+				"name": "Attack",
+				"time": 1,
+				"damage": 15,
+				"xp": 2,
+				"toolDurability": -10,
+				"sound": "stab",
+				"stats": {"Stamina": -5},
+			},
+			"bladewing axe": {
+				"name": "Attack",
+				"time": 0.5,
+				"damage": 9,
+				"xp": 2,
+				"toolDurability": -5,
+				"sound": "stab",
+				"stats": {"Stamina": -5},
+			},
+	        "knife": {
+				"name": "Attack",
+				"time": 0.5,
+				"damage": 6,
+				"xp": 2,
+				"toolDurability": -5,
+				"sound": "stab",
+				"stats": {"Stamina": -5},
+			},
+			"any": {
+				"name": "Attack",
+				"time": 0.5,
+				"damage": 1,
+				"xp": 2,
+				"sound": "glibber",
+				"stats": {"Stamina": -5},
+			}
+		}
+	},
+	{
+		"name": "octopus ring",
+		"x": 1641, "y": 595, "w": 45, "h": 29,
+		"canTake": true, "stacking": 10,
+		"durability": 100,
+		"rotInterval": 10,
+		"use": {
+			"consume": {
+				"name": "Eat octopus ring",
+				"time": 1,
+				"destroy": true,
+				"stats": {"Food": 15},
+				"xp": 5,
+				"sound": "eat"
+			}
+		}
+	},
+	{
+	    "name": "footling",
+	    "x": 1727, "y": 592, "w": 62, "h": 67,
+	    "creature": true,
+	    "hp": 24,
+	    "idleMoveSpeed": 150,
+	    "moveSpeed": 150,
+	    "roamRandomly": true,
+	    "fleeFromPlayerDist": 800,
+	    "loot": [["insect meat", 6]],
+	    "use": {
+	        "beetle horn": {
+				"name": "Attack",
+				"time": 1,
+				"damage": 15,
+				"xp": 2,
+				"toolDurability": -10,
+				"sound": "stab",
+				"stats": {"Stamina": -5},
+			},
+			"bladewing axe": {
+				"name": "Attack",
+				"time": 0.5,
+				"damage": 9,
+				"xp": 2,
+				"toolDurability": -5,
+				"sound": "stab",
+				"stats": {"Stamina": -5},
+			},
+	        "knife": {
+				"name": "Attack",
+				"time": 0.5,
+				"damage": 6,
+				"xp": 2,
+				"toolDurability": -5,
+				"sound": "stab",
+				"stats": {"Stamina": -5},
+			},
+			"any": {
+				"name": "Attack",
+				"time": 0.5,
+				"damage": 1,
+				"xp": 2,
+				"sound": "glibber",
+				"stats": {"Stamina": -5},
+			}
+		}
 	},
 ]

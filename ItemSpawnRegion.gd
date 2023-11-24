@@ -4,6 +4,7 @@ var type:ItemType
 var quantity:int
 var radius:float
 var itemQuantity:int
+var ground:GroundType = null
 
 static var types = null:
 	get:
@@ -20,5 +21,6 @@ static func loadTypes():
 		isr.itemQuantity = i["itemQuantity"]
 		isr.radius = i["radius"]
 		isr.quantity = i["quantity"]
+		isr.ground = GroundType.ofName(i.get("ground", ""))
 		ts.append(isr)
 	types = ts

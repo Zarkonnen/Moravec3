@@ -1,4 +1,4 @@
-[gd_scene load_steps=9 format=3 uid="uid://pb415w1j1u0k"]
+[gd_scene load_steps=10 format=3 uid="uid://pb415w1j1u0k"]
 
 [ext_resource type="Script" path="res://Item.gd" id="1_3t73v"]
 [ext_resource type="Texture2D" uid="uid://cg232q4ygjq8b" path="res://tiles.png" id="1_qxv04"]
@@ -8,7 +8,7 @@
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_x2o0v"]
 size = Vector2(128, 96)
 
-[sub_resource type="ShaderMaterial" id="ShaderMaterial_4rb3g"]
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_b4l23"]
 shader = ExtResource("2_o8jvu")
 shader_parameter/strength = 0.0
 shader_parameter/a = 1.0
@@ -17,10 +17,13 @@ shader_parameter/a = 1.0
 atlas = ExtResource("1_qxv04")
 region = Rect2(406, 29, 63, 66)
 
-[sub_resource type="ShaderMaterial" id="ShaderMaterial_mfd6m"]
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_kv56x"]
 shader = ExtResource("2_o8jvu")
 shader_parameter/strength = 0.0
 shader_parameter/a = 1.0
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_duycn"]
+radius = 64.1327
 
 [node name="Item" type="StaticBody2D" groups=["Items"]]
 collision_layer = 0
@@ -31,13 +34,13 @@ position = Vector2(0, -48)
 shape = SubResource("RectangleShape2D_x2o0v")
 
 [node name="Sprite2D" type="Sprite2D" parent="."]
-material = SubResource("ShaderMaterial_4rb3g")
+material = SubResource("ShaderMaterial_b4l23")
 texture = SubResource("AtlasTexture_ccgmh")
 offset = Vector2(0, -33)
 
 [node name="Layer2" type="Sprite2D" parent="."]
 visible = false
-material = SubResource("ShaderMaterial_mfd6m")
+material = SubResource("ShaderMaterial_kv56x")
 texture = SubResource("AtlasTexture_ccgmh")
 offset = Vector2(0, -33)
 
@@ -58,3 +61,11 @@ horizontal_alignment = 1
 [node name="Light" type="PointLight2D" parent="."]
 enabled = false
 texture = ExtResource("4_74mbt")
+
+[node name="Nearby" type="Area2D" parent="."]
+collision_layer = 2
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Nearby"]
+shape = SubResource("CircleShape2D_duycn")
+
+[connection signal="area_entered" from="Nearby" to="." method="_on_nearby_area_entered"]

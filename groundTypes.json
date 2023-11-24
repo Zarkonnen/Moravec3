@@ -3,7 +3,8 @@
         "name": "Grass",
         "x": 4,
         "y": 6,
-        "terrain": 0
+        "terrain": 0,
+        "comment": "The ground is covered with some kind of pink moss."
     },
     {
         "name": "Water",

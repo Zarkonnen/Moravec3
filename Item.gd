@@ -10,6 +10,8 @@ var type:ItemType = ItemType.ofName("bush"):
 		rotTimeout = t.rotInterval
 		hp = t.hp
 		attackTimeout = t.attackCooldown
+		$Nearby.monitorable = t.interactable
+		$Nearby.monitoring = not t.interact.is_empty()
 		if type.heatEmission:
 			add_to_group("HeatEmitter")
 		else:
@@ -153,6 +155,9 @@ func _process(delta):
 			durability -= 1
 			rotTimeout = type.rotInterval
 			if durability <= 0:
+				for entry in type.spawnOnRotOutside:
+					var st:ItemType = ItemType.ofName(entry[0])
+					%DropItem.createItem(st, position, st.durability, entry[1])
 				var rotInto = ItemType.ofName(type.rotInto)
 				if rotInto:
 					type = rotInto
@@ -164,6 +169,7 @@ func _creatureProcess(delta):
 	if attackTimeout > 0 and type.attackDamage:
 		attackTimeout -= delta
 	if type.attackDamage and attackTimeout <= 0 and position.distance_squared_to(%Player.position) < 40 * 40:
+		%Sound.playSound(type.attackSound, type.attackVolume)
 		var dmg = type.attackDamage
 		if %Inventory.clothing:
 			dmg = dmg * %Inventory.clothing.clothingDamageMult - %Inventory.clothing.clothingDamageAbsorb
@@ -197,3 +203,7 @@ func _creatureProcess(delta):
 			position = navPath[navPathIndex]
 		else:
 			position += (navPath[navPathIndex] - position).normalized() * sp * Util.RATIO * delta
+
+
+func _on_nearby_area_entered(area):
+	pass # Replace with function body.

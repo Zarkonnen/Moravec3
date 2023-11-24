@@ -5,6 +5,9 @@ var output:ItemType = null
 var time:int = 1
 var xp:int = 5
 var unlocked = false
+var sound:String = ""
+var volume:float = -20
+var comment:String = ""
 
 # List of [name, list of recipes]
 static var categories = null:
@@ -32,6 +35,9 @@ static func loadTypes():
 			r.output = ItemType.ofName(i["output"])
 			r.inputs = i["inputs"].map(func(e): return [ItemType.ofName(e[0]), e[1]])
 			r.xp = i.get("xp", 5)
+			r.sound = i.get("sound", "")
+			r.volume = i.get("volume", -20)
+			r.comment = i.get("comment", "")
 			cat[1].append(r)
 	categories = cats
 

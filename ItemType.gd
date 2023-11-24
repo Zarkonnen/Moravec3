@@ -1,6 +1,7 @@
 class_name ItemType
 
 var name:String
+var comment:String
 var texRect:Rect2
 var texRect2:Rect2
 var canTake:bool = false
@@ -9,6 +10,7 @@ var use:Dictionary = {}
 var durability:int = 1
 var rotInterval:int = 0
 var rotInto:String
+var spawnOnRotOutside:Array = []
 var containerSize:int = 0
 var containerTimeMult:float = 1.0
 var snapToGrid:bool = false
@@ -26,6 +28,8 @@ var clothing:bool = false
 var clothingWetnessMult:float = 1
 var clothingDamageMult:float = 1
 var clothingDamageAbsorb:float = 0
+var interact:Dictionary = {}
+var interactable:bool = false
 
 # Creature stuff
 var creature:bool = false
@@ -40,6 +44,8 @@ var attackPlayerDist:float = 0
 var attackPlayerWhenInjuredDist:float = 0
 var attackCooldown:float = 1
 var attackDamage:float = 0
+var attackSound:String = ""
+var attackVolume:float = -20
 
 func _init(name, texRect):
 	self.name = name
@@ -64,11 +70,13 @@ static func loadTypes():
 		var it = ItemType.new(i["name"], Rect2(i["x"], i["y"], i["w"], i["h"]))
 		if i.has("x2"):
 			it.texRect2 = Rect2(i["x2"], i["y2"], i["w2"], i["h2"])
+		it.comment = i.get("comment", "")
 		it.canTake = i.get("canTake", false)
 		it.stacking = i.get("stacking", 1)
 		it.durability = i.get("durability", 1)
 		it.rotInterval = i.get("rotInterval", 0)
 		it.rotInto = i.get("rotInto", "")
+		it.spawnOnRotOutside = i.get("spawnOnRotOutside", [])
 		it.containerSize = i.get("containerSize", 0)
 		it.containerTimeMult = i.get("containerTimeMult", 1.0)
 		it.snapToGrid = i.get("snapToGrid", false)
@@ -85,6 +93,7 @@ static func loadTypes():
 		it.clothingWetnessMult = i.get("clothingWetnessMult", 1)
 		it.clothingDamageMult = i.get("clothingDamageMult", 1)
 		it.clothingDamageAbsorb = i.get("clothingDamageAbsorb", 0)
+		it.interactable = i.get("interactable", false)
 		
 		# Creature stuff
 		it.creature = i.get("creature", false)
@@ -99,6 +108,8 @@ static func loadTypes():
 		it.attackPlayerWhenInjuredDist = i.get("attackPlayerWhenInjuredDist", 0)
 		it.attackCooldown = i.get("attackCooldown", 1)
 		it.attackDamage = i.get("attackDamage", 0)
+		it.attackSound = i.get("attackSound", "")
+		it.attackVolume = i.get("attackVolume", -20)
 
 		if i.has("lightColor"):
 			it.lightColor = Color(i.get("lightColor"))
@@ -118,7 +129,23 @@ static func loadTypes():
 				u.damage = useV.get("damage", 0)
 				u.xp = useV.get("xp", 0)
 				u.xpKey = useV.get("xpKey", u.name + " " + u.tool)
+				u.comment = useV.get("comment", "")
+				u.sound = useV.get("sound", "")
+				u.volume = useV.get("volume", -20)
+				u.sleepTime = useV.get("sleepTime", 0)
 				it.use[useK] = u
+		if i.has("interact"):
+			var interacts:Dictionary = i.get("interact")
+			for ik in interacts.keys():
+				var iv = interacts[ik]
+				var interaction = Interaction.new()
+				interaction.other = ik
+				interaction.turnInto = iv.get("turnInto", "")
+				interaction.otherTurnInto = iv.get("otherTurnInto", "")
+				interaction.destroy = iv.get("destroy", false)
+				interaction.otherDestroy = iv.get("otherDestroy", false)
+				interaction.sound = iv.get("sound", "")
+				interaction.volume = iv.get("volume", "")
 		ts.append(it)
 	types = ts
 
@@ -134,3 +161,16 @@ class Use:
 	var damage = 0
 	var xpKey = ""
 	var xp = 0
+	var comment:String = ""
+	var sound:String = ""
+	var volume:float = -20
+	var sleepTime:float = 0
+
+class Interaction:
+	var other:String
+	var turnInto:String = ""
+	var otherTurnInto:String = ""
+	var destroy:bool = false
+	var otherDestroy:bool = false
+	var sound:String = ""
+	var volume:float = -20

@@ -26,6 +26,7 @@ var t = 0
 var stats = [\
 		Stat.new("Food", Color("597646"), 100, -1, 10, 20),\
 		Stat.new("HP", Color("d53846"), 50, 1, 20, 20),\
+		Stat.new("Stamina", Color("b3ad6e"), 100, 1, 10, 20),\
 		Stat.new("Warmth", Color("90242a"), 100, 0, 5, 20),\
 		Stat.new("Wetness", Color("62798d"), 0, 0, 1),\
 		]

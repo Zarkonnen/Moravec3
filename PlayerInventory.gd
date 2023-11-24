@@ -25,11 +25,15 @@ func _ready():
 	updateAllSlots()
 
 func _process(delta):
+	var doCheck = false
 	for i in range(contents.size):
 		if Input.is_action_pressed("inventory" + str(i + 1)):
 			selectSlot(i)
 		if contents.g(i).update(delta):
 			updateSlot(i)
+			doCheck = true
+	if doCheck:
+		checkLight()
 
 func has(it:ItemType, quantity:int=1) -> bool:
 	return contents.has(it, quantity) or (bag == it and quantity == 1) or (clothing == it and quantity == 1)
@@ -74,6 +78,7 @@ func add(it:ItemType, durability, quantity=1, preferredSlot=ItemContainer.ANY_SL
 	if added > 0:
 		changed.emit()
 		updateAllSlots()
+		checkLight()
 	return added
 
 func canRemoveBag():
@@ -105,6 +110,7 @@ func remove(it:ItemType, quantity:int=1, preferredSlot=ItemContainer.ANY_SLOT): 
 	if result:
 		changed.emit()
 		updateAllSlots()
+		checkLight()
 	return result
 
 func updateAllSlots():
@@ -179,3 +185,18 @@ func selectSlot(i):
 		selectedSlot = i
 		updateSlot(i)
 		updateSlot(old)
+
+func checkLight():
+	var amount = 0
+	var color = Color.WHITE
+	for i in range(contents.size):
+		var slot:ItemContainer.Slot = contents.slots[i]
+		if slot.type.lightEmission > amount:
+			amount = slot.type.lightEmission
+			color = slot.type.lightColor
+	if amount:
+		$/root/Node2D/Player/Light.scale = Vector2(amount, amount)
+		$/root/Node2D/Player/Light.color = color
+		$/root/Node2D/Player/Light.enabled = true
+	else:
+		$/root/Node2D/Player/Light.enabled = true

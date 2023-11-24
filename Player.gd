@@ -21,6 +21,10 @@ var useType:ItemType.Use = null
 var useTime = 0
 
 var ouch = 0
+var commentTimeout = 0
+var doneComments = []
+var commentGround = null
+var commentGroundTime = 0
 
 var xp:float = 0:
 	set(value):
@@ -37,11 +41,12 @@ func gainXP(source:String, amt:int):
 		xp += amt
 		xpSourcesUsed.append(source)
 
-func _ready():
-	call_deferred("actor_setup")
-
-func actor_setup():
-	await get_tree().physics_frame
+func doComment(c):
+	if not c or c in doneComments:
+		return
+	doneComments.append(c)
+	$Commentary.text = c
+	commentTimeout = 5
 
 func setNavTarget(to:Vector2, interact):
 	nextNavTarget = to
@@ -54,15 +59,22 @@ func interactionName(it:Item):
 	if it.type.containerSize > 0:
 		return "Open " + it.type.name
 	if %Inventory.selectedItem() and it.type.use.has(%Inventory.selectedItem().name):
-		return it.type.use.get(%Inventory.selectedItem().name).name
+		var use:ItemType.Use = it.type.use.get(%Inventory.selectedItem().name)
+		if "Stamina" in use.stats and %Stats.getValue("Stamina") + use.stats["Stamina"] < 0:
+			return use.name + "\nNot enough stamina!"
+		return use.name
 	if it.type.use.has("any"):
-		return it.type.use.get("any").name
+		var use:ItemType.Use = it.type.use.get("any")
+		if "Stamina" in use.stats and %Stats.getValue("Stamina") + use.stats["Stamina"] < 0:
+			return use.name + "\nNot enough stamina!"
+		return use.name
 	return ""
 
 func interact(it:Item):
 	interactWith = null
 	%World.usePause = 0.35
 	if it.type.canTake and it.contents.isEmpty() and (it.type.containerSize == 0 or %ContainerContents.container == it):
+		%Sound.playSound("take", -40)
 		it.quantity -= %Inventory.add(it.type, it.durability, it.quantity)
 		if it.quantity <= 0:
 			it.unregister()
@@ -82,6 +94,8 @@ func interact(it:Item):
 		return
 
 func use(it:Item, useType:ItemType.Use):
+	if "Stamina" in useType.stats.keys() and %Stats.getValue("Stamina") + useType.stats["Stamina"] < 0:
+		return
 	usingInInventory = null
 	using = it
 	crafting = null
@@ -108,6 +122,19 @@ func localTemperature():
 	return %Weather.temperature()
 
 func _process(delta):
+	var ground = %Grid.g(gridX(), gridY()).ground
+	if ground != commentGround:
+		commentGround = ground
+		commentGroundTime = 0
+	else:
+		commentGroundTime += delta
+		if commentGroundTime >= 4:
+			doComment(commentGround.comment)
+			commentGroundTime = 0
+	if commentTimeout > 0:
+		commentTimeout -= delta
+		if commentTimeout <= 0:
+			$Commentary.text = ""
 	if ouch > 0:
 		ouch = max(0, ouch - delta * 5)
 		$Sprite2D.scale = Vector2(1 - ouch * 0.1, 1 - ouch * 0.1)
@@ -121,8 +148,13 @@ func _process(delta):
 		%UseProgressBar.size.x = clamp(96 * useTime / time, 0, 96)
 		if useTime >= time:
 			if crafting:
+				%Sound.playSound(crafting.sound, crafting.volume)
+				doComment(crafting.comment)
 				%Crafts.finishCrafting(crafting)
 			else:
+				%Weather.t += useType.sleepTime
+				%Sound.playSound(useType.sound, useType.volume)
+				doComment(useType.comment)
 				gainXP(useType.xpKey, useType.xp)
 				%Inventory.useTool(ItemType.ofName(useType.tool), useType.toolDurability)
 				for entry in useType.spawn:

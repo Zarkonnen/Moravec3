@@ -1,11 +1,13 @@
-[gd_scene load_steps=27 format=3 uid="uid://cb3icp3ox1m3k"]
+[gd_scene load_steps=29 format=3 uid="uid://cb3icp3ox1m3k"]
 
 [ext_resource type="TileSet" uid="uid://cat3g8vk3uxca" path="res://ground_tile_set.tres" id="1_xbrc4"]
 [ext_resource type="Script" path="res://Player.gd" id="2_jq1fc"]
 [ext_resource type="Texture2D" uid="uid://cg232q4ygjq8b" path="res://tiles.png" id="2_sqygo"]
 [ext_resource type="Script" path="res://MapDisplay.gd" id="4_u3xq3"]
 [ext_resource type="PackedScene" uid="uid://pb415w1j1u0k" path="res://Item.tscn" id="5_ie426"]
+[ext_resource type="Script" path="res://Sound.gd" id="5_siaxv"]
 [ext_resource type="Script" path="res://PlayerInventory.gd" id="6_b3o7a"]
+[ext_resource type="Texture2D" uid="uid://bqp8w6yr6gbes" path="res://light_tex_2.png" id="6_kyteq"]
 [ext_resource type="PackedScene" uid="uid://cq7lggbfun7va" path="res://InventorySlot.tscn" id="6_tj3ja"]
 [ext_resource type="Script" path="res://DropItem.gd" id="8_7mnix"]
 [ext_resource type="Texture2D" uid="uid://dpw40sh7lxy63" path="res://crafting.png" id="8_fuffq"]
@@ -107,6 +109,23 @@ visibility_rect = Rect2(0, 0, 2000, 2000)
 local_coords = true
 
 [node name="Ambient" type="CanvasModulate" parent="Player/Weather"]
+
+[node name="Sound" type="AudioStreamPlayer2D" parent="Player"]
+unique_name_in_owner = true
+script = ExtResource("5_siaxv")
+
+[node name="Commentary" type="Label" parent="Player"]
+z_index = 9
+offset_left = -300.0
+offset_top = -120.0
+offset_right = 300.0
+offset_bottom = -94.0
+horizontal_alignment = 1
+
+[node name="Light" type="PointLight2D" parent="Player"]
+enabled = false
+texture = ExtResource("6_kyteq")
+offset = Vector2(5, -60)
 
 [node name="World" type="TileMap" parent="."]
 unique_name_in_owner = true
@@ -351,13 +370,17 @@ script = ExtResource("10_dt6v4")
 offset_top = 40.0
 offset_bottom = 40.0
 
-[node name="Warmth" parent="GUI/Stats" instance=ExtResource("12_xieyx")]
+[node name="Stamina" parent="GUI/Stats" instance=ExtResource("12_xieyx")]
 offset_top = 70.0
 offset_bottom = 70.0
 
-[node name="Wetness" parent="GUI/Stats" instance=ExtResource("12_xieyx")]
+[node name="Warmth" parent="GUI/Stats" instance=ExtResource("12_xieyx")]
 offset_top = 100.0
 offset_bottom = 100.0
+
+[node name="Wetness" parent="GUI/Stats" instance=ExtResource("12_xieyx")]
+offset_top = 130.0
+offset_bottom = 130.0
 
 [node name="XPLabel" type="Label" parent="GUI/Stats"]
 unique_name_in_owner = true
@@ -365,9 +388,9 @@ anchors_preset = 1
 anchor_left = 1.0
 anchor_right = 1.0
 offset_left = -106.0
-offset_top = 127.0
+offset_top = 157.0
 offset_right = -66.0
-offset_bottom = 153.0
+offset_bottom = 183.0
 grow_horizontal = 0
 text = "XP: 0"
 
@@ -560,73 +583,10 @@ script = ExtResource("14_c4t04")
 
 [node name="Items" type="Node" parent="."]
 
-[node name="Item5" parent="Items" instance=ExtResource("5_ie426")]
-position = Vector2(448, 384)
-typeName = "ceiling"
-
-[node name="Item7" parent="Items" instance=ExtResource("5_ie426")]
-position = Vector2(1234, 235)
-typeName = "leaf sling"
-
 [node name="Item" parent="Items" instance=ExtResource("5_ie426")]
 position = Vector2(952, 177)
 quantity = 3
 typeName = "chalk"
-
-[node name="Item2" parent="Items" instance=ExtResource("5_ie426")]
-position = Vector2(716, 231)
-typeName = "leaf sling"
-
-[node name="Item3" parent="Items" instance=ExtResource("5_ie426")]
-position = Vector2(320, 384)
-collision_layer = 1
-typeName = "wall"
-
-[node name="Item6" parent="Items" instance=ExtResource("5_ie426")]
-position = Vector2(448, 288)
-collision_layer = 1
-typeName = "wall"
-
-[node name="Item8" parent="Items" instance=ExtResource("5_ie426")]
-position = Vector2(576, 384)
-collision_layer = 1
-typeName = "wall"
-
-[node name="Item9" parent="Items" instance=ExtResource("5_ie426")]
-position = Vector2(576, 576)
-collision_layer = 1
-typeName = "wall"
-
-[node name="Item11" parent="Items" instance=ExtResource("5_ie426")]
-position = Vector2(448, 480)
-typeName = "ceiling"
-
-[node name="Item16" parent="Items" instance=ExtResource("5_ie426")]
-position = Vector2(448, 576)
-typeName = "ceiling"
-
-[node name="Item14" parent="Items" instance=ExtResource("5_ie426")]
-position = Vector2(320, 480)
-collision_layer = 1
-typeName = "wall"
-
-[node name="Item15" parent="Items" instance=ExtResource("5_ie426")]
-position = Vector2(576, 480)
-collision_layer = 1
-typeName = "wall"
-
-[node name="Item12" parent="Items" instance=ExtResource("5_ie426")]
-position = Vector2(448, 672)
-typeName = "door"
-
-[node name="Item13" parent="Items" instance=ExtResource("5_ie426")]
-position = Vector2(320, 576)
-collision_layer = 1
-typeName = "wall"
-
-[node name="Item4" parent="Items" instance=ExtResource("5_ie426")]
-position = Vector2(1098, 460)
-typeName = "feather poncho"
 
 [node name="WorldGen" type="Node" parent="."]
 script = ExtResource("21_5vlla")
