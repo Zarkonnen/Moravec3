@@ -117,9 +117,9 @@ script = ExtResource("5_siaxv")
 [node name="Commentary" type="Label" parent="Player"]
 z_index = 9
 offset_left = -300.0
-offset_top = -120.0
+offset_top = -150.0
 offset_right = 300.0
-offset_bottom = -94.0
+offset_bottom = -124.0
 horizontal_alignment = 1
 
 [node name="Light" type="PointLight2D" parent="Player"]
@@ -585,8 +585,12 @@ script = ExtResource("14_c4t04")
 
 [node name="Item" parent="Items" instance=ExtResource("5_ie426")]
 position = Vector2(952, 177)
+typeName = "campfire"
+
+[node name="Item2" parent="Items" instance=ExtResource("5_ie426")]
+position = Vector2(750, 177)
 quantity = 3
-typeName = "chalk"
+typeName = "meat"
 
 [node name="WorldGen" type="Node" parent="."]
 script = ExtResource("21_5vlla")

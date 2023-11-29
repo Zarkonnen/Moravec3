@@ -40,7 +40,11 @@ func showCrafting():
 		outSlot.tooltip_text = "Craft " + r.output.name
 		if not r.unlocked:
 			outSlot.tooltip_text += "\nUnlock with " + str(r.xp) + " XP"
-		outSlot.get_node("Border").color = Color("7892ab") if canCraft(r) else Color("d53846")
+		elif r.stamina > %Stats.getValue("Stamina"):
+			outSlot.tooltip_text += "\nNot enough stamina"
+		outSlot.get_node("Border").color = Color("597646") if canCraft(r) else Color("d53846")
+		if not r.unlocked:
+			outSlot.get_node("Border").color = Color("7892ab")
 		outSlot.get_node("Label").text = "" if r.unlocked else str(r.xp) + " XP"
 		$/root/Node2D/GUI.add_child(outSlot)
 		var x2 = x + 70
@@ -70,6 +74,8 @@ func hideCrafting():
 func canCraft(r:Recipe):
 	if not r.unlocked:
 		return false
+	if r.stamina > %Stats.getValue("Stamina"):
+		return false
 	for i in r.inputs:
 		if not %Inventory.has(i[0], i[1]):
 			return false
@@ -93,6 +99,7 @@ func craft(r:Recipe):
 	hideCrafting()
 
 func finishCrafting(r:Recipe):
+	%Stats.change("Stamina", -r.stamina)
 	for i in r.inputs:
 		%Inventory.remove(i[0], i[1])
 	if not r.output.canTake or not %Inventory.add(r.output, r.output.durability):

@@ -105,6 +105,26 @@
 		"name": "gourd plant",
 		"x": 545, "y": 54, "w": 54, "h": 40,
 		"use": {
+		    "shingle shovel": {
+				"name": "Harvest gourd",
+				"time": 2,
+				"destroy": true,
+				"spawn": [["gourd", 1]],
+				"stats": {"Stamina": -5},
+				"toolDurability": -5,
+				"xp": 2,
+				"sound": "dig"
+			},
+		    "woven shovel": {
+				"name": "Harvest gourd",
+				"time": 4,
+				"destroy": true,
+				"spawn": [["gourd", 1]],
+				"stats": {"Stamina": -10},
+				"toolDurability": -5,
+				"xp": 2,
+				"sound": "dig"
+			},
 			"any": {
 				"name": "Harvest gourd",
 				"time": 8,
@@ -131,12 +151,32 @@
 		"name": "large gourd plant",
 		"x": 545, "y": 54, "w": 54, "h": 40,
 		"use": {
-			"any": {
+		    "shingle shovel": {
 				"name": "Harvest large gourd",
-				"time": 15,
+				"time": 4,
 				"destroy": true,
 				"spawn": [["large gourd", 1], ["leaf", 5]],
-				"stats": {"Stamina": -30},
+				"stats": {"Stamina": -8},
+				"toolDurability": -5,
+				"xp": 2,
+				"sound": "dig"
+			},
+		    "woven shovel": {
+				"name": "Harvest large gourd",
+				"time": 8,
+				"destroy": true,
+				"spawn": [["large gourd", 1], ["leaf", 5]],
+				"stats": {"Stamina": -16},
+				"toolDurability": -5,
+				"xp": 2,
+				"sound": "dig"
+			},
+			"any": {
+				"name": "Harvest large gourd",
+				"time": 16,
+				"destroy": true,
+				"spawn": [["large gourd", 1], ["leaf", 5]],
+				"stats": {"Stamina": -32},
 				"xp": 2,
 				"sound": "dig"
 			}
@@ -290,6 +330,18 @@
 		"durability": 100
 	},
 	{
+		"name": "woven shovel",
+		"x": 976, "y": 238, "w": 54, "h": 45,
+		"canTake": true,
+		"durability": 30
+	},
+	{
+		"name": "shingle shovel",
+		"x": 895, "y": 217, "w": 47, "h": 44,
+		"canTake": true,
+		"durability": 100
+	},
+	{
 		"name": "finger tree",
 		"x": 406, "y": 29, "w": 63, "h": 66,
 		"use": {
@@ -423,13 +475,6 @@
 		"snapToGrid": true,
 		"spawnOnCollapse": [["brick", 3]],
 		"insulation": 0.8
-	},
-	{
-		"name": "campfire",
-		"x": 79, "y": 720, "w": 46, "h": 48,
-		"heatEmission": 100,
-		"lightEmission": 1.4,
-		"lightColor": "ff5567"
 	},
 	{
 	    "name": "antlermander",
@@ -642,6 +687,24 @@
 		"name": "stone pile",
 		"x": 1061, "y": 1002, "w": 59, "h": 17,
 		"use": {
+		    "shingle shovel": {
+				"name": "Find stone",
+				"time": 6,
+				"xp": 2,
+				"sound": "scrape",
+				"spawn": [["chalk", 1]],
+				"stats": {"Stamina": -5},
+				"toolDurability": -5
+			},
+		    "woven shovel": {
+				"name": "Find stone",
+				"time": 8,
+				"xp": 2,
+				"sound": "scrape",
+				"spawn": [["chalk", 1]],
+				"stats": {"Stamina": -8},
+				"toolDurability": -5
+			},
 			"any": {
 				"name": "Find stone",
 				"time": 12,
@@ -744,6 +807,24 @@
 		}
 	},
 	{
+		"name": "cooked meat",
+		"x": 1444, "y": 426, "w": 36, "h": 29,
+		"tint": "6a4d1b",
+		"canTake": true, "stacking": 4,
+		"durability": 100,
+		"rotInterval": 80,
+		"use": {
+			"consume": {
+				"name": "Eat meat",
+				"time": 1,
+				"destroy": true,
+				"stats": {"Food": 60},
+				"xp": 5,
+				"sound": "eat"
+			}
+		}
+	},
+	{
 		"name": "insect meat",
 		"x": 1670, "y": 431, "w": 40, "h": 38,
 		"canTake": true, "stacking": 4,
@@ -755,6 +836,24 @@
 				"time": 1,
 				"destroy": true,
 				"stats": {"Food": 40},
+				"xp": 5,
+				"sound": "eat"
+			}
+		}
+	},
+	{
+		"name": "cooked insect meat",
+		"x": 1670, "y": 431, "w": 40, "h": 38,
+		"canTake": true, "stacking": 4,
+		"durability": 100,
+		"rotInterval": 30,
+		"tint": "6a4d1b",
+		"use": {
+			"consume": {
+				"name": "Eat meat",
+				"time": 1,
+				"destroy": true,
+				"stats": {"Food": 60},
 				"xp": 5,
 				"sound": "eat"
 			}
@@ -839,7 +938,24 @@
 				"stats": {"Food": 5},
 				"xp": 5,
 				"sound": "eat",
-				"stats": {"Stamina": -5},
+			}
+		}
+	},
+	{
+		"name": "cooked white mushroom",
+		"x": 988, "y": 321, "w": 42, "h": 40,
+		"canTake": true, "stacking": 10,
+		"durability": 100,
+		"rotInterval": 40,
+		"tint": "6a4d1b",
+		"use": {
+			"consume": {
+				"name": "Eat mushroom",
+				"time": 1,
+				"destroy": true,
+				"stats": {"Food": 10},
+				"xp": 5,
+				"sound": "eat",
 			}
 		}
 	},
@@ -849,7 +965,6 @@
 		"rotInterval": 4000,
 		"rotInto": "white mushroom in ground"
 	},
-	
 	{
 		"name": "ash mushroom in ground",
 		"x": 1301, "y": 690, "w": 43, "h": 49,
@@ -877,6 +992,24 @@
 				"time": 1,
 				"destroy": true,
 				"stats": {"HP": 5},
+				"xp": 5,
+				"sound": "eat"
+			}
+		}
+	},
+	{
+		"name": "cooked ash mushroom",
+		"x": 1301, "y": 690, "w": 43, "h": 49,
+		"canTake": true, "stacking": 10,
+		"durability": 100,
+		"rotInterval": 100,
+		"tint": "6a4d1b",
+		"use": {
+			"consume": {
+				"name": "Eat mushroom",
+				"time": 1,
+				"destroy": true,
+				"stats": {"Food": 10},
 				"xp": 5,
 				"sound": "eat"
 			}
@@ -915,6 +1048,24 @@
 				"time": 1,
 				"destroy": true,
 				"stats": {"HP": -20},
+				"xp": 5,
+				"sound": "eat"
+			}
+		}
+	},
+	{
+		"name": "cooked finger mushroom",
+		"x": 1059, "y": 323, "w": 35, "h": 35,
+		"canTake": true, "stacking": 10,
+		"durability": 100,
+		"rotInterval": 10,
+		"tint": "6a4d1b",
+		"use": {
+			"consume": {
+				"name": "Eat mushroom",
+				"time": 1,
+				"destroy": true,
+				"stats": {"Food": 20},
 				"xp": 5,
 				"sound": "eat"
 			}
@@ -984,6 +1135,26 @@
 		"name": "root plant",
 		"x": 906, "y": 417, "w": 44, "h": 32,
 		"use": {
+		    "shingle shovel": {
+				"name": "Harvest root",
+				"time": 2,
+				"destroy": true,
+				"spawn": [["root", 1]],
+				"xp": 2,
+				"sound": "dig",
+				"stats": {"Stamina": -4},
+				"toolDurability": -5
+			},
+		    "woven shovel": {
+				"name": "Harvest root",
+				"time": 4,
+				"destroy": true,
+				"spawn": [["root", 1]],
+				"xp": 2,
+				"sound": "dig",
+				"stats": {"Stamina": -8},
+				"toolDurability": -5
+			},
 			"any": {
 				"name": "Harvest root",
 				"time": 8,
@@ -991,7 +1162,7 @@
 				"spawn": [["root", 1]],
 				"xp": 2,
 				"sound": "dig",
-				"stats": {"Stamina": -15},
+				"stats": {"Stamina": -16},
 			}
 		}
 	},
@@ -1000,13 +1171,31 @@
 		"x": 966, "y": 412, "w": 19, "h": 54,
 		"canTake": true, "stacking": 10,
 		"durability": 100,
-		"rotInterval": 5,
+		"rotInterval": 100,
 		"use": {
 			"consume": {
 				"name": "Eat root",
 				"time": 2,
 				"turnInto": "root seeds",
 				"stats": {"Food": 20},
+				"xp": 5,
+				"sound": "eat"
+			}
+		}
+	},
+	{
+		"name": "cooked root",
+		"x": 966, "y": 412, "w": 19, "h": 54,
+		"canTake": true, "stacking": 10,
+		"durability": 100,
+		"rotInterval": 10,
+		"tint": "6a4d1b",
+		"use": {
+			"consume": {
+				"name": "Eat root",
+				"time": 2,
+				"turnInto": "root seeds",
+				"stats": {"Food": 35},
 				"xp": 5,
 				"sound": "eat"
 			}
@@ -1041,6 +1230,24 @@
 				"time": 1,
 				"destroy": true,
 				"stats": {"Food": 50},
+				"xp": 5,
+				"sound": "eat"
+			}
+		}
+	},
+	{
+		"name": "cooked fatty meat",
+		"x": 1183, "y": 424, "w": 43, "h": 34,
+		"canTake": true, "stacking": 4,
+		"durability": 100,
+		"rotInterval": 30,
+		"tint": "6a4d1b",
+		"use": {
+			"consume": {
+				"name": "Eat meat",
+				"time": 1,
+				"destroy": true,
+				"stats": {"Food": 65},
 				"xp": 5,
 				"sound": "eat"
 			}
@@ -1328,6 +1535,24 @@
 		}
 	},
 	{
+		"name": "cooked octopus ring",
+		"x": 1641, "y": 595, "w": 45, "h": 29,
+		"canTake": true, "stacking": 10,
+		"durability": 100,
+		"rotInterval": 10,
+		"tint": "6a4d1b",
+		"use": {
+			"consume": {
+				"name": "Eat octopus ring",
+				"time": 1,
+				"destroy": true,
+				"stats": {"Food": 25},
+				"xp": 5,
+				"sound": "eat"
+			}
+		}
+	},
+	{
 	    "name": "footling",
 	    "x": 1727, "y": 592, "w": 62, "h": 67,
 	    "creature": true,
@@ -1373,6 +1598,103 @@
 				"sound": "glibber",
 				"stats": {"Stamina": -5},
 			}
+		}
+	},
+	{
+		"name": "campfire",
+		"x": 79, "y": 720, "w": 46, "h": 48,
+		"heatEmission": 100,
+		"lightEmission": 1.4,
+		"lightColor": "ff5567",
+		"durability": 100,
+		"rotInterval": 1,
+		"rotInto": "extinguished campfire",
+		"use": {
+		    "dried tree mulch": {
+		        "name": "Refuel",
+		        "time": 1,
+		        "sound": "fire",
+		        "toolDestroy": true,
+		        "durability": 100
+		    },
+		    "meat": {
+		        "name": "Cook",
+		        "time": 2,
+		        "stats": {"Stamina": -3},
+		        "toolDestroy": true,
+		        "sound": "fire",
+		        "spawn": [["cooked meat", 1]]
+		    },
+		    "insect meat": {
+		        "name": "Cook",
+		        "time": 1,
+		        "stats": {"Stamina": -2},
+		        "toolDestroy": true,
+		        "sound": "fire",
+		        "spawn": [["cooked insect meat", 1]]
+		    },
+		    "white mushroom": {
+		        "name": "Cook",
+		        "time": 3,
+		        "stats": {"Stamina": -5},
+		        "toolDestroy": true,
+		        "sound": "fire",
+		        "spawn": [["cooked white mushroom", 1]]
+		    },
+		    "ash mushroom": {
+		        "name": "Cook",
+		        "time": 3,
+		        "stats": {"Stamina": -5},
+		        "toolDestroy": true,
+		        "sound": "fire",
+		        "spawn": [["cooked ash mushroom", 1]]
+		    },
+		    "finger mushroom": {
+		        "name": "Cook",
+		        "time": 3,
+		        "stats": {"Stamina": -5},
+		        "toolDestroy": true,
+		        "sound": "fire",
+		        "spawn": [["cooked finger mushroom", 1]]
+		    },
+		    "root": {
+		        "name": "Cook",
+		        "time": 3,
+		        "stats": {"Stamina": -5},
+		        "toolDestroy": true,
+		        "sound": "fire",
+		        "spawn": [["cooked root", 1]]
+		    },
+		    "fatty meat": {
+		        "name": "Cook",
+		        "time": 2,
+		        "stats": {"Stamina": -3},
+		        "toolDestroy": true,
+		        "sound": "fire",
+		        "spawn": [["cooked fatty meat", 1]]
+		    },
+		    "octopus ring": {
+		        "name": "Cook",
+		        "time": 1,
+		        "stats": {"Stamina": -2},
+		        "toolDestroy": true,
+		        "sound": "fire",
+		        "spawn": [["cooked octopus ring", 1]]
+		    }
+		}
+	},
+	{
+		"name": "extinguished campfire",
+		"x": 23, "y": 744, "w": 46, "h": 24,
+		"use": {
+		    "dried tree mulch": {
+		        "name": "Relight",
+		        "time": 3,
+		        "sound": "fire",
+		        "turnInto": "campfire",
+		        "toolDestroy": true,
+		        "stats": {"Stamina": -5},
+		    }
 		}
 	},
 ]

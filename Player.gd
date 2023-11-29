@@ -122,15 +122,16 @@ func localTemperature():
 	return %Weather.temperature()
 
 func _process(delta):
-	var ground = %Grid.g(gridX(), gridY()).ground
-	if ground != commentGround:
-		commentGround = ground
-		commentGroundTime = 0
-	else:
-		commentGroundTime += delta
-		if commentGroundTime >= 4:
-			doComment(commentGround.comment)
+	if %Grid.g(gridX(), gridY()):
+		var ground = %Grid.g(gridX(), gridY()).ground
+		if ground != commentGround:
+			commentGround = ground
 			commentGroundTime = 0
+		else:
+			commentGroundTime += delta
+			if commentGroundTime >= 4:
+				doComment(commentGround.comment)
+				commentGroundTime = 0
 	if commentTimeout > 0:
 		commentTimeout -= delta
 		if commentTimeout <= 0:
@@ -157,6 +158,8 @@ func _process(delta):
 				doComment(useType.comment)
 				gainXP(useType.xpKey, useType.xp)
 				%Inventory.useTool(ItemType.ofName(useType.tool), useType.toolDurability)
+				if useType.toolDestroy:
+					%Inventory.remove(ItemType.ofName(useType.tool), 1, %Inventory.selectedSlot)
 				for entry in useType.spawn:
 					var t:ItemType = ItemType.ofName(entry[0])
 					var amt = entry[1]
@@ -188,6 +191,8 @@ func _process(delta):
 						using.queue_free()
 				for statName in useType.stats.keys():
 					%Stats.change(statName, useType.stats[statName])
+				if using:
+					using.durability += useType.durability
 			using = null
 			usingInInventory = null
 			crafting = null

@@ -10,6 +10,7 @@ var type:ItemType = ItemType.ofName("bush"):
 		rotTimeout = t.rotInterval
 		hp = t.hp
 		attackTimeout = t.attackCooldown
+		durability = t.durability
 		$Nearby.monitorable = t.interactable
 		$Nearby.monitoring = not t.interact.is_empty()
 		if type.heatEmission:
@@ -34,6 +35,7 @@ var type:ItemType = ItemType.ofName("bush"):
 			texCopied = true
 		$Sprite2D.texture.region = t.texRect
 		$Sprite2D.offset.y = -t.texRect.size.y / 2
+		$Sprite2D.material.set_shader_parameter("tint", t.tint)
 		if t.texRect2:
 			$Layer2.texture.region = t.texRect2
 			$Layer2.offset.y = -t.texRect2.size.y / 2
@@ -117,6 +119,7 @@ func snapToGridAndRegister():
 # Called when the node enters the scene tree for the first time.
 func _ready():
 	$Sprite2D.material = $Sprite2D.material.duplicate()
+	$Sprite2D.material.set_shader_parameter("tint", type.tint)
 	$Layer2.material = $Layer2.material.duplicate()
 	$Label.position.y = -type.texRect.size.y - 30
 	$Quantity.text = "" if quantity < 2 else str(quantity)
@@ -205,5 +208,22 @@ func _creatureProcess(delta):
 			position += (navPath[navPathIndex] - position).normalized() * sp * Util.RATIO * delta
 
 
-func _on_nearby_area_entered(area):
-	pass # Replace with function body.
+func _on_nearby_area_entered(other):
+	other = other.get_parent()
+	if not is_instance_of(other, Item):
+		return
+	if not other.type.name in type.interact:
+		return
+	var interaction:ItemType.Interaction = type.interact[other.type.name]
+	if interaction.destroy:
+		unregister()
+		queue_free()
+	elif interaction.turnInto:
+		type = ItemType.ofName(interaction.turnInto)
+	if interaction.otherDestroy:
+		other.unregister()
+		other.queue_free()
+	elif interaction.otherTurnInto:
+		other.type = ItemType.ofName(interaction.otherTurnInto)
+	if interaction.sound:
+		%Sound.playSound(interaction.sound, interaction.volume)

@@ -119,7 +119,7 @@ func updateAllSlots():
 	
 func updateSlot(i):
 	var islot
-	var it
+	var it:ItemType
 	var durability
 	var quantity = 1
 	if i >= contents.size:
@@ -144,6 +144,7 @@ func updateSlot(i):
 	if it:
 		islot.get_node("Texture").setImage(it.texRect)
 		islot.get_node("Texture").visible = true
+		islot.get_node("Texture").modulate = it.tint
 		if %ContainerContents.container:
 			islot.tooltip_text = it.name + "\nLeft click to transfer\nShift-left click to split"
 		else:
@@ -191,7 +192,7 @@ func checkLight():
 	var color = Color.WHITE
 	for i in range(contents.size):
 		var slot:ItemContainer.Slot = contents.slots[i]
-		if slot.type.lightEmission > amount:
+		if slot.type and slot.type.lightEmission > amount:
 			amount = slot.type.lightEmission
 			color = slot.type.lightColor
 	if amount:
@@ -199,4 +200,4 @@ func checkLight():
 		$/root/Node2D/Player/Light.color = color
 		$/root/Node2D/Player/Light.enabled = true
 	else:
-		$/root/Node2D/Player/Light.enabled = true
+		$/root/Node2D/Player/Light.enabled = false

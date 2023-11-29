@@ -3,6 +3,7 @@ class_name Recipe
 var inputs:Array = []
 var output:ItemType = null
 var time:int = 1
+var stamina:int = 10
 var xp:int = 5
 var unlocked = false
 var sound:String = ""
@@ -32,6 +33,7 @@ static func loadTypes():
 		for i in c.get("recipes"):
 			var r = Recipe.new()
 			r.time = i.get("time", 1)
+			r.stamina = i.get("stamina", 10)
 			r.output = ItemType.ofName(i["output"])
 			r.inputs = i["inputs"].map(func(e): return [ItemType.ofName(e[0]), e[1]])
 			r.xp = i.get("xp", 5)

@@ -3,24 +3,26 @@
 [ext_resource type="Script" path="res://Item.gd" id="1_3t73v"]
 [ext_resource type="Texture2D" uid="uid://cg232q4ygjq8b" path="res://tiles.png" id="1_qxv04"]
 [ext_resource type="Shader" path="res://Item.gdshader" id="2_o8jvu"]
-[ext_resource type="Texture2D" uid="uid://bqp8w6yr6gbes" path="res://light_tex_2.png" id="4_74mbt"]
+[ext_resource type="Texture2D" uid="uid://iarjihna3nkg" path="res://wobblylight.png" id="4_dajku"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_x2o0v"]
 size = Vector2(128, 96)
 
-[sub_resource type="ShaderMaterial" id="ShaderMaterial_b4l23"]
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_axsc2"]
 shader = ExtResource("2_o8jvu")
 shader_parameter/strength = 0.0
 shader_parameter/a = 1.0
+shader_parameter/tint = Color(1, 1, 1, 1)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_ccgmh"]
 atlas = ExtResource("1_qxv04")
 region = Rect2(406, 29, 63, 66)
 
-[sub_resource type="ShaderMaterial" id="ShaderMaterial_kv56x"]
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_4uymc"]
 shader = ExtResource("2_o8jvu")
 shader_parameter/strength = 0.0
 shader_parameter/a = 1.0
+shader_parameter/tint = Color(1, 1, 1, 1)
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_duycn"]
 radius = 64.1327
@@ -34,13 +36,13 @@ position = Vector2(0, -48)
 shape = SubResource("RectangleShape2D_x2o0v")
 
 [node name="Sprite2D" type="Sprite2D" parent="."]
-material = SubResource("ShaderMaterial_b4l23")
+material = SubResource("ShaderMaterial_axsc2")
 texture = SubResource("AtlasTexture_ccgmh")
 offset = Vector2(0, -33)
 
 [node name="Layer2" type="Sprite2D" parent="."]
 visible = false
-material = SubResource("ShaderMaterial_kv56x")
+material = SubResource("ShaderMaterial_4uymc")
 texture = SubResource("AtlasTexture_ccgmh")
 offset = Vector2(0, -33)
 
@@ -60,10 +62,11 @@ horizontal_alignment = 1
 
 [node name="Light" type="PointLight2D" parent="."]
 enabled = false
-texture = ExtResource("4_74mbt")
+texture = ExtResource("4_dajku")
 
 [node name="Nearby" type="Area2D" parent="."]
 collision_layer = 2
+collision_mask = 3
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Nearby"]
 shape = SubResource("CircleShape2D_duycn")

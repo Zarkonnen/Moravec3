@@ -4,6 +4,7 @@ var name:String
 var comment:String
 var texRect:Rect2
 var texRect2:Rect2
+var tint:Color = Color.WHITE
 var canTake:bool = false
 var stacking:int = 1
 var use:Dictionary = {}
@@ -70,6 +71,8 @@ static func loadTypes():
 		var it = ItemType.new(i["name"], Rect2(i["x"], i["y"], i["w"], i["h"]))
 		if i.has("x2"):
 			it.texRect2 = Rect2(i["x2"], i["y2"], i["w2"], i["h2"])
+		if i.has("tint"):
+			it.tint = Color(i["tint"])
 		it.comment = i.get("comment", "")
 		it.canTake = i.get("canTake", false)
 		it.stacking = i.get("stacking", 1)
@@ -123,9 +126,11 @@ static func loadTypes():
 				u.time = useV.get("time", 1)
 				u.turnInto = useV.get("turnInto", "")
 				u.destroy = useV.get("destroy", false)
+				u.durability = useV.get("durability", 0)
 				u.spawn = useV.get("spawn", [])
 				u.stats = useV.get("stats", {})
 				u.toolDurability = useV.get("toolDurability", 0)
+				u.toolDestroy = useV.get("toolDestroy", false)
 				u.damage = useV.get("damage", 0)
 				u.xp = useV.get("xp", 0)
 				u.xpKey = useV.get("xpKey", u.name + " " + u.tool)
@@ -146,6 +151,7 @@ static func loadTypes():
 				interaction.otherDestroy = iv.get("otherDestroy", false)
 				interaction.sound = iv.get("sound", "")
 				interaction.volume = iv.get("volume", "")
+				it.interact[ik] = interaction
 		ts.append(it)
 	types = ts
 
@@ -155,9 +161,11 @@ class Use:
 	var time = 1
 	var turnInto:String = ""
 	var destroy:bool = false
+	var durability = 0
 	var spawn:Array = []
 	var stats:Dictionary = {}
 	var toolDurability = 0
+	var toolDestroy:bool = false
 	var damage = 0
 	var xpKey = ""
 	var xp = 0
